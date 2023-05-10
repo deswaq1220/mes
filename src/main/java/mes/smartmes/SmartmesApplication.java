@@ -1,13 +1,13 @@
-package com.mes;
+package mes.smartmes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MesApplication {
+public class SmartmesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MesApplication.class, args);
+		SpringApplication.run(SmartmesApplication.class, args);
 	}
 
 }
