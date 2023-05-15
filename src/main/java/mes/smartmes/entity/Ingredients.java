@@ -1,9 +1,16 @@
 package mes.smartmes.entity;
 
 
+import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Ingredients {
 
     @Id

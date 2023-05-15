@@ -1,10 +1,17 @@
 package mes.smartmes.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "porder")
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Porder {      // 발주 테이블
 
     @Id

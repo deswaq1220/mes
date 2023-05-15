@@ -1,9 +1,15 @@
 package mes.smartmes.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
-
+@Getter
+@Setter
+@ToString
 public class PorderDTO {
 
     private  String porderNo;                       // 발주 번호

@@ -13,7 +13,7 @@ public interface OrdersRepository extends JpaRepository<Orders, String> {
     Orders save(Orders orders);
     Orders findByOrderNo(String orderNo);
     Orders findByCompanyId(String companyId);
-
+    Integer deleteByOrderNo(String orderNo);
     List<Orders> findAll();
 
 

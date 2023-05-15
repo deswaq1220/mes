@@ -1,8 +1,12 @@
 package mes.smartmes.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 public class ProductDTO {
 
     private String productId;           // 제품 id

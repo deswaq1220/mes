@@ -1,6 +1,7 @@
 package mes.smartmes.entity;
 
 import lombok.*;
+import mes.smartmes.dto.OrdersDTO;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
@@ -39,6 +40,23 @@ public class Orders {
     private Date deliveryDate;              // 납품일자
 
     private char orderStatus;            // 주문 상태 A = 주문접수 , B =  수주확정
+
+
+
+    // Orders -> OrdersDTO
+    public OrdersDTO toOrderDTO(Orders orders) {
+        OrdersDTO ordersDTO = new OrdersDTO();
+        ordersDTO.setOrderNo(orders.getOrderNo());
+        ordersDTO.setCompanyId(orders.getCompanyId());
+        ordersDTO.setOrderDate(orders.getOrderDate());
+        ordersDTO.setProductId(orders.getProductId());
+        ordersDTO.setOrderQuantity(orders.getOrderQuantity());
+        ordersDTO.setOrderPrice(orders.getOrderPrice());
+        ordersDTO.setDeliveryDate(orders.getDeliveryDate());
+        ordersDTO.setOrderStatus(orders.getOrderStatus());
+        return ordersDTO;
+    }
+
 
 
 }

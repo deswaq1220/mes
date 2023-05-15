@@ -1,5 +1,7 @@
 package mes.smartmes.entity;
 
+import lombok.*;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,6 +9,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "product")
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     @Id

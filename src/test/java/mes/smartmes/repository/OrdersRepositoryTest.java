@@ -1,10 +1,13 @@
 package mes.smartmes.repository;
 
+import mes.smartmes.dto.OrdersDTO;
 import mes.smartmes.entity.Orders;
+import mes.smartmes.service.OrdersService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.client.ResourceAccessException;
 
 import javax.transaction.Transactional;
 
@@ -21,6 +24,10 @@ public class OrdersRepositoryTest {
 
     @Autowired
     private OrdersRepository ordersRepository;
+    @Autowired
+    private OrdersService ordersService;
+
+    private Orders orders;
 
     @Test
     public void test() {
@@ -37,5 +44,33 @@ public class OrdersRepositoryTest {
         });
     }
 
+    @Test
+    public void  삭제(){
+
+        OrdersDTO ordersDTO = new OrdersDTO();
+
+        ordersDTO.setOrderNo("하이");
+        ordersDTO.setCompanyId("CommandA");
+        ordersDTO.setOrderDate(ordersDTO.getOrderDate());
+        ordersDTO.setProductId("productA");
+
+        System.out.println(ordersDTO.toString());
+
+        ordersRepository.deleteByOrderNo("하이");
+        Assertions.assertThrows(ResourceAccessException.class, () -> {
+            ordersRepository.findByOrderNo("하이");
+
+        });
+
+    }
+
+    @Test
+    public void 저장(){
+
+        orders = new Orders();
+        orders.setOrderNo("xxxxx");
+
+        ordersRepository.save(orders);
+    }
 
 }
