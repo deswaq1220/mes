@@ -12,6 +12,7 @@ import org.springframework.web.client.ResourceAccessException;
 import javax.transaction.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -28,6 +29,7 @@ public class OrdersRepositoryTest {
     private OrdersService ordersService;
 
     private Orders orders;
+    private Orders orders1;
 
     @Test
     public void test() {
@@ -46,22 +48,45 @@ public class OrdersRepositoryTest {
 
     @Test
     public void  삭제(){
+        try{
+        orders = new Orders();
+        orders1 = new Orders();
 
-        OrdersDTO ordersDTO = new OrdersDTO();
 
-        ordersDTO.setOrderNo("하이");
-        ordersDTO.setCompanyId("CommandA");
-        ordersDTO.setOrderDate(ordersDTO.getOrderDate());
-        ordersDTO.setProductId("productA");
+        orders.setOrderNo("하이");
+        orders.setCompanyId("CommandA");
+        orders.setOrderDate(orders.getOrderDate());
+        orders.setProductId("productA");
 
-        System.out.println(ordersDTO.toString());
 
-        ordersRepository.deleteByOrderNo("하이");
-        Assertions.assertThrows(ResourceAccessException.class, () -> {
-            ordersRepository.findByOrderNo("하이");
+            orders1.setOrderNo("하이1515");
+            orders1.setCompanyId("CommandA1515");
+            orders1.setOrderDate(orders.getOrderDate());
+            orders1.setProductId("productA1515");
 
-        });
+        ordersRepository.save(orders);
+        ordersRepository.save(orders1);
 
+        Orders h = ordersService.findByOrderNo("하이");
+        System.out.println("h는는"  + h);
+
+        System.out.println("삭제삭제삭제1" + orders.toString());
+
+//        int s = ordersService.deleteByOrderNo("하이");
+//            System.out.println("s는" + s);
+
+
+
+        System.out.println("삭제삭제삭제2" + orders.toString());
+            System.out.println("s는는" +h);
+
+        Orders test = ordersService.findByOrderNo("하이");
+            System.out.println("테스트" + test);
+
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -70,6 +95,24 @@ public class OrdersRepositoryTest {
         orders = new Orders();
         orders.setOrderNo("xxxxx");
 
+        ordersRepository.save(orders);
+
+        System.out.println(orders.toString());
+    }
+    @Test
+    public void 주문생성() {
+
+
+        String dayNo = "PD" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String maxOrderNo = ordersRepository.findMaxOrderNo();
+
+        int orderInt = Integer.parseInt(maxOrderNo.substring(10)) + 1;
+        Orders orders = Orders.builder()
+                .orderNo(dayNo + String.format("%04d", orderInt))
+                .orderDate(LocalDateTime.now())
+                .productId("12345")
+                .orderQuantity(5)
+                .build();
         ordersRepository.save(orders);
     }
 

@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.sql.Date;
 import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Getter @Setter @ToString
@@ -27,8 +29,8 @@ public class Orders {
     @Column(length = 20)
     private String companyId;               //  업체 id
 
-    @Column(length = 20)
-    private Date orderDate;                 // 주문날짜
+
+    private LocalDateTime orderDate;                 // 주문날짜
 
     @Column(length = 20)
     private String productId;               // (고객 주문) 제품 id
@@ -48,7 +50,6 @@ public class Orders {
         OrdersDTO ordersDTO = new OrdersDTO();
         ordersDTO.setOrderNo(orders.getOrderNo());
         ordersDTO.setCompanyId(orders.getCompanyId());
-        ordersDTO.setOrderDate(orders.getOrderDate());
         ordersDTO.setProductId(orders.getProductId());
         ordersDTO.setOrderQuantity(orders.getOrderQuantity());
         ordersDTO.setOrderPrice(orders.getOrderPrice());

@@ -4,6 +4,7 @@
     import mes.smartmes.entity.Orders;
     import mes.smartmes.repository.OrdersRepository;
     import mes.smartmes.service.OrdersService;
+    import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.ResponseEntity;
     import org.springframework.stereotype.Controller;
     import org.springframework.web.bind.annotation.*;
@@ -11,19 +12,17 @@
     @Controller
     @RequestMapping("/mes/orders")
     public class OrdersController {
-        private OrdersRepository ordersRepository;
+
+
+        @Autowired
         private OrdersService ordersService;
-
-        public OrdersController(OrdersRepository ordersRepository, OrdersService ordersService) {
-            this.ordersRepository = ordersRepository;
-            this.ordersService = ordersService;
-        }
-
 
         @GetMapping("/test")
         public String save(){
             return "test";
         }
+
+
 
 /*        @PostMapping
         public ResponseEntity<?> createOrder(@RequestBody OrdersDTO ordersDTO) {
@@ -44,8 +43,8 @@
         }*/
 
         @DeleteMapping("/{orderNo}")
-        public ResponseEntity<?> deleteOrder(@PathVariable String orderNo) {
-            ordersRepository.deleteByOrderNo(orderNo);
+        public ResponseEntity<Orders> deleteOrder(@PathVariable String orderNo) {
+            ordersService.deleteByOrderNo(orderNo);
             return ResponseEntity.ok().build();
         }
     }
