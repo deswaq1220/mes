@@ -21,3 +21,26 @@ button{
     -moz-appearance: none;
     appearance: none;
 }
+
+body::-webkit-scrollbar{
+    width: 10px;
+}
+
+body::-webkit-scrollbar-thumb{
+    background-color: #022454;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+}
+
+.table-container::-webkit-scrollbar{
+    width: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb{
+    background-color: #022454;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+}
+

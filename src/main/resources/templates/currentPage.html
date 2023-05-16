@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -15,40 +15,12 @@
     <!-- css -->
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/currentpage.css">
+    <link rel="stylesheet" href="css/nav.css">
     <!-- <link href='fullcalendar-5.11.3/lib/main.css' rel='stylesheet' /> -->
 </head>
 <body>
 <div id="wrap">
-    <nav>
-        <button th:onclick="|window.location.href='@{/}'|">HOME</button>
-        <ul id="business">
-            <span class="title">영업관리</span>
-            <li><a href="order.html">수주등록</a></li>
-            <li><a href="Ordermanagement.html">수주관리</a></li>
-            <li><a href="">출하관리</a></li>
-        </ul>
-        <ul id="Purchase">
-            <span class="title">구매관리</span>
-            <li><a href="">발주관리</a></li>
-            <li><a href="">재고관리</a></li>
-            <li><a href="">입출고관리</a></li>
-        </ul>
-        <ul id="Production">
-            <span class="title">생산관리</span>
-            <!-- <li></li> -->
-            <li><a href="">생산계획</a></li>
-            <li><a href="">작업지시</a></li>
-            <li><a href="">작업실적등록</a></li>
-            <li><a href="">작업실적수정</a></li>
-        </ul>
-        <ul id="standard">
-            <span class="title">기준정보</span>
-            <!-- <li></li> -->
-            <li><a href="">공정등록</a></li>
-            <li><a href="">라우팅등록</a></li>
-            <li><a href="">제조BOM</a></li>
-        </ul>
-    </nav>
+   <nav th:replace="sideMenu :: nav"></nav>
 
     <aside>
         <div id="asideWrap">
@@ -112,15 +84,13 @@
             </div>
         </div>
     </aside>
-    <footer class="copy">
-        <p>copyright@smartMES</p>
-    </footer>
 </div>
 
 <!-- 스크립트 -->
 
 <!-- 그래프 -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <!-- 달력 -->
 <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.7/index.global.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.7/index.global.min.js'></script>
@@ -178,13 +148,12 @@
         },
         options: {
             scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true
-                        }
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: 100
                     }
-                ]
+                }]
             }
         }
     });
@@ -240,19 +209,19 @@
         },
         options: {
             scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true
-                        }
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: 100
                     }
-                ]
+                }]
             }
         }
     });
 
 
     // 일일재공현황
+    // 여기 일단 상의해서 데이터 바꾸기
     var context = document
         .getElementById('DailyWorkChart')
         .getContext('2d');
@@ -303,13 +272,12 @@
         },
         options: {
             scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true
-                        }
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: 100
                     }
-                ]
+                }]
             }
         }
     });
@@ -366,13 +334,12 @@
         },
         options: {
             scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true
-                        }
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: 100
                     }
-                ]
+                }]
             }
         }
     });
@@ -445,13 +412,12 @@
         },
         options: {
             scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true
-                        }
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: 100
                     }
-                ]
+                }]
             }
         }
     });
