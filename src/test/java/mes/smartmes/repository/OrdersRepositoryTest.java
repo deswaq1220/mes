@@ -67,7 +67,7 @@ public class OrdersRepositoryTest {
         ordersRepository.save(orders);
         ordersRepository.save(orders1);
 
-        Orders h = ordersService.findByOrderNo("하이");
+        String h = ordersService.selectOrderNo();
         System.out.println("h는는"  + h);
 
         System.out.println("삭제삭제삭제1" + orders.toString());
@@ -80,7 +80,7 @@ public class OrdersRepositoryTest {
         System.out.println("삭제삭제삭제2" + orders.toString());
             System.out.println("s는는" +h);
 
-        Orders test = ordersService.findByOrderNo("하이");
+        String test = ordersService.selectOrderNo();
             System.out.println("테스트" + test);
 
 
@@ -91,15 +91,21 @@ public class OrdersRepositoryTest {
 
     @Test
     public void 저장(){
-
-        orders = new Orders();
-        orders.setOrderNo("xxxxx");
-
+        String orderId = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        Orders orders = new Orders();
+        orders.setOrderNo(orderId);
         ordersRepository.save(orders);
 
-        System.out.println(orders.toString());
+        ordersService.selectOrderNo();
+
+        System.out.println(orders);
+
     }
-    @Test
+
+
+
+
+/*    @Test
     public void 주문생성() {
 
 
@@ -114,6 +120,6 @@ public class OrdersRepositoryTest {
                 .orderQuantity(5)
                 .build();
         ordersRepository.save(orders);
-    }
+    }*/
 
 }

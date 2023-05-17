@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>주문 수정</title>
+</head>
+<body>
+<h1>주문 수정</h1>
+<form action="/mes/orderUpdate" method="post">
+  <input type="hidden" th:value="${orders.orderNo}" name="orderNo">
+
+  <label for="companyId">업체 ID:</label>
+  <input type="text" id="companyId" name="companyId" th:value="${orders.companyId}"><br><br>
+
+  <label for="productId">제품 ID:</label>
+  <input type="text" id="productId" name="productId" th:value="${orders.productId}"><br><br>
+
+  <label for="orderQuantity">주문 수량:</label>
+  <input type="number" id="orderQuantity" name="orderQuantity" th:value="${orders.orderQuantity}"><br><br>
+
+  <label for="orderPrice">주문 가격:</label>
+  <input type="number" id="orderPrice" name="orderPrice" th:value="${orders.orderPrice}"><br><br>
+
+  <label for="deliveryDate">납품 일자:</label>
+  <input type="datetime-local" id="deliveryDate" name="deliveryDate" th:value="${orders.deliveryDate}"><br><br>
+
+  <label for="orderStatus">주문 상태:</label>
+  <select id="orderStatus" name="orderStatus">
+    <option value="A" th:selected="${orders.orderStatus == 'A'}">주문접수</option>
+    <option value="B" th:selected="${orders.orderStatus == 'B'}">수주확정</option>
+    <option value="C" th:selected="${orders.orderStatus == 'C'}">생산계획 완료</option>
+  </select><br><br>
+
+  <input type="submit" value="수정">
+</form>
+</body>
+</html>

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 
@@ -12,7 +14,7 @@ import java.util.Date;
 public class OrdersDTO {
 
 
-    private String orderNo;                 // 수주 번호
+    private String orderNo;                     // 수주 번호
 
     private String companyId;               //  업체 id
 

@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 @Getter @Setter @ToString
@@ -30,6 +31,7 @@ public class Orders {
     private String companyId;               //  업체 id
 
 
+
     private LocalDateTime orderDate;                 // 주문날짜
 
     @Column(length = 20)
@@ -39,16 +41,18 @@ public class Orders {
 
     private int orderPrice;                // 주문 가격
 
-    private Date deliveryDate;              // 납품일자
+    // 스프링이 시간을 적용 되게 해주는 어노테이션
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime deliveryDate;              // 납품일자
 
-    private char orderStatus;            // 주문 상태 A = 주문접수 , B =  수주확정
+    private char orderStatus;            // 주문 상태 A = 주문접수 , B =  수주확정, C = 생산계획 완료
 
 
 
-    // Orders -> OrdersDTO
+ /*   // Orders -> OrdersDTO
     public OrdersDTO toOrderDTO(Orders orders) {
         OrdersDTO ordersDTO = new OrdersDTO();
-        ordersDTO.setOrderNo(orders.getOrderNo());
+        ordersDTO.setOrderNo(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
         ordersDTO.setCompanyId(orders.getCompanyId());
         ordersDTO.setProductId(orders.getProductId());
         ordersDTO.setOrderQuantity(orders.getOrderQuantity());
@@ -57,7 +61,7 @@ public class Orders {
         ordersDTO.setOrderStatus(orders.getOrderStatus());
         return ordersDTO;
     }
-
+*/
 
 
 }
