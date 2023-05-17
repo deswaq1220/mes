@@ -1,13 +1,15 @@
-package mes.smartmes;
+package com.example.mes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-public class SmartmesApplication {
+@EnableScheduling
+public class MesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SmartmesApplication.class, args);
+		SpringApplication.run(MesApplication.class, args);
 	}
 
 }
