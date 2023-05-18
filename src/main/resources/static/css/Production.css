@@ -1,15 +1,17 @@
 #business li:nth-child(2){
   font-weight: 700;
 }
+
 .table-container {
   max-height: 500px;
   overflow-y: auto;
 }
-.orderData thead{
-  position: sticky;
-  top: 0;
-  z-index: 1;
+#orderData thead{
+ position: sticky;
+ top: 0;
+ z-index: 1;
 }
+
 
 aside{
   width: 80%;
@@ -110,13 +112,9 @@ aside{
 /*  height: 43px;*/
 /*  margin-left: 12px;*/
 /*  border: 1px solid  #9F9D9D;*/
-/*  font-family: 'Pretendard-Regular';*/
+/*  font-family: 'Montserrat', sans-serif; */
 /*  padding: 12px 9px;*/
 /*  box-sizing: border-box;*/
-/*}*/
-
-/*select{*/
-/*  font-family: 'Pretendard-Regular';*/
 /*}*/
 
 .systemAuto{
@@ -243,22 +241,26 @@ td{
   width: 40px;
 }
 
- table tbody{
+/*#orderList table thead tr td:nth-child(9),*/
+#orderList table thead tr td:nth-child(10),
+#orderList table thead tr td:nth-child(11),
+#orderList table thead tr td:nth-child(12){
+  border: none;
+}
+
+#orderList table tbody{
   text-align: center;
 }
 #orderList table tbody tr:nth-child(odd){
   background-color: #F2F3F4;
 }
 
-#orderList table tbody td:nth-child(9),
-#orderList table tbody td:nth-child(10),
-#orderList table tbody td:nth-child(11),
-#orderList table tbody td:nth-child(12)
+/* #orderList table tbody td:nth-child(6)
 {
   text-align: right;
   padding: 12px;
   box-sizing: border-box;
-}
+} */
 
 #orderList table tfoot{
   width: 30px;
@@ -276,29 +278,28 @@ td{
   box-sizing: border-box;
 }
 
-#orderList table tfoot tr td:nth-child(3),
-#orderList table tfoot tr td:nth-child(4),
-#orderList table tfoot tr td:nth-child(5),
-#orderList table tfoot tr td:nth-child(6),
-#orderList table tfoot tr td:nth-child(7),
-#orderList table tfoot tr td:nth-child(8){
+
+#orderList table tbody tr td:nth-child(10),
+#orderList table tbody tr td:nth-child(11),
+#orderList table tbody tr td:nth-child(12)
+
+{
   border: none;
 }
-
-#orderList table tfoot tr td:nth-child(9){
+/* 
+#orderList table tfoot tr td:nth-child(6),
+#orderList table tfoot tr td:nth-child(7){
   border-left: 1px solid white;
-}
+} */
 
-#orderList table tfoot tr td:nth-child(9),
-#orderList table tfoot tr td:nth-child(10),
-#orderList table tfoot tr td:nth-child(11),
-#orderList table tfoot tr td:nth-child(12){
+
+#orderList table tfoot tr td:nth-child(6){
   text-align: right;
 }
 /* 수주 테이블 끝 */
 
 /* 수주상세 테이블 시작 */
-#orderDetails{
+ #orderDetails{
   width: 95%;
   margin: 10px 45px 0 45px;
 
@@ -330,7 +331,9 @@ td{
   text-align: center;
 }
 
-
+#orderDetails table tbody{
+  text-align: center;
+}
 
 #orderDetails table tbody tr:nth-child(odd){
   background-color: #F2F3F4;
@@ -351,7 +354,7 @@ td{
   width: 30px;
   background-color: #022454;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   height: 40px;
 }
@@ -376,12 +379,12 @@ td{
   border-left: 1px solid white;
 }
 
-#orderDetails table tfoot tr td:nth-child(9),
-#orderDetails table tfoot tr td:nth-child(10),
-#orderDetails table tfoot tr td:nth-child(11),
-#orderDetails table tfoot tr td:nth-child(12){
-  text-align: right;
-}
+/*#orderDetails table tfoot tr td:nth-child(9),*/
+/*#orderDetails table tfoot tr td:nth-child(10),*/
+/*#orderDetails table tfoot tr td:nth-child(11),*/
+/*#orderDetails table tfoot tr td:nth-child(12){*/
+/*  text-align: right;*/
+/*}*/
 
 #fileSave{
   width: 88px;
@@ -395,7 +398,16 @@ td{
 
 }
 
-
+.routingBtn{
+  width: 100px;
+  height: 40px;
+  background-color: #DDEAFD;
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-bottom: 4px;
+}
 
 
 

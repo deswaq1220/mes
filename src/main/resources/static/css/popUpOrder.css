@@ -18,7 +18,7 @@ textarea{
   background-color: rgba(0,0,0,0);
   padding: 10px 10px;
   /* box-sizing: border-box; */
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Pretendard-Regular';
 
 }
 textarea:focus{
@@ -56,14 +56,14 @@ textarea::-webkit-scrollbar-thumb{
 #popUp_orderList table thead tr{
   background-color: #022454;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   height: 40px;
 }
 #popUp_orderList table thead tr td{
   background-color: #022454;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
 }
 
@@ -73,7 +73,7 @@ textarea::-webkit-scrollbar-thumb{
 }
 
 #popUp_orderList table tbody{
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
 }
 #popUp_orderList table tbody tr:nth-child(odd){
@@ -94,7 +94,7 @@ textarea::-webkit-scrollbar-thumb{
   width: 30px;
   background-color: #022454;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   height: 40px;
 }
@@ -182,7 +182,7 @@ textarea::-webkit-scrollbar-thumb{
   text-align: center;
   line-height: 57px;
   margin-right: 12px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .tablerow{
@@ -199,19 +199,19 @@ textarea::-webkit-scrollbar-thumb{
 
 }
 
-input[type="search"],input[type="date"],input[type="text"]{
-  -webkit-appearance: none;
-  -moz-appearance: none;
-       appearance: none;
-       /* 인풋 초기화 */
-  width: 163px;
-  height: 43px;
-  margin-left: 12px;
-  border: 1px solid  #9F9D9D;
-  font-family: 'Montserrat', sans-serif; 
-  padding: 12px 9px;
-  box-sizing: border-box;
-}
+/*input[type="search"],input[type="date"],input[type="text"]{*/
+/*  -webkit-appearance: none;*/
+/*  -moz-appearance: none;*/
+/*       appearance: none;*/
+/*       !* 인풋 초기화 *!*/
+/*  width: 163px;*/
+/*  height: 43px;*/
+/*  margin-left: 12px;*/
+/*  border: 1px solid  #9F9D9D;*/
+/*  font-family: 'Montserrat', sans-serif; */
+/*  padding: 12px 9px;*/
+/*  box-sizing: border-box;*/
+/*}*/
 
 .systemAuto{
   margin-right: 12px;
@@ -230,9 +230,9 @@ input[type="text"]{
   margin-right: 12px;
 }
 
-.orderForm{
-  width: 100%;
-  height: auto;
+form{
+width: 100%;
+height: auto;
 }
 
 form input:nth-child(1){
@@ -291,7 +291,7 @@ input[type="checkbox"]:checked {
 
 input[type="checkbox"]:checked::before {
   border-radius: 2px;
-  transform: scale(1) translate(-50%, -50%);
+  transform: scale(1) translate(-50%, -50%)
 }
 
 /* 수주등록 테이블 끝 */
@@ -334,14 +334,14 @@ td{
 #popUp_orderList table thead tr{
   background-color: #022454;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   height: 40px;
 }
 #popUp_orderList table thead tr td{
   background-color: #022454;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
 }
 
@@ -351,7 +351,7 @@ td{
 }
 
 #popUp_orderList table tbody{
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
 }
 #popUp_orderList table tbody tr:nth-child(odd){
@@ -372,7 +372,7 @@ td{
   width: 30px;
   background-color: #022454;
   color: white;
-  font-weight: 600;
+  font-weight:5600;
   text-align: center;
   height: 40px;
 }
@@ -419,7 +419,7 @@ td{
   color: white;
   background-color: #022454;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   margin-top: 0;
   margin-left: 4px;
 }
@@ -439,19 +439,18 @@ td{
 #popUp_orderDetails table thead tr{
   background-color: #022454;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   height: 40px;
 }
 #popUp_orderDetails table thead tr td{
   /* background-color: #022454; */
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
 }
 
 #popUp_orderDetails table tbody{
-  font-weight: 600;
   text-align: center;
 }
 
@@ -474,7 +473,7 @@ td{
   width: 30px;
   background-color: #022454;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   height: 40px;
 }
@@ -514,6 +513,8 @@ td{
 line-height: 90px;
 }
 
-
+#popUp_tableCheck tr:nth-child(1) td:nth-child(8) input{
+  margin-left: 12px;
+}
 
 
