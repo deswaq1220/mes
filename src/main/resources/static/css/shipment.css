@@ -1,6 +1,7 @@
 #business li:nth-child(2){
   font-weight: 700;
 }
+
 .table-container {
   max-height: 500px;
   overflow-y: auto;
@@ -101,24 +102,6 @@ aside{
 
 }
 
-/*input[type="search"],input[type="date"],input[type="text"]{*/
-/*  -webkit-appearance: none;*/
-/*  -moz-appearance: none;*/
-/*       appearance: none;*/
-/*       !* 인풋 초기화 *!*/
-/*  width: 163px;*/
-/*  height: 43px;*/
-/*  margin-left: 12px;*/
-/*  border: 1px solid  #9F9D9D;*/
-/*  font-family: 'Pretendard-Regular';*/
-/*  padding: 12px 9px;*/
-/*  box-sizing: border-box;*/
-/*}*/
-
-/*select{*/
-/*  font-family: 'Pretendard-Regular';*/
-/*}*/
-
 .systemAuto{
   margin-right: 12px;
 }
@@ -135,7 +118,6 @@ input[type="text"]{
   margin-left: 4px;
   margin-right: 12px;
 }
-
 form{
   width: 100%;
   height: auto;
@@ -243,17 +225,15 @@ td{
   width: 40px;
 }
 
- table tbody{
+#orderList table tbody{
   text-align: center;
 }
 #orderList table tbody tr:nth-child(odd){
   background-color: #F2F3F4;
 }
 
-#orderList table tbody td:nth-child(9),
-#orderList table tbody td:nth-child(10),
-#orderList table tbody td:nth-child(11),
-#orderList table tbody td:nth-child(12)
+/*#orderList table tbody td:nth-child(9),*/
+#orderList table tbody td:nth-child(10)
 {
   text-align: right;
   padding: 12px;
@@ -281,26 +261,36 @@ td{
 #orderList table tfoot tr td:nth-child(5),
 #orderList table tfoot tr td:nth-child(6),
 #orderList table tfoot tr td:nth-child(7),
-#orderList table tfoot tr td:nth-child(8){
+#orderList table tfoot tr td:nth-child(8),
+#orderList table tfoot tr td:nth-child(9),
+#orderList table tfoot tr td:nth-child(10),
+#orderList table tfoot tr td:nth-child(11)
+
+{
   border: none;
 }
 
-#orderList table tfoot tr td:nth-child(9){
+#orderList table tfoot tr td:nth-child(7),
+#orderList table tfoot tr td:nth-child(8),
+#orderList table tfoot tr td:nth-child(9),
+#orderList table tfoot tr td:nth-child(10),
+#orderList table tfoot tr td:nth-child(11)
+{
   border-left: 1px solid white;
 }
 
+#orderList table tfoot tr td:nth-child(7),
+#orderList table tfoot tr td:nth-child(8),
 #orderList table tfoot tr td:nth-child(9),
-#orderList table tfoot tr td:nth-child(10),
-#orderList table tfoot tr td:nth-child(11),
-#orderList table tfoot tr td:nth-child(12){
+#orderList table tfoot tr td:nth-child(10){
   text-align: right;
 }
 /* 수주 테이블 끝 */
 
 /* 수주상세 테이블 시작 */
 #orderDetails{
-  width: 95%;
-  margin: 10px 45px 0 45px;
+  width: 100%;
+  margin-top: 10px;
 
 }
 
@@ -330,17 +320,20 @@ td{
   text-align: center;
 }
 
-
+#orderDetails table tbody{
+  text-align: center;
+}
 
 #orderDetails table tbody tr:nth-child(odd){
   background-color: #F2F3F4;
 }
 
-#orderDetails table tbody td:nth-child(9),
+
 #orderDetails table tbody td:nth-child(10),
 #orderDetails table tbody td:nth-child(11),
-#orderDetails table tbody td:nth-child(12)
-{
+#orderDetails table tbody td:nth-child(12),
+#orderDetails table tbody td:nth-child(13),
+#orderDetails table tbody td:nth-child(14) {
   text-align: right;
   padding: 12px;
   box-sizing: border-box;
@@ -351,7 +344,7 @@ td{
   width: 30px;
   background-color: #022454;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   height: 40px;
 }
@@ -363,23 +356,28 @@ td{
   box-sizing: border-box;
 }
 
+#orderDetails table tfoot tr td:nth-child(2),
 #orderDetails table tfoot tr td:nth-child(3),
 #orderDetails table tfoot tr td:nth-child(4),
 #orderDetails table tfoot tr td:nth-child(5),
 #orderDetails table tfoot tr td:nth-child(6),
 #orderDetails table tfoot tr td:nth-child(7),
-#orderDetails table tfoot tr td:nth-child(8){
+#orderDetails table tfoot tr td:nth-child(8),
+#orderDetails table tfoot tr td:nth-child(9)
+{
   border: none;
 }
 
-#orderDetails table tfoot tr td:nth-child(9){
+#orderDetails table tfoot tr td:nth-child(10){
   border-left: 1px solid white;
 }
 
 #orderDetails table tfoot tr td:nth-child(9),
 #orderDetails table tfoot tr td:nth-child(10),
 #orderDetails table tfoot tr td:nth-child(11),
-#orderDetails table tfoot tr td:nth-child(12){
+#orderDetails table tfoot tr td:nth-child(12),
+#orderDetails table tfoot tr td:nth-child(13),
+#orderDetails table tfoot tr td:nth-child(14){
   text-align: right;
 }
 
@@ -394,7 +392,6 @@ td{
   float: right;
 
 }
-
 
 
 

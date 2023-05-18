@@ -1,6 +1,7 @@
-#business li:nth-child(2){
+#Purchase li:nth-child(4){
   font-weight: 700;
 }
+
 .table-container {
   max-height: 500px;
   overflow-y: auto;
@@ -84,7 +85,7 @@ aside{
   text-align: center;
   line-height: 57px;
   margin-right: 12px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .tablerow{
@@ -110,13 +111,9 @@ aside{
 /*  height: 43px;*/
 /*  margin-left: 12px;*/
 /*  border: 1px solid  #9F9D9D;*/
-/*  font-family: 'Pretendard-Regular';*/
+/*  font-family: 'Montserrat', sans-serif; */
 /*  padding: 12px 9px;*/
 /*  box-sizing: border-box;*/
-/*}*/
-
-/*select{*/
-/*  font-family: 'Pretendard-Regular';*/
 /*}*/
 
 .systemAuto{
@@ -137,13 +134,14 @@ input[type="text"]{
 }
 
 form{
-  width: 100%;
-  height: auto;
+ width: 100%;
+ height: auto;
 }
 
 form input:nth-child(1){
   margin-left:0;
 }
+
 
 
 .datepicker{
@@ -243,7 +241,7 @@ td{
   width: 40px;
 }
 
- table tbody{
+#orderList table tbody{
   text-align: center;
 }
 #orderList table tbody tr:nth-child(odd){
@@ -252,8 +250,7 @@ td{
 
 #orderList table tbody td:nth-child(9),
 #orderList table tbody td:nth-child(10),
-#orderList table tbody td:nth-child(11),
-#orderList table tbody td:nth-child(12)
+#orderList table tbody td:nth-child(11)
 {
   text-align: right;
   padding: 12px;
@@ -291,16 +288,15 @@ td{
 
 #orderList table tfoot tr td:nth-child(9),
 #orderList table tfoot tr td:nth-child(10),
-#orderList table tfoot tr td:nth-child(11),
-#orderList table tfoot tr td:nth-child(12){
+#orderList table tfoot tr td:nth-child(11){
   text-align: right;
 }
 /* 수주 테이블 끝 */
 
 /* 수주상세 테이블 시작 */
 #orderDetails{
-  width: 95%;
-  margin: 10px 45px 0 45px;
+  width: 100%;
+  margin-top: 10px;
 
 }
 
@@ -330,16 +326,18 @@ td{
   text-align: center;
 }
 
-
+#orderDetails table tbody{
+  text-align: center;
+}
 
 #orderDetails table tbody tr:nth-child(odd){
   background-color: #F2F3F4;
 }
 
+#orderDetails table tbody td:nth-child(8),
 #orderDetails table tbody td:nth-child(9),
 #orderDetails table tbody td:nth-child(10),
-#orderDetails table tbody td:nth-child(11),
-#orderDetails table tbody td:nth-child(12)
+#orderDetails table tbody td:nth-child(11)
 {
   text-align: right;
   padding: 12px;
@@ -351,7 +349,7 @@ td{
   width: 30px;
   background-color: #022454;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   height: 40px;
 }
@@ -363,23 +361,28 @@ td{
   box-sizing: border-box;
 }
 
+#orderDetails table tfoot tr td:nth-child(2),
 #orderDetails table tfoot tr td:nth-child(3),
 #orderDetails table tfoot tr td:nth-child(4),
 #orderDetails table tfoot tr td:nth-child(5),
 #orderDetails table tfoot tr td:nth-child(6),
 #orderDetails table tfoot tr td:nth-child(7),
-#orderDetails table tfoot tr td:nth-child(8){
+#orderDetails table tfoot tr td:nth-child(12),
+#orderDetails table tfoot tr td:nth-child(13)
+
+{
   border: none;
 }
 
-#orderDetails table tfoot tr td:nth-child(9){
+#orderDetails table tfoot tr td:nth-child(8),
+#orderDetails table tfoot tr td:nth-child(10){
   border-left: 1px solid white;
 }
 
+#orderDetails table tfoot tr td:nth-child(8),
 #orderDetails table tfoot tr td:nth-child(9),
 #orderDetails table tfoot tr td:nth-child(10),
-#orderDetails table tfoot tr td:nth-child(11),
-#orderDetails table tfoot tr td:nth-child(12){
+#orderDetails table tfoot tr td:nth-child(11){
   text-align: right;
 }
 
@@ -390,11 +393,10 @@ td{
   text-align: center;
   line-height: 43px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 5;
   float: right;
 
 }
-
 
 
 

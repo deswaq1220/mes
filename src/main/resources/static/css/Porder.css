@@ -1,14 +1,15 @@
-#business li:nth-child(2){
+#Purchase li:nth-child(2){
   font-weight: 700;
 }
+
 .table-container {
   max-height: 500px;
   overflow-y: auto;
 }
 .orderData thead{
-  position: sticky;
-  top: 0;
-  z-index: 1;
+ position: sticky;
+ top: 0;
+ z-index: 1;
 }
 
 aside{
@@ -84,7 +85,7 @@ aside{
   text-align: center;
   line-height: 57px;
   margin-right: 12px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .tablerow{
@@ -101,23 +102,7 @@ aside{
 
 }
 
-/*input[type="search"],input[type="date"],input[type="text"]{*/
-/*  -webkit-appearance: none;*/
-/*  -moz-appearance: none;*/
-/*       appearance: none;*/
-/*       !* 인풋 초기화 *!*/
-/*  width: 163px;*/
-/*  height: 43px;*/
-/*  margin-left: 12px;*/
-/*  border: 1px solid  #9F9D9D;*/
-/*  font-family: 'Pretendard-Regular';*/
-/*  padding: 12px 9px;*/
-/*  box-sizing: border-box;*/
-/*}*/
 
-/*select{*/
-/*  font-family: 'Pretendard-Regular';*/
-/*}*/
 
 .systemAuto{
   margin-right: 12px;
@@ -137,8 +122,8 @@ input[type="text"]{
 }
 
 form{
-  width: 100%;
-  height: auto;
+ width: 100%;
+ height: auto;
 }
 
 form input:nth-child(1){
@@ -243,7 +228,8 @@ td{
   width: 40px;
 }
 
- table tbody{
+#orderList table tbody{
+  font-weight: 500;
   text-align: center;
 }
 #orderList table tbody tr:nth-child(odd){
@@ -330,7 +316,9 @@ td{
   text-align: center;
 }
 
-
+#orderDetails table tbody{
+  text-align: center;
+}
 
 #orderDetails table tbody tr:nth-child(odd){
   background-color: #F2F3F4;
@@ -351,7 +339,7 @@ td{
   width: 30px;
   background-color: #022454;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   height: 40px;
 }
@@ -363,16 +351,18 @@ td{
   box-sizing: border-box;
 }
 
+#orderDetails table tfoot tr td:nth-child(2),
 #orderDetails table tfoot tr td:nth-child(3),
 #orderDetails table tfoot tr td:nth-child(4),
 #orderDetails table tfoot tr td:nth-child(5),
 #orderDetails table tfoot tr td:nth-child(6),
 #orderDetails table tfoot tr td:nth-child(7),
-#orderDetails table tfoot tr td:nth-child(8){
+#orderDetails table tfoot tr td:nth-child(8),
+#orderDetails table tfoot tr td:nth-child(9){
   border: none;
 }
 
-#orderDetails table tfoot tr td:nth-child(9){
+#orderDetails table tfoot tr td:nth-child(10){
   border-left: 1px solid white;
 }
 
@@ -390,11 +380,10 @@ td{
   text-align: center;
   line-height: 43px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   float: right;
 
 }
-
 
 
 

@@ -1,11 +1,11 @@
-#business li:nth-child(2){
+#Production li:nth-child(3){
   font-weight: 700;
 }
 .table-container {
   max-height: 500px;
   overflow-y: auto;
 }
-.orderData thead{
+#orderData thead{
   position: sticky;
   top: 0;
   z-index: 1;
@@ -84,7 +84,7 @@ aside{
   text-align: center;
   line-height: 57px;
   margin-right: 12px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .tablerow{
@@ -101,30 +101,16 @@ aside{
 
 }
 
-/*input[type="search"],input[type="date"],input[type="text"]{*/
-/*  -webkit-appearance: none;*/
-/*  -moz-appearance: none;*/
-/*       appearance: none;*/
-/*       !* 인풋 초기화 *!*/
-/*  width: 163px;*/
-/*  height: 43px;*/
-/*  margin-left: 12px;*/
-/*  border: 1px solid  #9F9D9D;*/
-/*  font-family: 'Pretendard-Regular';*/
-/*  padding: 12px 9px;*/
-/*  box-sizing: border-box;*/
-/*}*/
 
-/*select{*/
-/*  font-family: 'Pretendard-Regular';*/
-/*}*/
 
 .systemAuto{
   margin-right: 12px;
 }
-input[type="text"]{
+/* input[type="search"]:nth-child(2),
+input[type="search"]:nth-child(3){
   margin-left: 0;
-}
+  margin-right: 12px;
+} */
 
 
 .searchBtn{
@@ -143,6 +129,10 @@ form{
 
 form input:nth-child(1){
   margin-left:0;
+}
+
+form:nth-child(1) table tr:nth-child(2) input[type="search"]{
+  margin-right: 12px;
 }
 
 
@@ -243,22 +233,15 @@ td{
   width: 40px;
 }
 
- table tbody{
+#orderList table tbody{
   text-align: center;
 }
 #orderList table tbody tr:nth-child(odd){
   background-color: #F2F3F4;
 }
 
-#orderList table tbody td:nth-child(9),
-#orderList table tbody td:nth-child(10),
-#orderList table tbody td:nth-child(11),
-#orderList table tbody td:nth-child(12)
-{
-  text-align: right;
-  padding: 12px;
-  box-sizing: border-box;
-}
+
+
 
 #orderList table tfoot{
   width: 30px;
@@ -330,28 +313,37 @@ td{
   text-align: center;
 }
 
-
+#orderDetails table tbody{
+  text-align: center;
+}
 
 #orderDetails table tbody tr:nth-child(odd){
   background-color: #F2F3F4;
 }
 
+#orderDetails table tbody td:nth-child(8),
 #orderDetails table tbody td:nth-child(9),
 #orderDetails table tbody td:nth-child(10),
 #orderDetails table tbody td:nth-child(11),
 #orderDetails table tbody td:nth-child(12)
 {
-  text-align: right;
-  padding: 12px;
-  box-sizing: border-box;
+ border: none;
 }
 
+#orderDetails table thead td:nth-child(8),
+#orderDetails table thead td:nth-child(9),
+#orderDetails table thead td:nth-child(10),
+#orderDetails table thead td:nth-child(11),
+#orderDetails table thead td:nth-child(12)
+{
+  border: none;
+}
 
 #orderDetails table tfoot{
   width: 30px;
   background-color: #022454;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   height: 40px;
 }
@@ -394,8 +386,50 @@ td{
   float: right;
 
 }
+.routingBtn{
+  width: 100px;
+  height: 40px;
+  background-color: #DDEAFD;
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  margin-top: 0px;
+  margin-left: 4px;
+  margin-bottom: 4px;
+  float: right;
+}
+
+.addBtn, .deleteBtn{
+  width: 100px;
+  height: 40px;
+  background-color: #DDEAFD;
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  margin-top: 0px;
+  margin-left: 4px;
+  margin-bottom: 4px;
+  float: right;
+}
+
+.addBtn:hover,.deleteBtn:hover,.routingBtn:hover{
+  background-color: #022454;
+  color: white;
+  box-shadow: 1px 2px 5px #989898;
+}
 
 
+.titleBtnWrap{
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.Rwrap2{
+  display: flex;
+  margin: 15px 0;
+  border-top: 1.5px solid #022454;
+  border-bottom: 1.5px solid #022454;
+  padding-top: 4px;
+}
 
 
 

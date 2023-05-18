@@ -9,6 +9,9 @@
   float: right;
   margin: 0 0 0 4px;
 }
+#business li:nth-child(3){
+  font-weight: 700;
+}
 
 
 #orderManagementList{
@@ -31,14 +34,14 @@
 #orderManagementList table thead tr{
   background-color: #022454;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   height: 40px;
 }
 #orderManagementList table thead tr td{
   background-color: #022454;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
 }
 
@@ -48,7 +51,6 @@
 }
 
 #orderManagementList table tbody{
-  font-weight: 600;
   text-align: center;
 }
 #orderManagementList table tbody tr:nth-child(odd){
@@ -70,7 +72,7 @@
   width: 30px;
   background-color: #022454;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   height: 40px;
 }
@@ -118,3 +120,12 @@
   margin-right: 0;
 }
 
+.table-container {
+  max-height: 500px;
+  overflow-y: auto;
+}
+.orderData thead{
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}

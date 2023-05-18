@@ -30,8 +30,6 @@ public class Orders {
     @Column(length = 20)
     private String companyId;               //  업체 id
 
-
-
     private LocalDateTime orderDate;                 // 주문날짜
 
     @Column(length = 20)

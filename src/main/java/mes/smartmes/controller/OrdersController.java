@@ -60,7 +60,7 @@ public class OrdersController {
 
         String orderNo = dayNo + String.format("%04d", orderIntNo);
         System.out.println(orderNo);
-        return "orders";
+        return "order";
     }
 
     //수주 등록 
@@ -87,7 +87,7 @@ public class OrdersController {
         ordersRepository.save(orders);
         System.out.println(orders);
 
-        return  "orders";
+        return  "order";
     }
 
     // 조회
@@ -99,7 +99,7 @@ public class OrdersController {
         // orderList 리스트 객체를 orderList 라는 이름으로 뷰페이지에서 사용 가능하게 세팅
         model.addAttribute("orderList", orderList);
 
-        return "orders";
+        return "order";
     }
 
 
@@ -134,6 +134,11 @@ public class OrdersController {
     }
 
 
+
+    @GetMapping("/mainOrder")
+    public String mainSave(){
+        return "order";
+    }
 
 }
 
