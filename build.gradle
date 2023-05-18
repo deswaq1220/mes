@@ -38,6 +38,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-mustache'
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
 	annotationProcessor(
 

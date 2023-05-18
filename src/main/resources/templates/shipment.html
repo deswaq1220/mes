@@ -16,7 +16,7 @@
  <div id="wrap">
   <nav th:replace="sideMenu::nav"></nav>
     <aside>
-      <form class="orderForm" action="/shipments">
+      <form class="orderForm" action="/search" method="GET">
       <div class="topArea">
         <h1> 출하관리</h1>
         <div id="btnWrap">
@@ -26,7 +26,7 @@
             </svg>
             
           </button>
-        <button class="check">조회</button>
+        <button class="check" type="submit">조회</button>
         </div>
       </div>
 
@@ -101,56 +101,64 @@
             </tr>
           </thead>
           <tbody>
-            <tr onclick="toggleCheckbox(this)">
-              <td >3</td>
-              <td>
-                <input type="checkbox" id="checkbox">
-              </td>
-              <td>2023-05-04</td>
-              <td>SM2305040001</td>
-              <td>에이농장</td>
-              <td>적용</td>
-              <td>100</td>
-              <td>10000</td>
-              <td>0</td>
-              <td>0</td>
-              <td>뭐 출하일정 지연</td>
-              <td>2023-05-07 17:54:34</td>
-            </tr>
-            <tr class="row-data" th:each="shipment : ${shipments}" onclick="toggleCheckbox(this)">
-              <td th:text="${shipment.shipmentNo}"></td>
-              <td>
-                <input type="checkbox" onclick="event.stopPropagation()">
-              </td>
-              <td th:text="${shipment.shipmentDate}"></td>
-              <td th:text="${shipment.finproductNo}"></td>
-              <td th:text="${shipment.companyName}"></td>
-              <td>적용</td>
-              <td th:text="${shipment.shipmentQuantity}"></td>
-              <td th:text="${shipment.productId}"></td>
-              <td th:text="${shipment.Vat}"></td>
-              <td>합계~</td>
-              <td th:text="${shipment.shipmentStatus}"></td>
-              <td th:text="${shipment.ModificationDate}"></td>
 
-            </tr>
-            <tr class="row-data" th:each="shipment : ${shipments}" onclick="toggleCheckbox(this)">
-              <td th:text="${shipment.shipmentNo}"></td>
-              <td>
-                <input type="checkbox" onclick="event.stopPropagation()">
-              </td>
-              <td th:text="${shipment.shipmentDate}"></td>
-              <td th:text="${shipment.finproductNo}"></td>
-              <td th:text="${shipment.companyName}"></td>
-              <td>적용</td>
-              <td th:text="${shipment.shipmentQuantity}"></td>
-              <td th:text="${shipment.productId}"></td>
-              <td th:text="${shipment.Vat}"></td>
-              <td>합계~</td>
-              <td th:text="${shipment.shipmentStatus}"></td>
-              <td th:text="${shipment.ModificationDate}"></td>
+          <tr th:each="shipment : ${shipmentlist}">
+            <td th:text="${shipment.companyName}"></td>
+            <td th:text="${shipment.shipmentDate}"></td>
+            <td th:text="${shipment.shipmentNo}"></td>
+            <!-- 추가 필드들에 대한 출력도 추가할 수 있습니다 -->
+          </tr>
 
-            </tr>
+<!--            <tr onclick="toggleCheckbox(this)">-->
+<!--              <td >3</td>-->
+<!--              <td>-->
+<!--                <input type="checkbox" id="checkbox">-->
+<!--              </td>-->
+<!--              <td>2023-05-04</td>-->
+<!--              <td>SM2305040001</td>-->
+<!--              <td>에이농장</td>-->
+<!--              <td>적용</td>-->
+<!--              <td>100</td>-->
+<!--              <td>10000</td>-->
+<!--              <td>0</td>-->
+<!--              <td>0</td>-->
+<!--              <td>뭐 출하일정 지연</td>-->
+<!--              <td>2023-05-07 17:54:34</td>-->
+<!--            </tr>-->
+<!--            <tr class="row-data" th:each="shipment : ${shipments}" onclick="toggleCheckbox(this)">-->
+<!--              <td th:text="${shipment.shipmentNo}"></td>-->
+<!--              <td>-->
+<!--                <input type="checkbox" onclick="event.stopPropagation()">-->
+<!--              </td>-->
+<!--              <td th:text="${shipment.shipmentDate}"></td>-->
+<!--              <td th:text="${shipment.finproductNo}"></td>-->
+<!--              <td th:text="${shipment.companyName}"></td>-->
+<!--              <td>적용</td>-->
+<!--              <td th:text="${shipment.shipmentQuantity}"></td>-->
+<!--              <td th:text="${shipment.productId}"></td>-->
+<!--              <td th:text="${shipment.Vat}"></td>-->
+<!--              <td>합계~</td>-->
+<!--              <td th:text="${shipment.shipmentStatus}"></td>-->
+<!--              <td th:text="${shipment.ModificationDate}"></td>-->
+
+<!--            </tr>-->
+<!--            <tr class="row-data" th:each="shipment : ${shipments}" onclick="toggleCheckbox(this)">-->
+<!--              <td th:text="${shipment.shipmentNo}"></td>-->
+<!--              <td>-->
+<!--                <input type="checkbox" onclick="event.stopPropagation()">-->
+<!--              </td>-->
+<!--              <td th:text="${shipment.shipmentDate}"></td>-->
+<!--              <td th:text="${shipment.finproductNo}"></td>-->
+<!--              <td th:text="${shipment.companyName}"></td>-->
+<!--              <td>적용</td>-->
+<!--              <td th:text="${shipment.shipmentQuantity}"></td>-->
+<!--              <td th:text="${shipment.productId}"></td>-->
+<!--              <td th:text="${shipment.Vat}"></td>-->
+<!--              <td>합계~</td>-->
+<!--              <td th:text="${shipment.shipmentStatus}"></td>-->
+<!--              <td th:text="${shipment.ModificationDate}"></td>-->
+
+<!--            </tr>-->
           </tbody>
           <tfoot>
             <tr>
@@ -209,6 +217,14 @@
               <td>0</td>
               <td>0</td>
             </tr>
+
+            <tr th:each="shipment : ${shipments}">
+              <td th:text="${shipment.companyName}"></td>
+              <td th:text="${shipment.shipmentDate}"></td>
+              <td th:text="${shipment.shipmentNo}"></td>
+            </tr>
+
+
 
           </tbody>
           <tfoot>
