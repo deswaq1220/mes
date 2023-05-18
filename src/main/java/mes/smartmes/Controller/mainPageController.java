@@ -39,10 +39,10 @@ public class mainPageController {
         return "order";
     }
 
-//    @GetMapping("/shipment")
-//    public String shipmentPage(){
-//        return "shipment";
-//    }
+    @GetMapping("/shipment")
+    public String shipmentPage(){
+        return "shipment";
+    }
 
     @GetMapping("/management")
     public String managementPage(){

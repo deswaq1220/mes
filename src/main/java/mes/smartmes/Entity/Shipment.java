@@ -37,11 +37,7 @@ public class Shipment {
     @Column(name = "shipment_status")
     private String shipmentStatus; // 출하상태
 
-    @Column(name = "vat")
-    private BigDecimal vat; // 부가세
 
-    @Column(name = "modification_date")
-    private LocalDateTime modificationDate; // 수정일자
 
 
 

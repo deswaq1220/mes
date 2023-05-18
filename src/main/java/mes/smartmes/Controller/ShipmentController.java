@@ -41,8 +41,8 @@ public class ShipmentController {
         shipment1.setProductId(100L);
         shipment1.setShipmentQuantity(10);
         shipment1.setShipmentStatus("Pending");
-        shipment1.setVat(new BigDecimal("100.00"));
-        shipment1.setModificationDate(LocalDateTime.now());
+//        shipment1.setVat(new BigDecimal("100.00"));
+//        shipment1.setModificationDate(LocalDateTime.now());
         shipments.add(shipment1);
 
         Shipment shipment2 = new Shipment();
@@ -53,8 +53,8 @@ public class ShipmentController {
         shipment2.setProductId(200L);
         shipment2.setShipmentQuantity(20);
         shipment2.setShipmentStatus("Completed");
-        shipment2.setVat(new BigDecimal("200.00"));
-        shipment2.setModificationDate(LocalDateTime.now());
+//        shipment2.setVat(new BigDecimal("200.00"));
+//        shipment2.setModificationDate(LocalDateTime.now());
         shipments.add(shipment2);
 
         return shipments;
