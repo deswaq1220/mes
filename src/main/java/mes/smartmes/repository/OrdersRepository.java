@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,5 +30,24 @@ public interface OrdersRepository extends JpaRepository<Orders, String> {
 //    String selectMaxOrderNo();
 //
 //    String findMaxOrderNo();
+
+    //리드타임
+    @Query(value = "SELECT p.lead_time FROM process p WHERE processno = :processNo" ,nativeQuery = true)
+    long findLeadTime(String processNo);
+
+    //생산시간
+    @Query(value = "SELECT p.process_time FROM process p WHERE processno = :processNo" ,nativeQuery = true)
+    long findProcessTime(String processNo);
+
+    //생산능력(prcess_capacity)
+    @Query(value = "SELECT p.process_capacity FROM process p WHERE processno = :processNo" ,nativeQuery = true)
+    long findCapa(String processNo);
+
+    @Query(value ="SELECT dayofweek(now())",nativeQuery = true)
+    long findWorkDay();
+
+    @Query(value ="SELECT date_format(:totalProcessTime,'%H%i%S')",nativeQuery = true)
+    String findWorkTime(LocalDateTime totalProcessTime);
+
 
 }

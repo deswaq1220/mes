@@ -86,6 +86,7 @@ public class OrdersController {
         }
         ordersRepository.save(orders);
         System.out.println(orders);
+        ordersService.selectProcessTime();
 
         return  "order";
     }
