@@ -256,7 +256,7 @@ td{
   box-sizing: border-box;
 }
 
-#orderList table tfoot tr td:nth-child(3),
+
 #orderList table tfoot tr td:nth-child(4),
 #orderList table tfoot tr td:nth-child(5),
 #orderList table tfoot tr td:nth-child(6),

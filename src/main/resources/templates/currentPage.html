@@ -425,14 +425,23 @@ document.addEventListener('DOMContentLoaded', function() {
           initialView: 'dayGridMonth',
           events : [
             {
-              title: '물주기',
+              title: '양배추발주',
               start: '2023-05-01'
           	},
+              {
+                  title: '양배추입고',
+                  start: '2023-05-03'
+              },
             {
-              title: '뚜껑 닫기',
+              title: '양배추즙생산',
               start: '2023-05-03',
-              end: '2022-09-05'
-          	}
+              end: '2023-05-15'
+          	},
+              {
+                  title: '양배추즙출하',
+                  start: '2023-05-15',
+
+              },
           ]
         });
         calendar.render();

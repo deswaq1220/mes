@@ -8,9 +8,9 @@ function toggleCheckbox(row) {
   }
 }
 
-function changeColor(row) {
-  row.style.backgroundColor = '#DDEAFD';
-}
+// function changeColor(row) {
+//   row.style.backgroundColor = '#DDEAFD';
+// }
 
 //라우팅 배정 버튼 이벤트
 

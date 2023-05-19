@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>출하관리 </title>
   <!-- css -->
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/nav.css">
-  <link rel="stylesheet" href="css/shipment.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/shipment.css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 </head>
@@ -16,7 +16,7 @@
  <div id="wrap">
   <nav th:replace="sideMenu::nav"></nav>
     <aside>
-      <form class="orderForm" action="/search" method="GET">
+      <form class="orderForm" th:action="@{/shipments/search}" method="get">
       <div class="topArea">
         <h1> 출하관리</h1>
         <div id="btnWrap">
@@ -35,43 +35,43 @@
           <tr class="tablerow">
             <td class="inventory">회사</td>
             <td>
-              <select class="company">
-                <option value="select">회사명</option>
-                <option value="cupang">쿠팡</option>
-                <option value="Gmarket">지마켓</option>
-                <option value="11">11번가</option>
+              <select class="company" name="company">
+                <option value="">회사명</option>
+                <option value="쿠팡">쿠팡</option>
+                <option value="지마켓">지마켓</option>
+                <option value="11번가">11번가</option>
               </select>
             </td>
   
             <td class="inventory">출하일자</td>
-            <td><input type="date" class="datepicker"></td>
+            <td><input type="date" class="datepicker" name="startDate"></td>
             <td>~</td>
-            <td><input type="date" class="datepicker" id="picker"></td>
+            <td><input type="date" class="datepicker" id="picker" name="endDate"></td>
             <td class="inventory">출하번호</td>
             <td>
-              <input type="text">
+              <input type="text"name="finproductNo">
             </td>
           </tr>
           <tr class="tablerow">
             <td class="inventory">품목</td>
             <td>
-              <select class="drop">
-                <option value="select">품목</option>
-                <option value="cabbage">양배추즙</option>
-                <option value="garlic">흑마늘즙</option>
-                <option value="Pomegranate">석류젤리</option>
-                <option value="plum">매실젤리</option>
+              <select class="drop" name="item">
+                <option value="">품목</option>
+                <option value="양배추즙">양배추즙</option>
+                <option value="흑마늘즙">흑마늘즙</option>
+                <option value="석류젤리">석류젤리</option>
+                <option value="매실젤리">매실젤리</option>
               </select>
              
             </td>
             <td class="inventory">거래처</td>
             <td>
-              <select class="drop">
-                <option value="select">거래처</option>
-                <option value="cupang">코드하우스</option>
-                <option value="Gmarket">하나로마트</option>
-                <option value="Gmarket">에이농장</option>
-                <option value="Gmarket">팔피엠</option>
+              <select class="drop" name="companyName">
+                <option value="">거래처</option>
+                <option value="코드하우스">코드하우스</option>
+                <option value="하나로마트">하나로마트</option>
+                <option value="에이농장">에이농장</option>
+                <option value="팔피엠">팔피엠</option>
               </select>
             </td>
           </tr>
@@ -82,8 +82,9 @@
 
       <div id="orderList">
         <h1> 출하목록 </h1>
+        <div class="allSelect">전체선택</div>
         <div class="table-container">
-        <table clas="orderData">
+        <table class="orderData">
           <thead>
             <tr>
               <td></td>
@@ -101,64 +102,22 @@
             </tr>
           </thead>
           <tbody>
-
-          <tr th:each="shipment : ${shipmentlist}">
-            <td th:text="${shipment.companyName}"></td>
-            <td th:text="${shipment.shipmentDate}"></td>
-            <td th:text="${shipment.shipmentNo}"></td>
-            <!-- 추가 필드들에 대한 출력도 추가할 수 있습니다 -->
-          </tr>
-
-<!--            <tr onclick="toggleCheckbox(this)">-->
-<!--              <td >3</td>-->
-<!--              <td>-->
-<!--                <input type="checkbox" id="checkbox">-->
-<!--              </td>-->
-<!--              <td>2023-05-04</td>-->
-<!--              <td>SM2305040001</td>-->
-<!--              <td>에이농장</td>-->
-<!--              <td>적용</td>-->
-<!--              <td>100</td>-->
-<!--              <td>10000</td>-->
-<!--              <td>0</td>-->
-<!--              <td>0</td>-->
-<!--              <td>뭐 출하일정 지연</td>-->
-<!--              <td>2023-05-07 17:54:34</td>-->
-<!--            </tr>-->
-<!--            <tr class="row-data" th:each="shipment : ${shipments}" onclick="toggleCheckbox(this)">-->
-<!--              <td th:text="${shipment.shipmentNo}"></td>-->
-<!--              <td>-->
-<!--                <input type="checkbox" onclick="event.stopPropagation()">-->
-<!--              </td>-->
-<!--              <td th:text="${shipment.shipmentDate}"></td>-->
-<!--              <td th:text="${shipment.finproductNo}"></td>-->
-<!--              <td th:text="${shipment.companyName}"></td>-->
-<!--              <td>적용</td>-->
-<!--              <td th:text="${shipment.shipmentQuantity}"></td>-->
-<!--              <td th:text="${shipment.productId}"></td>-->
-<!--              <td th:text="${shipment.Vat}"></td>-->
-<!--              <td>합계~</td>-->
-<!--              <td th:text="${shipment.shipmentStatus}"></td>-->
-<!--              <td th:text="${shipment.ModificationDate}"></td>-->
-
-<!--            </tr>-->
-<!--            <tr class="row-data" th:each="shipment : ${shipments}" onclick="toggleCheckbox(this)">-->
-<!--              <td th:text="${shipment.shipmentNo}"></td>-->
-<!--              <td>-->
-<!--                <input type="checkbox" onclick="event.stopPropagation()">-->
-<!--              </td>-->
-<!--              <td th:text="${shipment.shipmentDate}"></td>-->
-<!--              <td th:text="${shipment.finproductNo}"></td>-->
-<!--              <td th:text="${shipment.companyName}"></td>-->
-<!--              <td>적용</td>-->
-<!--              <td th:text="${shipment.shipmentQuantity}"></td>-->
-<!--              <td th:text="${shipment.productId}"></td>-->
-<!--              <td th:text="${shipment.Vat}"></td>-->
-<!--              <td>합계~</td>-->
-<!--              <td th:text="${shipment.shipmentStatus}"></td>-->
-<!--              <td th:text="${shipment.ModificationDate}"></td>-->
-
-<!--            </tr>-->
+            <tr class="row-data" th:each="shipment : ${shipmentlist}" onclick="toggleCheckbox(this)">
+              <td th:text="${shipment.shipmentNo}"></td>
+              <td>
+                <input type="checkbox" onclick="event.stopPropagation()" class="row-checkbox">
+              </td>
+              <td th:text="${shipment.shipmentDate}"></td>
+              <td th:text="${shipment.finproductNo}"></td>
+              <td th:text="${shipment.companyName}"></td>
+              <td>적용</td>
+              <td th:text="${shipment.shipmentQuantity}"></td>
+              <td th:text="${shipment.productId}"></td>
+              <td>얼마일세</td>
+              <td>일억.</td>
+              <td th:text="${shipment.shipmentStatus}"></td>
+              <td></td>
+            </tr>
           </tbody>
           <tfoot>
             <tr>
@@ -171,7 +130,7 @@
               <td></td>
               <td></td>
               <td></td>
-              <td>100</td>
+              <td>이억</td>
               <td></td>
               <td></td>
             </tr>
@@ -258,12 +217,12 @@
 
  <!-- 스크립트 -->
  
-  <script src="js/datapicker.js"></script>
+  <script src="/js/datapicker.js"></script>
   <!-- <script src="js/popUP.js"></script> -->
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script src="js/download.js"></script>
-  <script src="js/click.js"></script>
+  <script src="/js/download.js"></script>
+  <script src="/js/click.js"></script>
 
 <!-- "excel download" -->
 <!-- Sheet JS -->

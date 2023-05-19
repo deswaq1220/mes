@@ -19,9 +19,15 @@ public class QShipment extends EntityPathBase<Shipment> {
 
     public static final QShipment shipment = new QShipment("shipment");
 
+    public final StringPath company = createString("company");
+
     public final StringPath companyName = createString("companyName");
 
+    public final StringPath endDate = createString("endDate");
+
     public final StringPath finproductNo = createString("finproductNo");
+
+    public final StringPath item = createString("item");
 
     public final NumberPath<Long> productId = createNumber("productId", Long.class);
 
@@ -32,6 +38,8 @@ public class QShipment extends EntityPathBase<Shipment> {
     public final NumberPath<Integer> shipmentQuantity = createNumber("shipmentQuantity", Integer.class);
 
     public final StringPath shipmentStatus = createString("shipmentStatus");
+
+    public final StringPath startDate = createString("startDate");
 
     public QShipment(String variable) {
         super(Shipment.class, forVariable(variable));

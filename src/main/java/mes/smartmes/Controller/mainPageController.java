@@ -39,10 +39,6 @@ public class mainPageController {
         return "order";
     }
 
-//    @GetMapping("/shipment")
-//    public String shipmentPage(){
-//        return "shipment";
-//    }
 
     @GetMapping("/management")
     public String managementPage(){
@@ -89,7 +85,7 @@ public class mainPageController {
     }
 
     @GetMapping("/workorder")
-    public String workorderPage(){
+    public String work(){
         return "workorder";
     }
 

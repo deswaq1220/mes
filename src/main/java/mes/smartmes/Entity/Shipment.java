@@ -2,6 +2,7 @@ package mes.smartmes.Entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Setter
 @Getter
+@ToString
 @Table(name = "shipment")
 public class Shipment {
 
@@ -40,8 +42,23 @@ public class Shipment {
 
 
 
+    @Column(name = "testcompany")
+    private String company; // 회사명
+    @Column(name ="start_date")
+    private String startDate; // 시작일자
+    @Column(name ="end_date")
+    private String endDate; // 마감일자
+    @Column(name = "item") // 품목
+    private String item;
 
-   // 생성자, 게터 및 세터 생략
+
+
+
+
+
+
+
+    // 생성자, 게터 및 세터 생략
     
     
     

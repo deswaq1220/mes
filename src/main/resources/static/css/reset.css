@@ -79,3 +79,16 @@ select{
   font-family: 'Pretendard-Regular';
 }
 
+#orderList h1{
+  display: inline-block;
+}
+
+.allSelect{
+  margin: 20px 10px 4px 0;
+  cursor: pointer;
+  float: right;
+}
+.allSelect:hover{
+  color: red;
+}
+
