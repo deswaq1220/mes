@@ -16,8 +16,6 @@ public interface PorderRepository extends JpaRepository<Porder, String> {
     @Query(value = "SELECT MAX(RIGHT(p.porder_no,4)) FROM porder p WHERE (select date_format(porder_date, '%Y%m%d')) = (Select date_format(sysdate(), '%Y%m%d'))",nativeQuery = true)
     String findByPorderNo();
 
-
-
     //발주 내역 리스트
     List<Porder> findAll();
 

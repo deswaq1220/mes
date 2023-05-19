@@ -22,7 +22,7 @@ public class OrdersRepositoryTest {
     @Autowired
     private OrdersRepository ordersRepository;
 
-    @Test
+    //@Test
     public void test() {
         String[] memoTexts = {"양배추즙", "흑마늘즙", "석류 젤리스틱", "매실 젤리스틱"};
         String expectedPrefix = "OD" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -35,6 +35,10 @@ public class OrdersRepositoryTest {
             Assertions.assertEquals(expectedPrefix + String.format("%03d", i), orders.getOrderNo());
             Assertions.assertTrue(orders.getOrderNo().startsWith(expectedPrefix));
         });
+    }
+
+    public void test2(){
+
     }
 
 

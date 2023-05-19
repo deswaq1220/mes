@@ -42,7 +42,7 @@ public class PorderController {
         }
         System.out.println("=========================");
 
-        String porderNo = dayNo + String.format("%04d", porderIntNo);
+        String porderNo = dayNo + String.format("%04d", Integer.parseInt(service.selectPorderNo()));
         System.out.println(porderIntNo);
         System.out.println(porderNo);
 

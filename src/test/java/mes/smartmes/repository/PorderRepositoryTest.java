@@ -27,7 +27,7 @@ public class PorderRepositoryTest {
         Porder porder = Porder.builder()
                 .porderNo(dayNo + Integer.toString(porderIntNo))
                 .porderDate(LocalDateTime.now())
-                .ingredientsId("12345")
+                .ingredientId("12345")
                 .porderQuantity(5)
                 .supplierId("55555")
                 .emergency_yn('N')
