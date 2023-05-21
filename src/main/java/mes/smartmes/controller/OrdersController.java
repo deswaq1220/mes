@@ -40,9 +40,17 @@ public class OrdersController {
     }
 
 
+    // 수주 화면에 수주목록 띄우기
     @GetMapping("/order")
-    public String save() {
-        //수주 번호 생성
+    public String save(Model model) {
+        List<Orders>  orderList = ordersRepository.findAll();
+
+        // order에 수주 상세 표시
+        model.addAttribute("orderList", orderList);
+
+
+
+       /* //수주 번호 생성
         String dayNo = "OD" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         int orderIntNo;
 
@@ -59,11 +67,21 @@ public class OrdersController {
         //pdto.setPorderNo(dayNo + String.format("%04d", porderIntNo));
 
         String orderNo = dayNo + String.format("%04d", orderIntNo);
-        System.out.println(orderNo);
+        System.out.println(orderNo);*/
         return "order";
     }
 
-    //수주 등록 
+    //삭제
+    @GetMapping("/deleteOrder/{orderNo}")
+    public String  deleteOrder(@PathVariable String orderNo) {
+        ordersService.deleteByOrderNo(orderNo);
+
+        return "redirect:/mes/order";
+    }
+
+
+
+    //수주 등록 후 오더페이지로
     @PostMapping("/addOrder")
     public String saveOder(Orders orders, Model model){
         orders.setOrderDate(LocalDateTime.now());
@@ -86,9 +104,9 @@ public class OrdersController {
         }
         ordersRepository.save(orders);
         System.out.println(orders);
-        ordersService.selectProcessTime();
+        ordersService.selectProcessTime("p001");
 
-        return  "order";
+        return  "redirect:/mes/order";
     }
 
     // 조회
@@ -104,13 +122,7 @@ public class OrdersController {
     }
 
 
-    //삭제
-    @GetMapping("/deleteOrder/{orderNo}")
-    public String  deleteOrder(@PathVariable String orderNo) {
-        ordersService.deleteByOrderNo(orderNo);
 
-        return "redirect:/mes/orderList";
-    }
 
     //주문 수정 페이지
     @GetMapping("/orderUpdate/{orderNo}")

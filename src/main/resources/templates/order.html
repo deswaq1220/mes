@@ -28,7 +28,9 @@
           </svg>
 
         </button>
+        <form action="/mes/orderList" method="get">
         <button class="check" type="button">조회</button>
+        </form>
         <button class="new" type="button">신규</button>
         <button class="retouch" type="button">수정</button>
       </div>
@@ -360,20 +362,34 @@
         <tr>
           <td></td>
           <td>진행상태</td>
-          <td>품목코드</td>
           <td>품목명</td>
-          <td>규격</td>
           <td>납품예정일</td>
-          <td>기준단위</td>
           <td>수량</td>
           <td>단가</td>
-          <td>공급가</td>
-          <td>부가세</td>
-          <td>합계</td>
+          <td>삭제</td>
         </tr>
         </thead>
         <tbody>
-        <tr onclick="changeColor(this)">
+        <!-- 반복문을 사용하여 조회된 데이터를 동적으로 테이블에 추가 -->
+        <!-- Thymeleaf 문법을 활용하여 모델 데이터를 가져옴 -->
+        <tr th:each="order, rowStat : ${orderList}" onclick="changeColor(this)">
+          <td th:text="${rowStat.index + 1}"></td>
+          <td th:text="${order.orderStatus}"></td>
+          <td th:text="${order.orderNo}"></td>
+          <td th:text="${order.deliveryDate}"></td>
+          <td th:text="${order.orderQuantity}"></td>
+          <td th:text="${order.orderPrice}"></td>
+          <td>
+            <form th:action="@{/mes/deleteOrder/{orderNo}(orderNo=${order.orderNo})}" method="get">
+              <button type="submit">삭제</button>
+            </form>
+          </td>
+        </tr>
+
+
+
+
+       <!-- <tr onclick="changeColor(this)">
           <td>1</td>
           <td style="color:rgb(184, 0, 0)">미결</td>
           <td>SMFT0002</td>
@@ -400,24 +416,8 @@
           <td>0</td>
           <td>0</td>
           <td>0</td>
-        </tr>
+        </tr>-->
         </tbody>
-        <tfoot>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>합계</td>
-          <td></td>
-          <td></td>
-          <td>100</td>
-          <td>0</td>
-          <td>0</td>
-          <td>0</td>
-          <td>0</td>
-        </tr>
-        </tfoot>
       </table>
         </div>
       <button id="fileSave">엑셀저장</button>

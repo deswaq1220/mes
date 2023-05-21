@@ -46,10 +46,8 @@ public class OrdersService {
 
 
 
-    public long selectProcessTime(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("공정번호 입력 p001 ~ p004");
-        String productId = sc.nextLine();
+    public long selectProcessTime(String productId){
+
         double totalTime =0;
         double workLeadTime =0; // 공정별 리드타임
         double workProcessTime = 0; // 공정별 소요 시간
