@@ -33,7 +33,7 @@ public class ProdPlanService {
     public ProdPlanService(OrdersRepository ordersRepository, IngredientStockRepository ingredientStockRepository,
                            PorderRepository porderRepository, ProductionPlanRepository productionPlanRepository,
                            FinproductRepository finproductRepository, IngredientsRepository ingredientsRepository,
-                           ShipmentRepository shipmentRepository, ProductRepository productRepository) {
+                           ShipmentRepository shipmentRepository, ProductRepository productRepository, ProdPlanRepository prodPlanRepository) {
         this.ordersRepository = ordersRepository;
         this.ingredientStockRepository = ingredientStockRepository;
         this.porderRepository = porderRepository;
@@ -42,6 +42,7 @@ public class ProdPlanService {
         this.ingredientsRepository = ingredientsRepository;
         this.shipmentRepository = shipmentRepository;
         this.productRepository = productRepository;
+        this.prodPlanRepository = prodPlanRepository;
     }
 
     @Autowired
@@ -59,7 +60,7 @@ public class ProdPlanService {
         System.out.println("제품id : " + productId);
 
         Finproduct finproduct = finproductRepository.findByProductId(productId);
-        int haveFinquantity = finproduct.getFinProduct_quantity();
+        int haveFinquantity = finproduct.getFinProductQuantity();
         int productQuantity = orderQuantity - haveFinquantity;
         System.out.println("완재품 재고량(box) :" + haveFinquantity);
         System.out.println("생산해야할 제품(box)양 : " + productQuantity);
@@ -71,7 +72,7 @@ public class ProdPlanService {
             //완재품 재고량 빼기(수주량 100- 현재 완제품량 50)
             if(haveFinquantity > 0) {
                 System.out.println("완재품빼기 왔어");
-                finproductRepository.decreaseStockQuantity(finproduct.getProduct_id(), order.getOrderQuantity());
+                finproductRepository.decreaseStockQuantity(finproduct.getProductId(), order.getOrderQuantity());
                 Shipment shipment = new Shipment();
                 Date planDate = Calendar.getInstance().getTime();
                 //shipment.setShipmentDate(planDate);
@@ -92,9 +93,9 @@ public class ProdPlanService {
 
                 if(productQuantity > 0){
                     System.out.println("완재품이 0보다 작을때 0으로 set하기 왔어");
-                    finproduct.setFinProduct_quantity(0);
+                    finproduct.setFinProductQuantity(0);
                     finproductRepository.save(finproduct); // 완재품 재고량 저장
-                    System.out.println(finproduct.getFinProduct_quantity());
+                    System.out.println(finproduct.getFinProductQuantity());
 
                 }
             }
@@ -1322,7 +1323,7 @@ public class ProdPlanService {
             //수주량과 완제품량을 비교해서 완제품량이 충분할 경우 바로 출고 부분
             System.out.println("In-2");
             //완재품 재고량 빼기
-            finproductRepository.decreaseStockQuantity(finproduct.getProduct_id(), order.getOrderQuantity());
+            finproductRepository.decreaseStockQuantity(finproduct.getProductId(), order.getOrderQuantity());
             ordersRepository.setOrderStatus(orderNo,"C");
             Shipment shipment = new Shipment();
             Date planDate = Calendar.getInstance().getTime();
@@ -1452,6 +1453,7 @@ public class ProdPlanService {
     }
 
     //현화
+
     public List<ProductionPlan> selectList(){
         return prodPlanRepository.findAll();
     }

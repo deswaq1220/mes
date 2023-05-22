@@ -27,9 +27,20 @@ public class Porder {      // 발주 테이블
     private LocalDateTime porderDate;               // 발주 날짜
 
 
-    @Column(length = 10)
-    @ColumnDefault("입고대기")
+//    @Column(length = 20, nullable= false)
+//    @ColumnDefault("입고대기")
+
+    // 입고대기 넣기
+    @PrePersist
+    public void prePersist() {
+        if (porderStatus == null) {
+            porderStatus = "입고대기";
+        }
+    }
+
+    @Column(length = 20, nullable = false)
     private String porderStatus;                      // 발주 주문 상태
+
 
     @Column(length = 20)
     private String ingredientName;                   // 재료 이름
@@ -39,7 +50,7 @@ public class Porder {      // 발주 테이블
     @Column(length = 20)
     private String supplierId;                      // 공급 업체 id
 
-    @ColumnDefault("N")
+    @Column(columnDefinition = "varchar(1) default 'N'" , nullable = false)
     private  String emergencyYn;                     // 긴급 요청 여부
 
 
