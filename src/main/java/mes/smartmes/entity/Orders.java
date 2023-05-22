@@ -15,11 +15,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-@Getter @Setter @ToString
-@Entity @Builder
+@Entity
 @Table(name = "orders")
-@NoArgsConstructor
+@ToString
+@Getter
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
+@Setter
 public class Orders {
 
 
@@ -43,7 +46,8 @@ public class Orders {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime deliveryDate;              // 납품일자
 
-    private char orderStatus;            // 주문 상태 A = 주문접수 , B =  수주확정, C = 생산계획 완료
+    @Column(length = 1)
+    private String orderStatus;            // 주문 상태 A = 주문접수 , B =  수주확정, C = 생산계획 완료
 
 
 

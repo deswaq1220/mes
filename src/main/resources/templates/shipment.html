@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>출하관리 </title>
   <!-- css -->
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/nav.css">
-  <link rel="stylesheet" href="css/shipment.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/shipment.css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 </head>
@@ -26,7 +26,7 @@
             </svg>
             
           </button>
-        <button class="check">조회</button>
+        <button class="check" type="submit">조회</button>
         </div>
       </div>
 
@@ -206,29 +206,15 @@
               <td>0</td>
               <td>0</td>
             </tr>
-            <tr onclick="changeColor(this)">
-              <td th:each="shipment : ${shipmentList}"></td>
+            <tr th:each="shipment : ${shipmentList}" onclick="changeColor(this)">
               <td th:text="${shipment.shipmentNo}"></td>
-              <td th:text="${shipment.finproductNo}"></td>
-              <td th:text="${shipment.companyName}"></td>
-              <td th:text="${shipment.shipmentDate}"></td>
-              <td th:text="${shipment.productId}"></td>
-              <td th:text="${shipment.shipmentQuantity}"></td>
-              <td th:text="${shipment.shipmentStatus}"></td>
-
-            </tr>
-
-
-
-            <tr th:each="shipment : ${shipmentList}">
-              <td th:text="${shipment.shipmentNo}"></td>
-              <td th:text="${shipment.productId}"></td>
               <td th:text="${shipment.companyName}"></td>
               <td th:text="${shipment.shipmentDate}"></td>
               <td th:text="${shipment.productId}"></td>
               <td th:text="${shipment.shipmentQuantity}"></td>
               <td th:text="${shipment.shipmentStatus}"></td>
             </tr>
+
           </tbody>
           <tfoot>
             <tr>

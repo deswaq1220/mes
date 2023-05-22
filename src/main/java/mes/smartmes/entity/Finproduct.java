@@ -6,27 +6,29 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ingredients")
-public class Ingredients {
+@ToString
+@Table(name = "finproduct")
+public class Finproduct {
 
     @Id
-    @Column(nullable = false)
-    private int ingredientNo;
+    @Column(length = 20, nullable = false)
+    private String finProduct_no;
 
     @Column(length = 20, nullable = false)
-    private String ingredientId;
+    private String product_id;
 
     @Column(nullable = false)
-    private String ingredientName;
+    private int finProduct_quantity;
 
     @Column(nullable = false)
-    private String productId;
+    private Date product_date;
+
 }

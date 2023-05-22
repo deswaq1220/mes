@@ -36,24 +36,12 @@ public class ShipmentController {
 
     //출하 등록
     @GetMapping("/shipment")
-    public String save(){
-        String dayNo = "SD" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        int shipmentIntNo;
+    public String save(Model model){
+        List<Shipment> shipmentList =  shipmentRepository.findAll();
 
-        if (shipmentService.selectShipmentNo() == null) {
-            shipmentIntNo = 1;
-        } else {
-            shipmentIntNo = Integer.parseInt(shipmentService.selectShipmentNo()) + 1;
-        }
+        model.addAttribute("shipmentList" , shipmentList);
 
 
-        System.out.println("=========================");
-        System.out.println((shipmentIntNo));
-        //System.out.println(dayNo + String.format("%04d", porderIntNo));
-        //pdto.setPorderNo(dayNo + String.format("%04d", porderIntNo));
-
-        String orderNo = dayNo + String.format("%04d", shipmentIntNo);
-        System.out.println(orderNo);
         return "shipment";
 
     }
@@ -83,20 +71,22 @@ public class ShipmentController {
         shipmentRepository.save(shipment);
         System.out.println(shipment);
 
-        return  "shipment";
+        return  "redirect:/shipment/shipment";
     }
 
 
     // 조회
-    @RequestMapping("/shipmentList")
+    @GetMapping("/shipmentList")
     public String shipmentList(Model model){
 
         List<Shipment> shipmentList = shipmentRepository.findAll();
 
         // orderList 리스트 객체를 orderList 라는 이름으로 뷰페이지에서 사용 가능하게 세팅
         model.addAttribute("shipmentList", shipmentList);
+        System.out.println("쉽먼트 : " + shipmentList.getClass());
 
-        return "shipment";
+
+        return "redirect:/shipment/shipment";
     }
 
 

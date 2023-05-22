@@ -87,7 +87,7 @@ public class OrdersController {
         orders.setOrderDate(LocalDateTime.now());
         String dayNo = "OD" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         int orderIntNo=0;
-        
+
         // 값이 없을 시 값 시작 값 생성
         if (ordersService.selectOrderNo() == null) {
             orderIntNo = 1;
@@ -104,7 +104,17 @@ public class OrdersController {
         }
         ordersRepository.save(orders);
         System.out.println(orders);
-        ordersService.selectProcessTime("p001");
+//        ordersService.selectProcessTime();
+
+
+
+        ordersService.processSetting("p001");
+        ordersService.selectProcessOneToSix("p001");
+        ordersService.selectProcessSvenToEight("p001");
+        ordersService.selectProcessNineToTen("p001");
+
+
+
 
         return  "redirect:/mes/order";
     }
@@ -133,9 +143,10 @@ public class OrdersController {
         Orders orders = ordersRepository.findById(orderNo).get();
         System.out.println(orders);
 
-        model.addAttribute("orders", orders);
+        // 뷰단에 넘겨줄 때 이름 체크
+        model.addAttribute("orderList", orders);
 
-        return "orderUpdate";
+        return "order";
     }
     
     //수정 후 저장
@@ -145,6 +156,8 @@ public class OrdersController {
         ordersRepository.save(orders);
         return "redirect:/mes/orderList";
     }
+
+
 
 
 
