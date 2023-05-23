@@ -1,18 +1,15 @@
-package mes.smartmes.Service;
+package mes.smartmes.service;
 
 import com.querydsl.core.BooleanBuilder;
-import mes.smartmes.Entity.QShipment;
-import mes.smartmes.Entity.Shipment;
-import mes.smartmes.Entity.shipmenttest;
-import mes.smartmes.dto.shipmentDto;
+import mes.smartmes.entity.QShipment;
+import mes.smartmes.entity.Shipment;
 import mes.smartmes.repository.ShipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.beans.Transient;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -29,37 +26,22 @@ public class ShipmentService {
     }
 
 
-
-//    public List<Shipment> performSearch(String company, String startDate, String endDate, String finproductNo, String product, String partner) {
-//        List<Shipment> searchResults = shipmentRepository.searchByConditions(company, startDate, endDate, finproductNo, product, partner);
-//
-//        return searchResults;
-//    }
+    // 다중검색
 
     @Transactional
-    public List<Shipment> searchShipment(String company, String finproductNo, LocalDate startDate, LocalDate endDate, String companyName, String item) {
+    public List<Shipment> searchShipment(String shipmentNo, LocalDate startDate, LocalDate endDate, String companyName) {
         QShipment qShipment = QShipment.shipment;
         BooleanBuilder builder = new BooleanBuilder();
 
-        if (company != null && company != "") {
-            builder.and(qShipment.company.contains(company)); // 회사명
+
+        if (shipmentNo != null && shipmentNo != "") {
+            builder.and(qShipment.shipmentNo.contains(shipmentNo)); //출하번호
         }
 
 
-        if (finproductNo != null && finproductNo != "") {
-            builder.and(qShipment.finproductNo.contains(finproductNo)); //출하번호
-        }
-
-
-        if (companyName != null) {
+        if (companyName != null && companyName != "") {
             builder.and(qShipment.companyName.contains(companyName)); // 거래처
         }
-
-        if (item != null) {
-            builder.and(qShipment.item.contains(item)); // 거래처
-        }
-
-
 
         if (startDate != null && endDate != null) {
             builder.and(qShipment.shipmentDate.between(startDate, endDate)); // 날짜
@@ -69,6 +51,7 @@ public class ShipmentService {
 
 //        return (List<Shipment>) shipmentRepository.findAll(builder.getValue());
     }
+
 
 
 

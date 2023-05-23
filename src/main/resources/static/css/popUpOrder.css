@@ -10,7 +10,7 @@
 
 textarea{
   display: block;
-  width: 1800px;
+  width: 1200px;
   height: 55px;
   resize: none;
   border: 1px solid #9F9D9D;
@@ -132,14 +132,17 @@ textarea::-webkit-scrollbar-thumb{
   background-color: rgba(0, 0, 0, 0.5);
   padding: 100px;
   box-sizing: border-box;
-  display: none;
   z-index: 2;
+  display: none;
 }
 
+
+
 #registrationWrap{
-  width: 100%;
+  width: 1500px;
   height: 900px;
   background-color: white;
+  margin: 5% auto;
 }
 
 #wrapper{
@@ -153,6 +156,7 @@ textarea::-webkit-scrollbar-thumb{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 4px;
 }
 .popupTopArea h1{
   font-size: 40px;
@@ -297,7 +301,7 @@ input[type="checkbox"]:checked::before {
 /* 수주등록 테이블 끝 */
 
 /* 버튼 */
-.save, .close{
+.save, .close, .confirmsave{
   width: 88px;
   height: 43px;
   background-color: #022454;

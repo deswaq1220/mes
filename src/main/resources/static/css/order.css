@@ -392,7 +392,19 @@ td{
   font-size: 16px;
   font-weight: 600;
   float: right;
+  margin-left: 4px;
 
+}
+
+#confirmation{
+  width: 88px;
+  height: 43px;
+  background-color: #022454;
+  text-align: center;
+  line-height: 43px;
+  font-size: 16px;
+  font-weight: 600;
+  float: right;
 }
 
 

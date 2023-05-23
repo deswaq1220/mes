@@ -1,4 +1,4 @@
-package mes.smartmes.Entity;
+package mes.smartmes.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 

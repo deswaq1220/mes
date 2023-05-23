@@ -1,4 +1,4 @@
-package mes.smartmes.Service;
+package mes.smartmes.service;
 
 import org.springframework.stereotype.Service;
 
