@@ -65,9 +65,6 @@ public class OrdersService {
 
     public String processSetting(String productId) {
 
-        System.out.println("공정번호 입력 p001 ~ p004");
-
-
 
         // 라우팅에 productId를 받아오고
         Routing rout = rr.findByProductId(productId);

@@ -24,7 +24,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @AllArgsConstructor
-@RequestMapping("/mes")
+@RequestMapping("/smartMes")
 public class OrdersController {
 
 

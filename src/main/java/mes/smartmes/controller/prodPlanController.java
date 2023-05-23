@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import mes.smartmes.entity.Product;
 import mes.smartmes.entity.ProductionPlan;
 
+import mes.smartmes.service.PorderService;
 import mes.smartmes.service.ProdPlanService;
 import mes.smartmes.service.ProductService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,10 +23,12 @@ import java.util.List;
 @Controller
 @Transactional
 @RequiredArgsConstructor
+@RequestMapping("mes")
 public class prodPlanController {
 
     private final ProdPlanService prodplanservice;
     private final ProductService productservice;
+    private final PorderService porderService;
 
     @GetMapping("/prodPlan")
     public String selectList(Model model) {
@@ -34,6 +37,10 @@ public class prodPlanController {
         List<Product> productList = productservice.selectList();
         model.addAttribute("prodPlans", prodList);
         model.addAttribute("products", productList);
+
+
+
+
         return "Production";
     }
 

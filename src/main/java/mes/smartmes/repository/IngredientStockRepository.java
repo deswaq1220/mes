@@ -74,4 +74,22 @@ public interface IngredientStockRepository extends JpaRepository<IngredientStock
 
 
     Optional<IngredientStock> findByIngredientId(String ingredientId);
+
+    //스탁넘버 생성
+    //발주번호 생성
+    @Query(value = "SELECT MAX(RIGHT(i.stock_no,4)) FROM ingredient_stock AS i WHERE (select date_format(input_date, '%Y%m%d')) = (Select date_format(sysdate(), '%Y%m%d'))",nativeQuery = true)
+    String findByStockNo();
+
+
+    @Query(value = "SELECT MAX(RIGHT(o.order_no,4)) FROM orders AS o WHERE (select date_format(order_date, '%Y%m%d')) = (Select date_format(sysdate(), '%Y%m%d'))",nativeQuery = true)
+    String findByOrderNo();
+
+
+    // 재고 더하기
+    @Transactional
+    @Modifying
+    @Query("UPDATE IngredientStock ig SET ig.quantity = ig.quantity + :quantity WHERE ig.productId = :productId")
+    void increaseStockQuantity(String productId, int quantity);
+
+
 }

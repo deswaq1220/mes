@@ -2,11 +2,19 @@ package mes.smartmes.service;
 
 import lombok.RequiredArgsConstructor;
 import mes.smartmes.dto.Weekday;
+import mes.smartmes.entity.IngredientInput;
+import mes.smartmes.entity.IngredientStock;
+import mes.smartmes.entity.Ingredients;
 import mes.smartmes.entity.Porder;
+import mes.smartmes.repository.IngredientInputRepository;
+import mes.smartmes.repository.IngredientStockRepository;
 import mes.smartmes.repository.PorderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,12 +25,9 @@ public class PorderService {
 
     private final PorderRepository porderRepository;
 
-    public String selectPorderNo() {
 
-        String porderIntNo = porderRepository.findByPorderNo();
 
-        return porderIntNo;
-    }
+    // 은영
 
     //발주 내역 리스트
     public List<Porder> selectPorderList() {
@@ -62,10 +67,16 @@ public class PorderService {
 
         // 입고 예정 시간
 
+
         // 재고 관리 시  입고 예정 시간 이후면 발주 한거에서 현재시간이 입고예정시간 보다 크거나 같으면 입고 대기에서 입고완료로 바뀌고
         // 자재 입고테이블로 인서트문 넣고?               // 입고테이블 입고 내역
         // 재고 관리에서 인서트??                        //  현재 재고
-        if (ingre.equals("양배추") || ingre.equals("흑마늘") || ingre.equals("파우치") || ingre.equals("스틱파우치") || ingre.equals("포장Box")) {
+
+
+
+
+
+        if (ingre.equals("I001") || ingre.equals("I002") || ingre.equals("I006") || ingre.equals("I007") || ingre.equals("I008")) {
             if (emerYn.equals("N")) {
                 if (inputDay + 2 == Weekday.MONDAY || inputDay + 2 == Weekday.WEDNESDAY || inputDay + 2 == Weekday.FRIDAY) {
                     inputIngreDate = setTime(inputDate, 2, 10);
@@ -79,7 +90,7 @@ public class PorderService {
             }
 
 
-        } else if (ingre.equals("석류농축액") || ingre.equals("매실농축액") || ingre.equals("콜라겐")) {
+        } else if (ingre.equals("I003") || ingre.equals("I004") || ingre.equals("I005")) {
             if (emerYn.equals("N")) {
                 if (inputDay + 3 == Weekday.MONDAY || inputDay + 3 == Weekday.WEDNESDAY || inputDay + 3 == Weekday.FRIDAY) {
                     inputIngreDate = setTime(inputDate, 2, 10);
@@ -94,7 +105,16 @@ public class PorderService {
         }
 
 
+        System.out.println("ingre = " + ingre);
+        System.out.println(inputIngreDate);
         return inputIngreDate;
     }
+
+
+    //희람
+
+
+
+
 }
 

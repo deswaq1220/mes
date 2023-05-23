@@ -6,10 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface PorderRepository extends JpaRepository<Porder, String> {
 
     Porder save(Porder porder);
+
+
+    Optional<Porder> findById(String id);
 
     //발주번호 생성
     @Query(value = "SELECT MAX(RIGHT(p.porder_no,4)) FROM porder p WHERE (select date_format(porder_date, '%Y%m%d')) = (Select date_format(sysdate(), '%Y%m%d'))",nativeQuery = true)
