@@ -8,7 +8,7 @@ import java.util.*;
 @Service
 public class CalendarService {
 
-    public List<Map<String, Object>> getEventList(){
+    public static List<Map<String, Object>> getEventList(){
         Map<String, Object> event = new HashMap<String, Object>();
         List<Map<String, Object>> eventList = new ArrayList<Map<String, Object>>();
         event.put("start", LocalDate.now());

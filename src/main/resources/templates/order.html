@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>수주등록 </title>
+  <title>수주등록,관리 </title>
   <!-- css -->
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="/css/nav.css">
@@ -22,7 +22,7 @@
   <aside>
     <form class="orderForm">
     <div class="topArea">
-      <h1> 수주등록</h1>
+      <h1> 수주등록,관리</h1>
       <div id="btnWrap">
         <button class="return">
           <svg xmlns="http://www.w3.org/2000/svg" width="17.303" height="16.221" viewBox="0 0 17.303 16.221">
@@ -158,7 +158,7 @@
         <h1> 수주등록</h1>
         <div id="popUpBtnWrap">
           <button class="save" onclick="confirmSave()" type="button">저장</button>
-          <button class="close" onclick="closePopup()" type="button">닫기</button>
+          <button class="close"  type="button">닫기</button>
         </div>
       </div>
 
@@ -252,7 +252,7 @@
           <h1> 수주수정</h1>
           <div id="popUpBtnWrap2">
             <button class="save" onclick="confirmSave()" type="button">저장</button>
-            <button class="close" onclick="closePopup()" type="button">닫기</button>
+            <button class="close" type="button">닫기</button>
           </div>
         </div>
 
@@ -367,8 +367,8 @@
 
         // 저장 동작 수행하는 코드 작성
 
-        showSuccessMessage("저장되었습니다."); // 성공 메시지 표시
-        closePopup(); // 팝업 창 닫기
+        // showSuccessMessage("저장되었습니다."); // 성공 메시지 표시
+        // closePopup(); // 팝업 창 닫기
       }
       function closeModal() {
         var modal = document.getElementById("confirmModal");
@@ -387,11 +387,14 @@
         closeModal(); // 모달 창 닫기
       }
 
+      function cancelSave() {
+        closeModal(); // 모달 창 닫기
+
+        var popupWrap = document.getElementById("popUP_wrap");
+        popupWrap.style.display = "block"; // 기존 팝업 보이도록 설정
+      }
     </script>
 
-
-
-    <!-- "excel download" -->
     <!-- Sheet JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
     <!--FileSaver savaAs 이용 -->

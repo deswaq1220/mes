@@ -17,6 +17,3 @@ public interface ProdPlanRepository extends JpaRepository<ProductionPlan, String
     List<ProductionPlan> findSearch(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("status") String status, @Param("items") String items);
 
 }
-
-
-

@@ -46,31 +46,37 @@ function resetRowColors(table) {
 }
 
 function exportToExcel() {
-    // 선택한 행 데이터 추출
-    const selectedRows = getSelectedRows();
-
-    // 선택한 행 데이터로 엑셀 워크시트 생성
-    const worksheet = createWorksheet(selectedRows);
-
-    // 워크시트를 워크북에 추가
+    const tables = document.querySelectorAll('.orderData'); // 모든 테이블 요소 선택
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Shipment Data');
+
+    tables.forEach((table, index) => {
+        // 선택한 행 데이터 추출
+        const selectedRows = getSelectedRows(table);
+
+        // 선택한 행 데이터로 엑셀 워크시트 생성
+        const worksheet = createWorksheet(selectedRows, table);
+
+        // 워크시트를 워크북에 추가
+        const sheetName = `Shipment Data ${index + 1}`;
+        XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
+    });
 
     // 엑셀 파일 생성 및 다운로드
     const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     saveAsExcelFile(excelBuffer, 'shipment_data.xlsx');
 }
 
-function getSelectedRows() {
-    const table = document.querySelector('.orderData');
+function getSelectedRows(table) {
     const checkboxes = table.querySelectorAll('input[type="checkbox"]:checked');
     const selectedRows = Array.from(checkboxes).map(checkbox => checkbox.closest('tr'));
     return selectedRows;
 }
 
-function createWorksheet(rows) {
+function createWorksheet(rows, table) {
     const worksheet = XLSX.utils.aoa_to_sheet([]);
-    const header = ['출하번호', '출하일자', '상품번호']; // 헤더 데이터 배열
+    const headerRow = table.querySelector('thead tr');
+    const headerCells = headerRow.querySelectorAll('td');
+    const header = Array.from(headerCells).map(cell => cell.innerText);
     XLSX.utils.sheet_add_aoa(worksheet, [header], { origin: 'A1' });
 
     rows.forEach((row, index) => {
@@ -89,6 +95,8 @@ function saveAsExcelFile(buffer, fileName) {
     const data = new Blob([buffer], { type: 'application/octet-stream' });
     saveAs(data, fileName);
 }
+
+
 
 
 

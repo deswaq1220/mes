@@ -53,4 +53,6 @@ public class Porder {      // 발주 테이블
     private  String emergencyYn;                     // 긴급 요청 여부
 
 
+
+
 }

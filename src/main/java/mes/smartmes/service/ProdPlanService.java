@@ -33,7 +33,8 @@ public class ProdPlanService {
     public ProdPlanService(OrdersRepository ordersRepository, IngredientStockRepository ingredientStockRepository,
                            PorderRepository porderRepository, ProductionPlanRepository productionPlanRepository,
                            FinproductRepository finproductRepository, IngredientsRepository ingredientsRepository,
-                           ShipmentRepository shipmentRepository, ProductRepository productRepository) {
+                           ShipmentRepository shipmentRepository, ProductRepository productRepository,
+                           ProdPlanRepository prodPlanRepository) {
         this.ordersRepository = ordersRepository;
         this.ingredientStockRepository = ingredientStockRepository;
         this.porderRepository = porderRepository;
@@ -42,6 +43,7 @@ public class ProdPlanService {
         this.ingredientsRepository = ingredientsRepository;
         this.shipmentRepository = shipmentRepository;
         this.productRepository = productRepository;
+        this.prodPlanRepository = prodPlanRepository;
     }
 
     @Autowired

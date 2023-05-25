@@ -1,10 +1,15 @@
 package mes.smartmes.controller;
 
 import lombok.RequiredArgsConstructor;
+import mes.smartmes.entity.Product;
 import mes.smartmes.entity.ProductionPlan;
 
+import mes.smartmes.repository.ProdPlanRepository;
 import mes.smartmes.service.ProdPlanService;
 import mes.smartmes.service.ProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,21 +26,34 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 @RequestMapping("/mes")
-public class prodPlanController {
+public class ProdPlanController {
 
     private final ProdPlanService prodplanservice;
     private final ProductService productservice;
+    private final ProdPlanRepository prodplanrepository;
 
     @GetMapping("/prodPlan")
     public String selectList(Model model) {
-        model.addAttribute("prodPlans", prodplanservice.selectList());
-        model.addAttribute("products", productservice.selectList());
+
+        List<ProductionPlan> prodList = prodplanservice.selectList();
+        List<Product> productList = productservice.selectList();
+        model.addAttribute("prodPlans", prodList);
+        model.addAttribute("products", productList);
+
+
+        Pageable pageable = PageRequest.of(0,10);
+        Page<ProductionPlan> result = prodplanrepository.findAll(pageable);
+
+        System.out.println("===================");
+        System.out.println(result);
+        System.out.println("Total Pages:"+result.getTotalPages());
         return "Production";
     }
 
+
     @GetMapping("/search")
     public String searchForm() {
-        return "html/Production";
+        return "Production";
     }
 
     @PostMapping("/search")
@@ -51,4 +69,3 @@ public class prodPlanController {
         return "Production"; // 검색 결과를 표시하는 뷰로 반환
     }
 }
-

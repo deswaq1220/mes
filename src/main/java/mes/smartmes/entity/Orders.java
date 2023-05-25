@@ -3,10 +3,7 @@ package mes.smartmes.entity;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
@@ -43,6 +40,9 @@ public class Orders {
 
     @Column(length = 1)
     private String orderStatus;            // 주문 상태 A = 주문접수 , B =  수주확정, C = 생산계획 완료
+
+    @OneToOne(mappedBy = "order")  // 출하관리 좀 가지고 올게경..
+    private Shipment shipment;
 
 
 

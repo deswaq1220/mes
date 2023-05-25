@@ -1,9 +1,9 @@
 <nav id="sidebar">
-    <button th:onclick="|window.location.href='@{/}'|">HOME</button>
+    <button th:onclick="|window.location.href='@{/mes/main}'|">HOME</button>
     <ul id="business">
         <span class="title">영업관리</span>
         <li><a th:href='@{/mes/order}'>수주등록</a></li>
-        <li><a th:href="@{/management}">수주관리</a></li>
+<!--        <li><a th:href="@{/management}">수주관리</a></li>-->
         <li><a th:href="@{/mes/shipment}">출하관리</a></li>
     </ul>
     <ul id="Purchase">
