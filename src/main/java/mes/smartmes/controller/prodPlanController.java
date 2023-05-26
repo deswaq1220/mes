@@ -1,7 +1,10 @@
 package mes.smartmes.controller;
 
 import lombok.RequiredArgsConstructor;
+import mes.smartmes.entity.Product;
 import mes.smartmes.entity.ProductionPlan;
+
+import mes.smartmes.service.PorderService;
 import mes.smartmes.service.ProdPlanService;
 import mes.smartmes.service.ProductService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,26 +16,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
 @Transactional
 @RequiredArgsConstructor
-public class ProdPlanController {
+
+
+@RequestMapping("mes")
+public class prodPlanController {
 
     private final ProdPlanService prodplanservice;
     private final ProductService productservice;
+    private final PorderService porderService;
 
     @GetMapping("/prodPlan")
     public String selectList(Model model) {
-        model.addAttribute("prodPlans", prodplanservice.selectList());
-        model.addAttribute("products", productservice.selectList());
+
+        List<ProductionPlan> prodList = prodplanservice.selectList();
+        List<Product> productList = productservice.selectList();
+        model.addAttribute("prodPlans", prodList);
+        model.addAttribute("products", productList);
+
+
+
+
         return "Production";
     }
 
     @GetMapping("/search")
     public String searchForm() {
-        return "html/Production";
+        return "/Production";
     }
 
     @PostMapping("/search")

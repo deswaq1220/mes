@@ -15,19 +15,21 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import javax.transaction.Transactional;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
+
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class IngredientService {
 
     @PersistenceContext
@@ -41,6 +43,7 @@ public class IngredientService {
     private IngredientInputRepository ingredientInputRepository;
     private IngredientStockRepository ingredientStockRepository;
 
+
     private PorderRepository porderRepository;
 
     @Autowired
@@ -53,6 +56,7 @@ public class IngredientService {
     // 발주 재료 입고  업데이트 확인
     @Transactional
     public void updatePorderStatusAndInsertIngredient(String porderNo) {
+
         List<Porder> porders = porderRepository.findAll();
 
         for(Porder porder : porders) {
@@ -111,32 +115,10 @@ public class IngredientService {
         porderRepository.flush();
 
     }
+       
 
 
 
-
-
-
-    // ingredientId 를 조회하여 IngredientStock의 ingredientId에 해당하는 모든 quantity를 더하는 메서드
-//    public Long getTotalQuantityByIngredientId(String ingredientId) {
-//
-//        // 조건에 따라  더한다
-//
-//        //  sql 문법을 jpa에 맞게  저장해서
-//        String jpql = "SELECT SUM(e.quantity) FROM IngredientStock e WHERE e.ingredientId = :ingredientId";
-//        // 여기다 넣고
-//        Query query = em.createQuery(jpql);
-//
-//
-//        // 쿼리에 값을 넣어  주고
-//        query.setParameter("ingredientId", ingredientId);
-//
-//        // 집계 함수는 단 하나의 값만 나온다. // 섬의 값을 가져 오기 위해서 써줌
-//        Long totalQuantity = (Long)query.getSingleResult();
-//
-//        System.out.println("이건 뭐라 찍히노 " + ingredientId + "   " + query + "   " + totalQuantity);
-//        return totalQuantity;
-//    }
 
 
     @Scheduled(cron = "*/30 * * * * ?") // 30초마다 실행
@@ -150,85 +132,24 @@ public class IngredientService {
             }
         }
 
-
-    }
-
-    //
-
-    // 주문 처리 후 상태를 "C"로 변경
-//                ordersRepository.setOrderStatus(orderNo,"C");
-//                ordersRepository.save(order);
-
-
-//                int orderQuantity = order.getOrder_quantity();
-//                String orderNo = order.getOrder_no();
-//                int needMaterials = (orderQuantity * 30) / 20;
-//
-//                ProductionPlan productionPlan = productionPlanRepository.findByOrderNo(orderNo);
-//                IngredientStock ig = new IngredientStock();
-//
-//                if (productionPlan == null || productionPlan.getProdPlan_quantity() != needMaterials) {
-//                    processOrder(orderNo);
-//                }else if(ig.getQuantity() < needMaterials){
-//                    System.out.println("=====================");
-//                    System.out.println("재고수량을 확인하세요!!!");
-//                    System.out.println("=====================");
-//
-//                }
-
-
-
-
-    // 모든 발주 동작
-   /* public void AllPorders() {
-        List<Porder> porders = porderRepository.findAll();
-        IngredientStock ingredientStock = new IngredientStock();
         ingredientStock.setIngredientId(ingredientInput.getIngredientId());
-        ingredientStock.setStockNo(ingredientStockRepository.findByStockNo());
 
-        // 하나씩 돌아가며
-        for (Porder porder : porders) {
-            //porderNo 겟
-            String porderNo = porder.getPorderNo();
-            if (porder.getPorderStatus().equals("입고대기")){
-                ingredientStock.setIngredientId(ingredientInput.getIngredientId());
-//            ingredientStockRepository.increaseStockQuantity();
-//            ingredientStock.setInputDate(ingredientInput.getInputDate());
-                ingredientStock.setProductDate(new Date(System.currentTimeMillis()));
+        ingredientStock.setProductDate(new Date(System.currentTimeMillis()));
 
-                ingredientStock.setQuantity(ingredientInput.getInputQuantity());
+        ingredientStock.setQuantity(ingredientInput.getInputQuantity());
 
-                ingredientStockRepository.save(ingredientStock);
-
-                // 발주 완료 및 재고 추가 메서드 동작
-                updatePorderStatusAndInsertIngredient(porderNo);
-            } else{
-                continue;
-            }
-        }
-    }*/
+        ingredientStockRepository.save(ingredientStock);
 
 
-
-    // 초기화 시점에 ingredientStockMapping 맵을 생성하고 정보 저장
-    @PostConstruct
-    public void initStockMapping() {
-        ingredientStockMapping = new HashMap<>();
-        ingredientStockMapping.put("I001", "S001");     // I001 양배추
-        ingredientStockMapping.put("I002", "S002");     // I002 흑마늘
-        ingredientStockMapping.put("I003", "S003");     // I003 석류농축액
-        ingredientStockMapping.put("I004", "S004");     // I004 매실농축액
-        ingredientStockMapping.put("I005", "S005");     // I005 콜라겐
-        ingredientStockMapping.put("I006", "S006");     // 파우치
-        ingredientStockMapping.put("I007", "S007");     // 스틱 파우치
-        ingredientStockMapping.put("I008", "S008");     // 포장 Box
-    }
-
-    // ingredientId에 대응하는 stockNo를 반환하는 메서드
-    private String getReturnStockNo(String ingredientId) {
-        return ingredientStockMapping.get(ingredientId);
+    
     }
 
 
 
+
+
+
+       
+
+    
 }

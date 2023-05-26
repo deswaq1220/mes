@@ -20,11 +20,13 @@
     <button onclick="location.href='main.html'"></button>
     <ul id="business">
       <span class="title">영업관리</span>
-<<<<<<< HEAD
+
       <li><a href="order.html">수주등록</a></li>
-=======
+
       <li><a href="/mes/order">수주등록</a></li>
->>>>>>> af67f0dd11369ed71728ae40e8168ab783c571f4
+
+      <li><a href="/mes/order">수주등록</a></li>
+
       <li><a href="Ordermanagement.html">수주관리</a></li>
       <li><a href="">출하관리</a></li>
     </ul>
@@ -37,11 +39,13 @@
     <ul id="Production">
       <span class="title">생산관리</span>
       <!-- <li></li> -->
-<<<<<<< HEAD
+
       <li><a href="">생산계획</a></li>
-=======
+
       <li><a href="/prodPlan">생산계획</a></li>
->>>>>>> af67f0dd11369ed71728ae40e8168ab783c571f4
+
+      <li><a href="/prodPlan">생산계획</a></li>
+
       <li><a href="">작업지시</a></li>
       <li><a href="">작업실적등록</a></li>
       <li><a href="">작업실적수정</a></li>
@@ -71,10 +75,7 @@
       </div>
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> af67f0dd11369ed71728ae40e8168ab783c571f4
       <div id="tableCheckWrap">
         <table id="tableCheck">
           <tr class="tablerow">
@@ -86,11 +87,9 @@
             <td class="inventory">진행상태</td>
             <td>
               <select class="drop" name="status">
-<<<<<<< HEAD
                 <option value="진행상태">진행상태</option>
-=======
                 <option value="">진행상태</option>
->>>>>>> af67f0dd11369ed71728ae40e8168ab783c571f4
+                <option value="">진행상태</option>
                 <option value="대기">대기</option>
                 <option value="발주입고대기중">발주입고대기중</option>
                 <option value="진행중">진행중</option>
@@ -102,13 +101,13 @@
                 <option value="select">품목</option>
                 <option value="흑마늘즙">흑마늘즙</option>
                 <option value="양배추즙">양배추즙</option>
-<<<<<<< HEAD
                 <option value="석류젤리">석류젤리</option>
                 <option value="매실젤리">매실젤리</option>
-=======
+
                 <option value="석류젤리스틱">석류젤리</option>
                 <option value="매실젤리스틱">매실젤리</option>
->>>>>>> af67f0dd11369ed71728ae40e8168ab783c571f4
+                <option value="석류젤리스틱">석류젤리</option>
+                <option value="매실젤리스틱">매실젤리</option>
               </select>
             </td>
           </tr>
@@ -125,15 +124,15 @@
           <tr>
             <td></td>
             <td></td>
-<<<<<<< HEAD
             <td onclick="clickNum()">생산계획번호</td>
             <td>생산계획항번</td>
             <td onclick="clickDate()">생산번호일자</td>
-=======
             <td onclick="productionNum()">생산계획번호</td>
             <td>생산계획항번</td>
             <td onclick="productionDate()">생산번호일자</td>
->>>>>>> af67f0dd11369ed71728ae40e8168ab783c571f4
+            <td onclick="productionNum()">생산계획번호</td>
+            <td>생산계획항번</td>
+            <td onclick="productionDate()">생산번호일자</td>
             <td>품목</td>
             <td>계획수량</td>
             <td>작업지시완료여부</td>
@@ -143,13 +142,12 @@
           </tr>
           </thead>
           <tbody>
-<<<<<<< HEAD
           <tr th:each="prodPlan, prodPlanIndex : ${prodPlans}" onclick="toggleCheckbox(this)">
             <td th:text="${prodPlanIndex.index + 1}"></td>
-=======
           <tr th:each="prodPlan, prodPlanIndex : ${prodPlans}" onclick="toggleCheckbox(this)" >
             <td th:text="${prodPlanIndex.index+1}"> </td>
->>>>>>> af67f0dd11369ed71728ae40e8168ab783c571f4
+          <tr th:each="prodPlan, prodPlanIndex : ${prodPlans}" onclick="toggleCheckbox(this)" >
+            <td th:text="${prodPlanIndex.index+1}"> </td>
             <td>
               <input type="checkbox" id="checkbox">
             </td>
@@ -162,11 +160,6 @@
             <td></td>
             <td></td>
             <td></td>
-<<<<<<< HEAD
-=======
-
-
->>>>>>> af67f0dd11369ed71728ae40e8168ab783c571f4
           </tr>
           </tbody>
           <tfoot>
@@ -187,10 +180,6 @@
           </tfoot>
         </table>
       </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> af67f0dd11369ed71728ae40e8168ab783c571f4
     </div>
 
 
@@ -224,9 +213,6 @@
 
       });
 
-
-<<<<<<< HEAD
-=======
       let ascendingOrder = true;      //정렬순서 true->오름차순 false->내림차순
       let clickCount = 0;
       function productionDate() {
@@ -314,7 +300,6 @@
         }
       }
 
->>>>>>> af67f0dd11369ed71728ae40e8168ab783c571f4
     </script>
 
 
