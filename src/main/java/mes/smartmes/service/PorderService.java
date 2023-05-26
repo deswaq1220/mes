@@ -18,9 +18,6 @@ import java.util.List;
 
 @Service
 @Transactional
-
-@RequiredArgsConstructor
-
 public class PorderService {
 
     private final PorderRepository porderRepository;
