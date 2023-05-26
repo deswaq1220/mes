@@ -26,28 +26,15 @@ public class PorderService {
     private final PorderRepository porderRepository;
 
 
-    public List<Porder> selectList(){
-        return porderRepository.findAll();
-    }
 
-    public PorderService(PorderRepository porderRepository) {
-        this.porderRepository = porderRepository;
-    }
-
-
-    public List<Porder> findSearch(java.util.Date startDate, java.util.Date endDate, String porderStatus, String supplierId) {
-        return porderRepository.findSearch(startDate, endDate, porderStatus, supplierId);
-
-    }
+    // 은영
 
     //발주 내역 리스트
     public List<Porder> selectPorderList() {
         return porderRepository.findAll();
     }
 
-
     //현재시간을 고정 시간으로 설정
-
     private LocalDateTime setTime(LocalDateTime currentTime, int day, int hour) {
         currentTime = currentTime.plusDays(day).withHour(hour).withMinute(0).withSecond(0);
         return currentTime;
@@ -153,13 +140,11 @@ public class PorderService {
 
         System.out.println("ingre = " + ingre);
         System.out.println(inputIngreDate);
-
         return inputIngreDate;
     }
 
 
-
-
+    //희람
 
 
 

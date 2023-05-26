@@ -27,11 +27,9 @@ public class Finproduct {
 
     @Column(nullable = false)
 
-
     private int finProductQuantity;
 
 //    @Column(nullable = false)
-
     private Date productDate;
 
 }

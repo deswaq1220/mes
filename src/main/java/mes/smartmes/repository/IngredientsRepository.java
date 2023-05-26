@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
 @Repository
 public interface IngredientsRepository extends JpaRepository<Ingredients, String> {
     @Query("SELECT i.ingredientName FROM Ingredients i WHERE i.productId = :productId")
@@ -58,7 +57,6 @@ public interface IngredientsRepository extends JpaRepository<Ingredients, String
 
 
     List<Ingredients> findAll();
-
 
 
 

@@ -1,6 +1,5 @@
 package mes.smartmes.dto;
 
-
 import mes.smartmes.entity.ProductionPlan;
 import mes.smartmes.repository.ProductionPlanRepository;
 import mes.smartmes.service.WorkOrderService;
@@ -87,7 +86,6 @@ public class Ratio {
         return (getOrderInput()/5) * 15;                    //250
     }
 }
-
 
 
 

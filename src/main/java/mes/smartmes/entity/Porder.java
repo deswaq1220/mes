@@ -6,7 +6,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @EntityListeners(value = {AuditingEntityListener.class})
@@ -28,10 +27,8 @@ public class Porder {      // 발주 테이블
     private LocalDateTime porderDate;               // 발주 날짜
 
 
-
 //    @Column(length = 20, nullable= false)
 //    @ColumnDefault("입고대기")
-
 
     // 입고대기 넣기
     @PrePersist
@@ -42,22 +39,13 @@ public class Porder {      // 발주 테이블
     }
 
     @Column(length = 20, nullable = false)
-    private String porderStatus;
-
-
-
-
-
-
-
-    // 발주 주문 상태
-
-
-//    @Column(length = 20)
-//    private String ingredientName;                   // 재료 이름
+    private String porderStatus;                      // 발주 주문 상태
 
     @Column(length = 20)
     private String ingredientId;                   // 재료 이름
+
+    @Column(length = 20)
+    private String ingredientName;                   // 재료 이름
 
     private int porderQuantity;                     // 주문 수량
 

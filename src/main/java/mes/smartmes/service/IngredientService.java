@@ -38,8 +38,6 @@ public class IngredientService {
     // 재고와 ingredientId의 매핑 정보를 관리하기 위한 맵
     private Map<String, String> ingredientStockMapping;
 
-
-
     private IngredientInputRepository ingredientInputRepository;
     private IngredientStockRepository ingredientStockRepository;
 

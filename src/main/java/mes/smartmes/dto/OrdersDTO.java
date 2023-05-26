@@ -5,11 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 import java.util.Date;
 
 
@@ -18,7 +15,6 @@ public class OrdersDTO {
 
 
     private String orderNo;                     // 수주 번호
-
 
     private String companyId;                   //  업체 id
 
@@ -33,6 +29,5 @@ public class OrdersDTO {
     private Date deliveryDate;                  // 납품일자
 
     private char orderStatus;                   // 주문 상태 A = 주문접수 , B =  수주확정, C = 생산계획시작
-
 
 }

@@ -3,12 +3,16 @@ package mes.smartmes.service;
 import lombok.RequiredArgsConstructor;
 import mes.smartmes.dto.Ratio;
 import mes.smartmes.dto.Weekday;
+import mes.smartmes.entity.Lot;
 import mes.smartmes.entity.ProductionPlan;
 import mes.smartmes.entity.Routing;
+import mes.smartmes.entity.WorkOrder;
 import mes.smartmes.repository.LotRepository;
 import mes.smartmes.repository.OrdersRepository;
 import mes.smartmes.repository.RoutingRepository;
+import mes.smartmes.repository.WorkOrderRepository;
 import org.springframework.data.util.Pair;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +30,7 @@ public class LotService {
     private final LotRepository lotRepository;
     private final OrdersRepository ordersRepository;
     private final RoutingRepository routingRepository;
+    private final WorkOrderRepository workOrderRepository;
     private Ratio ratio;
     private ProductionPlan productionPlan;
     private WorkOrderService workOrderService;
@@ -34,7 +39,7 @@ public class LotService {
 
 
     //lot번호 자동 생성
-    public String selectLot() {
+    public String selectLot(String workNo) {
         String dayNo = "L" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         int lotNo;
 
@@ -46,7 +51,99 @@ public class LotService {
 
         String lotId = dayNo + String.format("%04d", lotNo);
 
+        WorkOrder wo = workOrderRepository.findByWorkOrder(workNo);
+
+        Lot lot = new Lot();
+        String id = generatePlanNumber();
+        lot.setLotId(id);
+        //lot.setIngredientId();
+        if(wo.getProcessNo().equals("process01")){
+            lot.setLotPlotNo("자재창고에서 출하");
+        }else{
+            lot.setLotPlotNo(lot.getLotPlotNo());
+        }
+        String Lno = generatePlanNumber1(wo);
+        lot.setLotNo(Lno);
+        lot.setProcessNo(wo.getProcessNo());
+        lot.setInputQuantity(wo.getInputQuantity());
+        lot.setOutputQuantity(wo.getOutputQuantity());
+        int io = (wo.getInputQuantity() - wo.getOutputQuantity());
+        lot.setInventoryQuantity(io);
+        lot.setProductId(wo.getProductId());
+        LocalDateTime date = LocalDateTime.now();
+        lot.setRegDate(date);
+        workOrderRepository.setWorkStatus(workNo,"작업완료(lot부여완료)");
+        lotRepository.save(lot);
+        lotRepository.flush();
+
+
+
         return lotId;
+    }
+    private static int sequence = 1;
+    public String generatePlanNumber() {
+        // 현재 시간 정보를 가져옵니다.
+        LocalDateTime now = LocalDateTime.now();
+        // 형식 지정을 위한 DateTimeFormatter를 생성합니다.
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        // 현재 시간 정보를 "yyyyMMdd" 형식의 문자열로 변환합니다.
+        String formattedDate = now.format(formatter);
+        // 시퀀스 값을 문자열로 변환합니다.
+        String formattedSequence = String.format("%03d", sequence);
+        // 시퀀스 값을 1 증가시킵니다.
+        sequence++;
+        // 생산계획번호를 조합하여 반환합니다.
+        return "LOT" + formattedSequence;
+    }
+
+    private static int sequence1 = 1;
+    public String generatePlanNumber1(WorkOrder wo) {
+        // 현재 시간 정보를 가져옵니다.
+        LocalDateTime now = LocalDateTime.now();
+        // 형식 지정을 위한 DateTimeFormatter를 생성합니다.
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        // 현재 시간 정보를 "yyyyMMdd" 형식의 문자열로 변환합니다.
+        String formattedDate = now.format(formatter);
+        // 시퀀스 값을 문자열로 변환합니다.
+        String formattedSequence = String.format("%03d", sequence1);
+        if(wo.getProcessNo().equals("process01")){
+            return "WYGY"+formattedDate+formattedSequence;
+        }else if(wo.getProcessNo().equals("process02")){
+            return "JCR"+formattedDate+formattedSequence;
+        }else if(wo.getProcessNo().equals("process03")){
+            return "CC"+formattedDate+formattedSequence;
+        }else if(wo.getProcessNo().equals("process04")){
+            return "HHMSG_J"+formattedDate+formattedSequence;
+        }else if(wo.getProcessNo().equals("process05")){
+            return "HHMSG_JR"+formattedDate+formattedSequence;
+        }else if(wo.getProcessNo().equals("process06")){
+            return "SH"+formattedDate+formattedSequence;
+        }else if(wo.getProcessNo().equals("process07")){
+            return "CJ_J"+formattedDate+formattedSequence;
+        }else if(wo.getProcessNo().equals("process08")){
+            return "CJ_JR"+formattedDate+formattedSequence;
+        }else if(wo.getProcessNo().equals("process09")){
+            return "GS"+formattedDate+formattedSequence;
+        }else if(wo.getProcessNo().equals("process10")){
+            return "PJ"+formattedDate+formattedSequence;
+        }
+        // 시퀀스 값을 1 증가시킵니다.
+        sequence1++;
+        // 생산계획번호를 조합하여 반환합니다.
+        return "LOT" + formattedSequence;
+    }
+
+    @Scheduled(cron = "*/30 * * * * ?") // 30초 마다 실행
+    public void processOrdersAutomatically() {
+        List<WorkOrder> plans = workOrderRepository.findByWorkStatus("작업완료");
+        if (plans != null && !plans.isEmpty()) {
+            for (WorkOrder workOrder : plans) {
+                //int planQuantity = workOrder.getProdPlanQuantity();
+                String workNo = workOrder.getWorkOrderNo();
+                selectLot(workNo);
+            }
+        }
+
     }
 
     public void find(ProductionPlan productionPlan) {

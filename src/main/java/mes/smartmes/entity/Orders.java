@@ -14,10 +14,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import javax.persistence.*;
-
-
-
 
 @Entity
 @Table(name = "orders")
@@ -55,8 +51,19 @@ public class Orders {
 
 
 
-
-
+ /*   // Orders -> OrdersDTO
+    public OrdersDTO toOrderDTO(Orders orders) {
+        OrdersDTO ordersDTO = new OrdersDTO();
+        ordersDTO.setOrderNo(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+        ordersDTO.setCompanyId(orders.getCompanyId());
+        ordersDTO.setProductId(orders.getProductId());
+        ordersDTO.setOrderQuantity(orders.getOrderQuantity());
+        ordersDTO.setOrderPrice(orders.getOrderPrice());
+        ordersDTO.setDeliveryDate(orders.getDeliveryDate());
+        ordersDTO.setOrderStatus(orders.getOrderStatus());
+        return ordersDTO;
+    }
+*/
 
 
 }

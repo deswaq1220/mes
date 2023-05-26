@@ -11,8 +11,6 @@ import mes.smartmes.repository.ProductionPlanRepository;
 import mes.smartmes.repository.RoutingRepository;
 import mes.smartmes.repository.WorkOrderRepository;
 
-import mes.smartmes.entity.ProductionPlan;
-import mes.smartmes.repository.ProductionPlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -226,6 +224,11 @@ public class WorkOrderService {
                 // 작업지시테이블에 insert 작업 수행
                 workOrderRepository.save(workOrder);
                 workOrderRepository.flush();
+                productionPlanRepository.setPlanStatus(planNo,"작업지시완료");
+                System.out.println("야야야야야야야야야");
+//                productionPlanRepository.save(pp);
+//                productionPlanRepository.flush();
+
 
             }
         }
