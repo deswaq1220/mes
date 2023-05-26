@@ -6,11 +6,13 @@ import mes.smartmes.entity.ProductionPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface PorderRepository extends JpaRepository<Porder, String> {
 
     Porder save(Porder porder);
@@ -59,7 +61,7 @@ public interface PorderRepository extends JpaRepository<Porder, String> {
 
 
 
-    String selectIngreName(String porderNo);
+//    String selectIngreName(String porderNo);
 
 
 

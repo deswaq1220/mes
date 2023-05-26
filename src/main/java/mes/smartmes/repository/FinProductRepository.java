@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public interface FinproductRepository extends JpaRepository<Finproduct, String> {
+public interface FinProductRepository extends JpaRepository<Finproduct, String> {
 
     List<Finproduct> findAll();
 

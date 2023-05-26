@@ -19,6 +19,7 @@ import mes.smartmes.service.ShipmentService;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -107,7 +108,7 @@ public class OrdersController {
     @PostMapping("/addOrder")
 
     @ResponseStatus(value= HttpStatus.OK)
-    public void saveOrder(Orders orders, @RequestParam("orderDateStr")String orderDateStr , Model model, HttpServletRequest request){
+    public String saveOrder(Orders orders, @RequestParam("orderDateStr")String orderDateStr , Model model, HttpServletRequest request){
         System.out.println("=========================");
 
         //orders.setOrderDate(LocalDateTime.now());
@@ -115,14 +116,6 @@ public class OrdersController {
         String dayNo = "OD" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         int orderIntNo=0;
         String orderNo;
-    }
-    //수주 등록 후 오더페이지로
-    @PostMapping("/addOrder")
-    public String saveOrder(Orders orders, Model model){
-        orders.setOrderDate(LocalDateTime.now());
-        String dayNo = "OD" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        int orderIntNo=0;
-
 
         // 값이 없을 시 값 시작 값 생성
         if (ordersService.selectOrderNo() == null) {
@@ -132,12 +125,6 @@ public class OrdersController {
         } else {
             orderIntNo = Integer.parseInt(ordersService.selectOrderNo()) + 1;
             orderNo = dayNo + String.format("%04d", orderIntNo);
-
-            String orderNo = dayNo + String.format("%04d", orderIntNo);
-            orders.setOrderNo(orderNo);
-            orders.setOrderDate(LocalDate.now());
-
-           
 
             ordersRepository.save(orders);
         } 
@@ -167,8 +154,6 @@ public class OrdersController {
         // ordersService.selectProcessOneToSix("p001");
         // ordersService.selectProcessSvenToEight("p001");
         // ordersService.selectProcessNineToTen("p001");
-
-
 
 
         return  "redirect:/mes/order";
@@ -229,7 +214,7 @@ public class OrdersController {
 
         // 여기에서 검색 로직을 수행하고, 결과를 모델에 저장합니다.
         // 예시로서 각 매개변수를 모델에 추가하고 "searchResults"라는 이름으로 반환합니다.
-        List<Orders> orders = shipmentService.searchOrders(orderNo,productId,startDate,endDate);
+        List<Orders> orders = shipmentService.searchOrders(orderNo,productId);
         System.out.println(orders);
         model.addAttribute("orderList",orders);
 

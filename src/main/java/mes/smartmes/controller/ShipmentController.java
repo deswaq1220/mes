@@ -13,6 +13,7 @@ import mes.smartmes.entity.Shipment;
 import mes.smartmes.repository.OrdersRepository;
 import mes.smartmes.repository.PorderRepository;
 import mes.smartmes.repository.ProductRepository;
+import mes.smartmes.repository.ShipmentRepository;
 import mes.smartmes.service.CalendarService;
 import mes.smartmes.service.OrdersService;
 import mes.smartmes.service.ShipmentService;
@@ -40,12 +41,15 @@ public class ShipmentController {
     @Autowired
     private OrdersRepository ordersRepository;
     @Autowired
+    private ShipmentRepository shipmentRepository;
+    @Autowired
     private ProductRepository productRepository;
     @Autowired
     private PorderRepository porderRepository;
     @Autowired
     private CalendarService calendarService;
 
+    @Autowired
     public ShipmentController(ShipmentService shipmentService, OrdersService ordersService) {
         this.shipmentService = shipmentService;
         this.ordersService = ordersService;
@@ -57,16 +61,16 @@ public class ShipmentController {
     }
 
     //출하 등록
-    @GetMapping("/shipment")
-    public String save(Model model){
-        List<Shipment> shipmentList =  shipmentRepository.findAll();
-
-        model.addAttribute("shipmentList" , shipmentList);
-
-
-        return "shipment";
-
-    }
+//    @GetMapping("/shipment")
+//    public String save(Model model){
+//        List<Shipment> shipmentList =  shipmentRepository.findAll();
+//
+//        model.addAttribute("shipmentList" , shipmentList);
+//
+//
+//        return "shipment";
+//
+//    }
 
 
 

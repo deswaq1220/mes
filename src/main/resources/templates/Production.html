@@ -54,17 +54,13 @@
             <td class="inventory">품목</td>
             <td>
               <select class="drop" name="items">
-                <option value="select">품목</option>
                 <option value="">품목</option>
                 <option value="흑마늘즙">흑마늘즙</option>
                 <option value="양배추즙">양배추즙</option>
                 <option value="석류젤리">석류젤리</option>
                 <option value="매실젤리">매실젤리</option>
 
-                <option value="석류젤리스틱">석류젤리</option>
-                <option value="매실젤리스틱">매실젤리</option>
-                <option value="석류젤리스틱">석류젤리</option>
-                <option value="매실젤리스틱">매실젤리</option>
+
               </select>
             </td>
           </tr>
@@ -98,10 +94,6 @@
           <tbody>
           <tr th:each="prodPlan, prodPlanIndex : ${prodPlans}" onclick="toggleCheckbox(this)">
             <td th:text="${prodPlanIndex.index + 1}"></td>
-          <tr th:each="prodPlan, prodPlanIndex : ${prodPlans}" onclick="toggleCheckbox(this)" >
-            <td th:text="${prodPlanIndex.index+1}"> </td>
-          <tr th:each="prodPlan, prodPlanIndex : ${prodPlans}" onclick="toggleCheckbox(this)" >
-            <td th:text="${prodPlanIndex.index+1}"> </td>
             <td>
               <input type="checkbox" id="checkbox">
             </td>

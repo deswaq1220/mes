@@ -19,7 +19,6 @@ import javax.persistence.EntityManagerFactory;
 
 @EnableScheduling
 @EnableJpaAuditing
-@SpringBootApplication
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 
 public class SmartmesApplication {

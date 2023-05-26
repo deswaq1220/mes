@@ -23,7 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PorderService {
 
-    private final PorderRepository porderRepository;
+    private PorderRepository porderRepository;
 
 
     public List<Porder> selectList(){

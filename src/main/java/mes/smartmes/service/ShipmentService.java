@@ -1,3 +1,5 @@
+package mes.smartmes.service;
+
 import com.querydsl.core.BooleanBuilder;
 import mes.smartmes.entity.Orders;
 import mes.smartmes.entity.QOrders;
@@ -60,7 +62,7 @@ public class ShipmentService {
 
     //오더 리스트 다중검색
     @Transactional
-    public List<Orders> searchOrders(String orderNo , String productId, LocalDate startDate, LocalDate endDate){
+    public List<Orders> searchOrders(String orderNo , String productId){
         QOrders qOrders = QOrders.orders;
         BooleanBuilder builder = new BooleanBuilder();
 
@@ -70,18 +72,18 @@ public class ShipmentService {
         if(productId != null && productId != ""){
             builder.and(qOrders.productId.contains(productId));
         }
-
-        if (startDate != null && endDate != null) {
-            builder.and(qOrders.orderDate.between(startDate, endDate)); // 날짜
-        }
+//
+//        if (startDate != null && endDate != null) {
+//            builder.and(qOrders.orderDate.between(startDate, endDate)); // 날짜
+//        }
 
 
         return (List<Orders>) ordersRepository.findAll(builder);
-
-
-        return shipmentRepository.deleteByShipmentNo(shipmentNo);
-
-        return (List<Orders>) ordersRepository.findAll(builder);
+//
+//
+//        return shipmentRepository.deleteByShipmentNo(shipmentNo);
+//
+//        return (List<Orders>) ordersRepository.findAll(builder);
 
 
     }

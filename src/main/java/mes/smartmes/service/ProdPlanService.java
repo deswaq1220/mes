@@ -1,5 +1,6 @@
 package mes.smartmes.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import mes.smartmes.entity.*;
 import mes.smartmes.repository.*;
@@ -17,36 +18,39 @@ import java.util.Optional;
 
 @Log4j2
 @Service
+@RequiredArgsConstructor
 public class ProdPlanService {
 
-    private OrdersRepository ordersRepository;
-    private IngredientStockRepository ingredientStockRepository;
-    private PorderRepository porderRepository;
-    private ProductionPlanRepository productionPlanRepository;
-    private FinProductRepository finproductRepository;
-    private IngredientsRepository ingredientsRepository;
-    private ShipmentRepository shipmentRepository;
-    private ProductRepository productRepository;
-    private ProdPlanRepository prodPlanRepository;
+    private final OrdersRepository ordersRepository;
+    private final IngredientStockRepository ingredientStockRepository;
+    private final PorderRepository porderRepository;
+    private final ProductionPlanRepository productionPlanRepository;
+    private final FinProductRepository finproductRepository;
+    private final IngredientsRepository ingredientsRepository;
+    private final ShipmentRepository shipmentRepository;
+    private final ProductRepository productRepository;
+    private final ProdPlanRepository prodPlanRepository;
 
-    @Autowired
-    public ProdPlanService(OrdersRepository ordersRepository, IngredientStockRepository ingredientStockRepository,
-                           PorderRepository porderRepository, ProductionPlanRepository productionPlanRepository,
-                           FinProductRepository finproductRepository, IngredientsRepository ingredientsRepository,
-                           ShipmentRepository shipmentRepository, ProductRepository productRepository, ProdPlanRepository prodPlanRepository) {
-        this.ordersRepository = ordersRepository;
-        this.ingredientStockRepository = ingredientStockRepository;
-        this.porderRepository = porderRepository;
-        this.productionPlanRepository = productionPlanRepository;
-        this.finproductRepository = finproductRepository;
-        this.ingredientsRepository = ingredientsRepository;
-        this.shipmentRepository = shipmentRepository;
-        this.productRepository = productRepository;
-        this.prodPlanRepository = prodPlanRepository;
-    }
+    private final ProductService productService;
 
-    @Autowired
-    private ProductService productService;
+//    @Autowired
+//    public ProdPlanService(OrdersRepository ordersRepository, IngredientStockRepository ingredientStockRepository,
+//                           PorderRepository porderRepository, ProductionPlanRepository productionPlanRepository,
+//                           FinProductRepository finproductRepository, IngredientsRepository ingredientsRepository,
+//                           ShipmentRepository shipmentRepository, ProductRepository productRepository, ProdPlanRepository prodPlanRepository) {
+//        this.ordersRepository = ordersRepository;
+//        this.ingredientStockRepository = ingredientStockRepository;
+//        this.porderRepository = porderRepository;
+//        this.productionPlanRepository = productionPlanRepository;
+//        this.finproductRepository = finproductRepository;
+//        this.ingredientsRepository = ingredientsRepository;
+//        this.shipmentRepository = shipmentRepository;
+//        this.productRepository = productRepository;
+//        this.prodPlanRepository = prodPlanRepository;
+//    }
+
+
+
 
     public void processOrder(String orderNo) {
 
@@ -1458,14 +1462,14 @@ public class ProdPlanService {
     public List<ProductionPlan> selectList(){
         return prodPlanRepository.findAll();
     }
-    public void prodPlanService(ProdPlanRepository prodPlanRepository){
-        this.prodPlanRepository = prodPlanRepository;
-    }
+//    public void prodPlanService(ProdPlanRepository prodPlanRepository){
+//        this.prodPlanRepository = prodPlanRepository;
+//    }
 
 
     public List<ProductionPlan> findSearch(LocalDate startDate, LocalDate endDate, String prodPlanFinYn, String productName) {
         // Date start = java.sql.Date.valueOf(startDate);
         // Date end = java.sql.Date.valueOf(endDate);
-        return prodPlanRepository.findSearch(start, end, prodPlanFinYn, productName);
+        return prodPlanRepository.findSearch(startDate, endDate, prodPlanFinYn, productName);
     }
 }

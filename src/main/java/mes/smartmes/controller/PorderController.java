@@ -4,7 +4,9 @@ package mes.smartmes.controller;
 import lombok.RequiredArgsConstructor;
 import mes.smartmes.entity.Porder;
 import mes.smartmes.repository.PorderRepository;
+import mes.smartmes.service.IngredientService;
 import mes.smartmes.service.PorderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +32,7 @@ import java.util.List;
 public class PorderController {
 
     private final PorderService porderService;
-    private final PorderRepository porderRepository;
+//    private final PorderRepository porderRepository;
     private Date convertToDate(LocalDate localDate) {
         return java.sql.Date.valueOf(localDate);
     }
@@ -40,46 +42,34 @@ public class PorderController {
         List<Porder> porderList = porderService.selectList();
         model.addAttribute("porders", porderList);
 
-        Pageable pageable = PageRequest.of(0, 10);
-        Page<Porder> result = porderRepository.findAll(pageable);
-        model.addAttribute("pageable",pageable);
-
-        System.out.println("===================================");
-        System.out.println(result);
-        System.out.println("Total Pages:"+result.getTotalPages());
+//        Pageable pageable = PageRequest.of(0, 10);
+//        Page<Porder> result = porderRepository.findAll(pageable);
+//        model.addAttribute("pageable",pageable);
+//
+//        System.out.println("===================================");
+//        System.out.println(result);
+//        System.out.println("Total Pages:"+result.getTotalPages());
 
 
         return "Porder";
     }
-
-    private Porder porder;
-    private PorderRepository porderRepository;
-    @Autowired
-    private PorderService porderService;
-
-    @Autowired
-    private IngredientService ingredientService;
-
-    @GetMapping("/porder")
-    public String save(){
-//        porderService.("PD20230522003");
-
-        ingredientService.updatePorderStatusAndInsertIngredient("PD202305260009");
-        ingredientService.updatePorderStatusAndInsertIngredient("PD202305260010");
-        ingredientService.updatePorderStatusAndInsertIngredient("PD202305260011");
-        ingredientService.updatePorderStatusAndInsertIngredient("PD202305260012");
-        System.out.println("===========================");
-        System.out.println("===========================");
-        System.out.println("===========================");
-        System.out.println("===========================");
-        System.out.println("===========================");
-
-
-
-
-
-
-}
+//
+//    @GetMapping("/porder")
+//    public String save(){
+////        porderService.("PD20230522003");
+//
+//        ingredientService.updatePorderStatusAndInsertIngredient("PD202305260009");
+//        ingredientService.updatePorderStatusAndInsertIngredient("PD202305260010");
+//        ingredientService.updatePorderStatusAndInsertIngredient("PD202305260011");
+//        ingredientService.updatePorderStatusAndInsertIngredient("PD202305260012");
+//        System.out.println("===========================");
+//        System.out.println("===========================");
+//        System.out.println("===========================");
+//        System.out.println("===========================");
+//        System.out.println("===========================");
+//
+//        return "Porder";
+//    }
 
     @GetMapping("/porderSearch")
     public String searchForm(){
