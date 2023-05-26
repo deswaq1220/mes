@@ -25,6 +25,7 @@ public class WorkOrderService {
     private RoutingRepository routingRepository;
     private WorkOrderRepository workOrderRepository;
     private ProcessRepository processRepository;
+
     private Ratio ratio;
 
 
@@ -51,6 +52,7 @@ public class WorkOrderService {
     public void processOrder(String planNo){
 
         System.out.println("생산계획번호 : "+planNo);
+
         ProductionPlan pp = productionPlanRepository.findByPlanNo(planNo);
         ratio = new Ratio(pp);
         lotService.find(pp);
@@ -207,7 +209,7 @@ public class WorkOrderService {
 
                 LocalDateTime processTime = processTimesList.get(i);
                 System.out.println(i+"번"+processTime);
-                workOrder.setWorkOrderFinshDate(processTime);
+                workOrder.setWorkOrderFinishDate(processTime);
                 // 작업 수행
 
                 System.out.println( "시발여기요 - "+processTimes);
@@ -228,7 +230,6 @@ public class WorkOrderService {
                 System.out.println("야야야야야야야야야");
 //                productionPlanRepository.save(pp);
 //                productionPlanRepository.flush();
-
 
             }
         }
@@ -263,7 +264,7 @@ public class WorkOrderService {
 
 
 
-    @Scheduled(cron = "*/30 * * * * ?") // 30초 마다 실행
+    @Scheduled(cron = "*/5 * * * * ?") // 30초 마다 실행
     public void processOrdersAutomatically() {
         List<ProductionPlan> plans = productionPlanRepository.findByProdPlanFinYn("진행중");
         if (plans != null && !plans.isEmpty()) {
@@ -273,6 +274,7 @@ public class WorkOrderService {
                 processOrder(planNo);
             }
         }
+
     }
 
     private String determineProgressStatus() {

@@ -1,7 +1,6 @@
 package mes.smartmes.entity;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -20,7 +19,7 @@ public class Porder {      // 발주 테이블
 
     @Id
     @Column(length = 20)
-    private  String porderNo;                       // 발주 번호
+    private String porderNo;                       // 발주 번호
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -31,14 +30,14 @@ public class Porder {      // 발주 테이블
 //    @ColumnDefault("입고대기")
 
     // 입고대기 넣기
-    @PrePersist
+/*    @PrePersist
     public void prePersist() {
-        if (porderStatus == null) {
+        if (porderStatus.equals(null)) {
             porderStatus = "입고대기";
         }
-    }
+    }*/
 
-    @Column(length = 20, nullable = false)
+    @Column(columnDefinition = "입고대기")
     private String porderStatus;                      // 발주 주문 상태
 
     @Column(length = 20)

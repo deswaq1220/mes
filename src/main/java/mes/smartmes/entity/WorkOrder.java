@@ -25,7 +25,7 @@ public class WorkOrder {
 
     private LocalDateTime workOrderDate;
 
-    private LocalDateTime workOrderFinshDate;
+    private LocalDateTime workOrderFinishDate;
 
     @Column(length = 20)
     private String prodPlanNo;
