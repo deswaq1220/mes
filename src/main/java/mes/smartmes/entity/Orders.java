@@ -14,6 +14,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import javax.persistence.*;
+
+
+
 
 @Entity
 @Table(name = "orders")
@@ -33,7 +37,7 @@ public class Orders {
     @Column(length = 20)
     private String companyId;               //  업체 id
 
-    private LocalDate orderDate;                 // 주문날짜
+    private LocalDateTime orderDate;                 // 주문날짜
 
     @Column(length = 20)
     private String productId;               // (고객 주문) 제품 id
@@ -50,28 +54,9 @@ public class Orders {
     private String orderStatus;            // 주문 상태 A = 주문접수 , B =  수주확정, C = 생산계획 완료
 
 
-<<<<<<< Updated upstream
-=======
-   // @OneToOne(mappedBy = "order")  // 출하관리 좀 가지고 올게경..
-   // private Shipment shipment;
 
 
 
->>>>>>> Stashed changes
-
- /*   // Orders -> OrdersDTO
-    public OrdersDTO toOrderDTO(Orders orders) {
-        OrdersDTO ordersDTO = new OrdersDTO();
-        ordersDTO.setOrderNo(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
-        ordersDTO.setCompanyId(orders.getCompanyId());
-        ordersDTO.setProductId(orders.getProductId());
-        ordersDTO.setOrderQuantity(orders.getOrderQuantity());
-        ordersDTO.setOrderPrice(orders.getOrderPrice());
-        ordersDTO.setDeliveryDate(orders.getDeliveryDate());
-        ordersDTO.setOrderStatus(orders.getOrderStatus());
-        return ordersDTO;
-    }
-*/
 
 
 }

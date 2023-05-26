@@ -4,6 +4,10 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Getter
@@ -17,7 +21,9 @@ public class Ingredients {
 
     @Id
     @Column(nullable = false)
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int ingredientNo;
 
     @Column(length = 20, nullable = false)
@@ -31,5 +37,6 @@ public class Ingredients {
 
     @Column(name = "input_date")
     private LocalDate inputDate;
+
 
 }

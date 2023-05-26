@@ -1455,7 +1455,6 @@ public class ProdPlanService {
     }
 
     //현화
-
     public List<ProductionPlan> selectList(){
         return prodPlanRepository.findAll();
     }
@@ -1465,8 +1464,8 @@ public class ProdPlanService {
 
 
     public List<ProductionPlan> findSearch(LocalDate startDate, LocalDate endDate, String prodPlanFinYn, String productName) {
-        Date start = java.sql.Date.valueOf(startDate);
-        Date end = java.sql.Date.valueOf(endDate);
+        // Date start = java.sql.Date.valueOf(startDate);
+        // Date end = java.sql.Date.valueOf(endDate);
         return prodPlanRepository.findSearch(start, end, prodPlanFinYn, productName);
     }
 }

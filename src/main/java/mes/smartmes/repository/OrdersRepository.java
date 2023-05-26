@@ -8,11 +8,32 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+
+import mes.smartmes.dto.OrdersDTO;
+import mes.smartmes.entity.Orders;
+import org.aspectj.weaver.ast.Or;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+import com.querydsl.core.BooleanBuilder;
+
+
 import java.util.List;
 import java.util.Optional;
 
 
-public interface OrdersRepository extends JpaRepository<Orders, String> {
+
+public interface OrdersRepository extends JpaRepository<Orders, String> , QuerydslPredicateExecutor<Orders> {
+
 
     // 은영
     Orders save(Orders Orders);
@@ -23,14 +44,10 @@ public interface OrdersRepository extends JpaRepository<Orders, String> {
 
     Optional<Orders> findById(String orderNo);
 
-/*    @Query(value = "SELECT * FROM orders o WHERE order_date >= :localdate")
-    Optional<Orders> findById(String Id);*/
-
-
-
 
     Orders findByCompanyId(String companyId);
     int deleteByOrderNo(String orderNo);
+
     List<Orders> findAll();
 
 

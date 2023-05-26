@@ -18,4 +18,5 @@ public class ProductDTO {
 
     private int productPrice;           // 제품 가격
 
+
 }

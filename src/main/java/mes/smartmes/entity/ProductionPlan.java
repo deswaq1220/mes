@@ -28,7 +28,9 @@ public class ProductionPlan {
 
     @CreatedDate
     @Column(updatable = false)
-    private Date prodPlanDate;
+
+    private LocalDateTime prodPlanDate;
+
 
     @Column(length = 20, nullable = false)
     private String productId;

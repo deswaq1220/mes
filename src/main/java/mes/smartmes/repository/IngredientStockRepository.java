@@ -2,15 +2,20 @@ package mes.smartmes.repository;
 
 import mes.smartmes.entity.IngredientStock;
 import mes.smartmes.entity.Ingredients;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.List;
 import java.util.Optional;
 
 public interface IngredientStockRepository extends JpaRepository<IngredientStock, String> {
+
+
+    List<IngredientStock> findAll();
+
 
     // 현일
     @Query("SELECT i FROM IngredientStock i WHERE i.productId = :productId")

@@ -1,6 +1,3 @@
-package mes.smartmes.service;
-
-import lombok.RequiredArgsConstructor;
 import mes.smartmes.entity.IngredientStock;
 import mes.smartmes.entity.Product;
 import mes.smartmes.repository.BomRepository;
@@ -10,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 

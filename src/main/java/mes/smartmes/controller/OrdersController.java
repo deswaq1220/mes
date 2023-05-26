@@ -2,35 +2,48 @@ package mes.smartmes.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+
 import mes.smartmes.entity.Ingredients;
 import mes.smartmes.entity.Orders;
-<<<<<<< Updated upstream
+
 import mes.smartmes.entity.Product;
 import mes.smartmes.repository.IngredientsRepository;
-=======
 import mes.smartmes.entity.Shipment;
->>>>>>> Stashed changes
 import mes.smartmes.repository.OrdersRepository;
 import mes.smartmes.repository.ProcessRepository;
 import mes.smartmes.repository.ProductRepository;
 import mes.smartmes.service.LotService;
 import mes.smartmes.service.OrdersService;
-<<<<<<< Updated upstream
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-=======
+
 import mes.smartmes.service.ShipmentService;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
->>>>>>> Stashed changes
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+
+import mes.smartmes.dto.OrdersDTO;
+import mes.smartmes.entity.Orders;
+import mes.smartmes.repository.OrdersRepository;
+import mes.smartmes.service.OrdersService;
+import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+
+
+
+import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -53,11 +66,12 @@ public class OrdersController {
     private OrdersRepository ordersRepository;
 
     @Autowired
-<<<<<<< Updated upstream
     private ProductRepository productRepository;
-=======
+
     private ShipmentService shipmentService;
->>>>>>> Stashed changes
+
+
+
 
     @GetMapping("/main")
     public String main(){
@@ -75,6 +89,7 @@ public class OrdersController {
         model.addAttribute("orderList", orderList);
         model.addAttribute("productList", productList);
 
+
         return "order";
     }
 
@@ -90,41 +105,44 @@ public class OrdersController {
 
     //수주 등록 후 오더페이지로
     @PostMapping("/addOrder")
-<<<<<<< Updated upstream
+
     @ResponseStatus(value= HttpStatus.OK)
-    public void saveOder(Orders orders, @RequestParam("orderDateStr")String orderDateStr , Model model, HttpServletRequest request){
+    public void saveOrder(Orders orders, @RequestParam("orderDateStr")String orderDateStr , Model model, HttpServletRequest request){
         System.out.println("=========================");
 
         //orders.setOrderDate(LocalDateTime.now());
-=======
-    public String saveOder(Orders orders, Model model){
-        orders.setOrderDate(LocalDate.now());
->>>>>>> Stashed changes
+
         String dayNo = "OD" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         int orderIntNo=0;
         String orderNo;
+    }
+    //수주 등록 후 오더페이지로
+    @PostMapping("/addOrder")
+    public String saveOrder(Orders orders, Model model){
+        orders.setOrderDate(LocalDateTime.now());
+        String dayNo = "OD" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        int orderIntNo=0;
+
 
         // 값이 없을 시 값 시작 값 생성
         if (ordersService.selectOrderNo() == null) {
             orderIntNo = 1;
-<<<<<<< Updated upstream
+
             orderNo = dayNo + String.format("%04d", orderIntNo);
         } else {
             orderIntNo = Integer.parseInt(ordersService.selectOrderNo()) + 1;
             orderNo = dayNo + String.format("%04d", orderIntNo);
-=======
+
             String orderNo = dayNo + String.format("%04d", orderIntNo);
             orders.setOrderNo(orderNo);
             orders.setOrderDate(LocalDate.now());
+
+           
+
             ordersRepository.save(orders);
-        } else {
-            orderIntNo = Integer.parseInt(ordersService.selectOrderNo()) + 1;
-            String orderNo = dayNo + String.format("%04d", orderIntNo);
-            orders.setOrderNo(orderNo);
-            orders.setOrderDate(LocalDate.now());
-            ordersRepository.save(orders);
->>>>>>> Stashed changes
-        }
+        } 
+
+
         System.out.println(orderNo);
 
 
@@ -135,11 +153,28 @@ public class OrdersController {
         orders.setOrderQuantity(Integer.parseInt(request.getParameter("orderQty")));
         orders.setOrderStatus("A");
 
-        ordersRepository.save(orders);
-        System.out.println(orders);
-//        ordersService.selectProcessTime();
 
+            orders.setOrderDate(LocalDateTime.now());
+            ordersRepository.save(orders);
+    
+
+
+
+
+
+
+        // ordersService.processSetting("p001");
+        // ordersService.selectProcessOneToSix("p001");
+        // ordersService.selectProcessSvenToEight("p001");
+        // ordersService.selectProcessNineToTen("p001");
+
+
+
+
+        return  "redirect:/mes/order";
     }
+
+
     // 조회
     @GetMapping("orderList")
     public String orderList(Model model){
@@ -151,6 +186,7 @@ public class OrdersController {
 
         return "order";
     }
+
 
     //주문 수정 페이지
     @GetMapping("/orderUpdate/{orderNo}")
@@ -166,7 +202,6 @@ public class OrdersController {
 
         return "order";
     }
-    
     //수정 후 저장
     @PostMapping("/orderUpdate")
     public String  updateOrderPage(Orders orders, BindingResult result) {
@@ -176,14 +211,13 @@ public class OrdersController {
     }
 
 
+
     @GetMapping("/mainOrder")
     public String mainSave(){
         return "order";
     }
 
 
-
-<<<<<<< Updated upstream
     //검색
     @GetMapping("/ordersSearch")
     public String search(@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
@@ -201,8 +235,6 @@ public class OrdersController {
 
         return "order";
     }
-=======
->>>>>>> Stashed changes
 
 }
 
@@ -271,13 +303,5 @@ public class OrdersController {
         return "order";
     }
 */
-
-// 다중검색
-
-
-
-
-
-
 
 

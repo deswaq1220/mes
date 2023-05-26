@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @EntityListeners(value = {AuditingEntityListener.class})
@@ -57,5 +58,6 @@ public class Porder {      // 발주 테이블
 
     @Column(columnDefinition = "varchar(1) default 'N'" , nullable = false)
     private  String emergencyYn;                     // 긴급 요청 여부
+
 
 }

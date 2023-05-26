@@ -1,6 +1,5 @@
 package mes.smartmes.repository;
 
-
 import mes.smartmes.entity.Orders;
 import mes.smartmes.entity.ProductionPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,6 +19,8 @@ public interface ProductionPlanRepository extends JpaRepository<ProductionPlan, 
 
     @Query("SELECT o FROM ProductionPlan o WHERE o.prodPlanNo = :planNo")
     ProductionPlan findByPlanNo(String planNo);
+    @Query("SELECT o FROM ProductionPlan o WHERE o.orderNo = :orderNo")
+    ProductionPlan findByOrderNo(String orderNo);
 
     @Transactional
     @Modifying
@@ -35,6 +36,7 @@ public interface ProductionPlanRepository extends JpaRepository<ProductionPlan, 
 
     @Query("SELECT o FROM Orders o WHERE o.orderStatus = :orderStatus")
     List<Orders> findByOrderStatus(@Param("orderStatus") String orderStatus);
+
 
 
 

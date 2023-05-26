@@ -1,36 +1,28 @@
-package mes.smartmes.service;
-
-import lombok.RequiredArgsConstructor;
+import com.querydsl.core.BooleanBuilder;
+import mes.smartmes.entity.Orders;
+import mes.smartmes.entity.QOrders;
+import mes.smartmes.entity.QShipment;
+import mes.smartmes.entity.Shipment;
+import mes.smartmes.repository.OrdersRepository;
 import mes.smartmes.repository.ShipmentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-<<<<<<< Updated upstream
-import org.springframework.transaction.annotation.Transactional;
-=======
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
->>>>>>> Stashed changes
 
 @Service
-@Transactional
-@RequiredArgsConstructor
 public class ShipmentService {
-
     private final ShipmentRepository shipmentRepository;
+    private final OrdersRepository ordersRepository;
 
-
-    //조회
-    public String selectShipmentNo(){
-        String shipmentIntNo = shipmentRepository.findByShipmentNo();
-        return  shipmentIntNo;
+    @Autowired
+    public ShipmentService(ShipmentRepository shipmentRepository, OrdersRepository ordersRepository) {
+        this.shipmentRepository = shipmentRepository;
+        this.ordersRepository = ordersRepository;
     }
 
-<<<<<<< Updated upstream
-    //삭제
-    public int deleteByShipmentNo(String shipmentNo){
-=======
     public List<Shipment> getAllShipments() {
         return shipmentRepository.findAll();
 
@@ -85,9 +77,13 @@ public class ShipmentService {
 
 
         return (List<Orders>) ordersRepository.findAll(builder);
->>>>>>> Stashed changes
+
 
         return shipmentRepository.deleteByShipmentNo(shipmentNo);
+
+        return (List<Orders>) ordersRepository.findAll(builder);
+
+
     }
 
 
