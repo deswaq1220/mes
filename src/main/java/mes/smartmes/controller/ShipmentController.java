@@ -99,7 +99,7 @@ public class ShipmentController {
         // 여기에서 검색 로직을 수행하고, 결과를 모델에 저장합니다.
         // 예시로서 각 매개변수를 모델에 추가하고 "searchResults"라는 이름으로 반환합니다.
         List<Shipment> shipments = shipmentService.searchShipment(shipmentNo,startDate,endDate,companyName);
-        List<Orders> orders = shipmentService.searchOrders(orderNo,productId);
+        List<Orders> orders = shipmentService.searchOrders(orderNo,productId,startDate,endDate);
         System.out.println(shipments);
         model.addAttribute("shipmentlist",shipments);
         model.addAttribute("orderList", orders);

@@ -26,7 +26,7 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 @RequestMapping("/mes")
-public class ProdPlanController {
+public class prodPlanController {
 
     private final ProdPlanService prodplanservice;
     private final ProductService productservice;

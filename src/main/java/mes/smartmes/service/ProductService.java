@@ -1,3 +1,5 @@
+package mes.smartmes.service;
+
 import mes.smartmes.entity.IngredientStock;
 import mes.smartmes.entity.Product;
 import mes.smartmes.repository.BomRepository;
