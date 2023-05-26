@@ -16,6 +16,6 @@ public class ProductDTO {
 
     private String productName;         // 제품명
 
-    private int productPrice;        // 제품 가격
+    private int productPrice;           // 제품 가격
 
 }

@@ -22,7 +22,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @AllArgsConstructor
-@RequestMapping("/shipment")
+@RequestMapping("/smartmes")
 public class ShipmentController {
 
     @Autowired

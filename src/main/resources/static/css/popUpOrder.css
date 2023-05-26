@@ -21,6 +21,10 @@ textarea{
   font-family: 'Pretendard-Regular';
 
 }
+
+#popUp_tableCheck tr:nth-child(2) td:nth-child(7) {
+  margin-left: 12px;
+}
 textarea:focus{
   outline: none;
 }

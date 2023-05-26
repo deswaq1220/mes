@@ -8,9 +8,7 @@ public class ShipmentDTO {
 
     private String shipmentNo;              // 출하 관리 번호
 
-
     private String productId;               // 출하 제품 id
-
 
     private String companyName;             // 출하 업체 이름
 

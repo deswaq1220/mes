@@ -30,24 +30,12 @@
 
         </button>
         <button class="check" type="button">조회</button>
-        <button class="new" type="button">신규</button>
-        <button class="retouch" type="button">수정</button>
       </div>
     </div>
 
     <div id="tableCheckWrap">
       <table id="tableCheck">
         <tr class="tablerow">
-          <td class="inventory">회사</td>
-          <td>
-            <select class="company">
-              <option value="select">회사명</option>
-              <option value="cupang">쿠팡</option>
-              <option value="Gmarket">지마켓</option>
-              <option value="11">11번가</option>
-            </select>
-          </td>
-
           <td class="inventory">조회날짜</td>
           <td><input type="date" class="datepicker"></td>
           <td>~</td>
@@ -58,16 +46,6 @@
           </td>
         </tr>
         <tr class="tablerow">
-          <td class="inventory">진행상태</td>
-          <td>
-
-            <select class="drop">
-              <option value="select">전체</option>
-              <option value="cabbage">완료</option>
-              <option value="garlic">미완료</option>
-            </select>
-
-          </td>
           <td class="inventory">품목</td>
           <td>
             <select class="drop">
@@ -94,7 +72,10 @@
 
 
     <div id="orderList">
-      <h1> 재고목록 </h1>
+      <div class="titleBtnWrap">
+        <h1>재고목록</h1>
+        <button id="fileSave">엑셀저장</button>
+      </div>
       <div class="table-container">
       <table class="orderData">
         <thead>
@@ -151,11 +132,15 @@
         </div>
     </div>
     <div id="orderDetails">
-      <h1> 완제품 재고 목록 </h1>
+      <div class="titleBtnWrap">
+        <h1>완제품 재고 목록</h1>
+        <button id="fileSave">엑셀저장</button>
+      </div>
       <div class="table-container">
       <table class="orderData">
         <thead>
         <tr>
+          <td></td>
           <td></td>
           <td>제조일자</td>
           <td>제품번호</td>
@@ -173,6 +158,9 @@
         <tbody>
         <tr onclick="changeColor(this)">
           <td>1</td>
+          <td>
+            <input type="checkbox" id="checkbox">
+          </td>
           <td>2023-05-15</td>
           <td>SMFT0002</td>
           <td>양배추</td>
@@ -205,232 +193,11 @@
         </tfoot> -->
       </table>
         </div>
-      <button id="fileSave">엑셀저장</button>
+
     </div>
   </aside>
 
 </div>
-
-<!-- 팝업영역입니당다랄당당당 -->
-<!-- 팝업영역입니당다랄당당당 -->
-<!-- 팝업영역입니당다랄당당당 -->
-<!-- 팝업영역입니당다랄당당당 -->
-<!-- 팝업영역입니당다랄당당당 -->
-<!-- 팝업영역입니당다랄당당당 -->
-<!-- 팝업영역입니당다랄당당당 -->
-<!-- 팝업영역입니당다랄당당당 -->
-<!-- 팝업영역입니당다랄당당당 -->
-<!-- 팝업영역입니당다랄당당당 -->
-<!-- 팝업영역입니당다랄당당당 -->
-<!-- 팝업영역입니당다랄당당당 -->
-
-<!-- 팝업영역입니당다랄당당당 -->
-
-<div id="popUP_wrap">
-  <div id="registrationWrap">
-    <form id="wrapper">
-      <div class="popupTopArea">
-        <h1> 수주등록</h1>
-        <div id="popUpBtnWrap">
-          <button class="save">저장</button>
-          <button class="close">닫기</button>
-        </div>
-      </div>
-
-      <div id="popUp_tableCheckWrap">
-        <table id="popUp_tableCheck">
-          <tr class="tablerow" onclick="toggleCheckbox(this)">
-            <td class="inventory">회사</td>
-            <td>
-              <select class="company">
-                <option value="select">회사명</option>
-                <option value="cupang">쿠팡</option>
-                <option value="Gmarket">지마켓</option>
-                <option value="11">11번가</option>
-              </select>
-            </td>
-
-            <td class="inventory">담당자</td>
-            <td>
-              <!-- <form>
-                <input type="search" placeholder="CODE">
-                <input type="search" placeholder="NAME">
-                <button class="searchBtn">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="25.002" height="25" viewBox="0 0 25.002 25">
-                    <path id="패스_31" data-name="패스 31" d="M501.807,542.86l-5.147-5.147a10.693,10.693,0,1,0-.947.947l5.147,5.147a.655.655,0,0,0,.473.193.683.683,0,0,0,.473-.193.664.664,0,0,0,0-.94ZM488.667,540A9.333,9.333,0,1,1,498,530.667,9.344,9.344,0,0,1,488.667,540Z" transform="translate(-477.5 -519.5)" fill="#fff" stroke="#fff" stroke-width="1"/>
-                  </svg>
-
-                </button>
-              </form> -->
-              <select class="drop">
-                <option value="select">담당자</option>
-                <option >양은영</option>
-                <option >박희람</option>
-                <option >성현일</option>
-                <option >조현화</option>
-                <option >변경원</option>
-              </select>
-            </td>
-            <td class="inventory">수주번호</td>
-            <td>
-              <input type="text" class="systemAuto" placeholder="시스템 자동발번" readonly required>
-            </td>
-            <td class="inventory">수주일</td>
-            <td>
-              <input type="date" class="datepicker">
-            </td>
-          </tr>
-          <tr class="tablerow">
-            <td class="inventory">거래처</td>
-            <td>
-              <!-- <form>
-                <input type="search" placeholder="smartMES">
-                <input type="search" placeholder="매출처">
-                <button class="searchBtn">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="25.002" height="25" viewBox="0 0 25.002 25">
-                    <path id="패스_31" data-name="패스 31" d="M501.807,542.86l-5.147-5.147a10.693,10.693,0,1,0-.947.947l5.147,5.147a.655.655,0,0,0,.473.193.683.683,0,0,0,.473-.193.664.664,0,0,0,0-.94ZM488.667,540A9.333,9.333,0,1,1,498,530.667,9.344,9.344,0,0,1,488.667,540Z" transform="translate(-477.5 -519.5)" fill="#fff" stroke="#fff" stroke-width="1"/>
-                  </svg>
-
-                </button>
-              </form> -->
-              <select class="drop">
-                <option value="select">거래처</option>
-                <option value="cupang">코드하우스</option>
-                <option value="Gmarket">하나로마트</option>
-                <option value="Gmarket">에이농장</option>
-                <option value="Gmarket">팔피엠</option>
-              </select>
-
-            </td>
-            <td class="inventory">내/외자구분</td>
-            <td>
-              <select class="drop">
-                <option value="select">내자/외자</option>
-                <option value="cupang">내자</option>
-                <option value="Gmarket">외자</option>
-              </select>
-            </td>
-            <td class="inventory">부가세적용</td>
-            <td>
-              <select class="drop">
-                <option value="select">적용/미적용</option>
-                <option value="apply">적용</option>
-                <option value="Unapplied">미적용</option>
-              </select>
-            </td>
-            <td class="inventory">통화</td>
-            <td>
-              <input type="text" class="systemAuto" placeholder="KRW" readonly required>
-            </td>
-          </tr>
-          <tr class="tablerow">
-            <td class="inventory">비고</td>
-            <td><textarea></textarea></td>
-          </tr>
-        </table>
-      </div>
-
-      <div id="popUp_orderList">
-        <div id="popUp_orderDetails">
-          <h1> 수주상세 </h1>
-          <div id="popUPbtn">
-            <button class="popUPbtn">품목정보적용</button>
-            <button class="popUPbtn">단가적용</button>
-            <button class="popUPbtn">현재고적용</button>
-            <button class="popUPbtn">삭제</button>
-          </div>
-        </div>
-
-        <table>
-          <thead>
-          <tr>
-            <td></td>
-            <td></td>
-            <td>품목코드</td>
-            <td>품목명</td>
-            <td>규격</td>
-            <td>납품예정일</td>
-            <td>기준단위</td>
-            <td>수량</td>
-            <td>단가</td>
-            <td>공급가</td>
-            <td>부가세</td>
-            <td>합계</td>
-          </tr>
-          </thead>
-          <tbody>
-          <tr onclick="toggleCheckbox(this)">
-            <td>1</td>
-            <td>
-              <input type="checkbox" id="checkbox">
-            </td>
-            <td>CBSM0002</td>
-            <td>양배추즙</td>
-            <td></td>
-            <td>2023-05-04</td>
-            <td>EA</td>
-            <td>1,000</td>
-            <td>900</td>
-            <td>900,000</td>
-            <td>90,000</td>
-            <td>990,000</td>
-          </tr>
-          <tr onclick="toggleCheckbox(this)">
-            <td>2</td>
-            <td>
-              <input type="checkbox" id="checkbox">
-            </td>
-            <td>GRSM0005</td>
-            <td>흑마늘즙</td>
-            <td></td>
-            <td>2023-05-15</td>
-            <td>EA</td>
-            <td>550</td>
-            <td>850</td>
-            <td>467,500</td>
-            <td>46,750</td>
-            <td>514,250</td>
-          </tr>
-          <tr onclick="toggleCheckbox(this)">
-            <td>3</td>
-            <td>
-              <input type="checkbox" id="checkbox">
-            </td>
-            <td>POSM0008</td>
-            <td>석류젤리</td>
-            <td></td>
-            <td>2023-05-04</td>
-            <td>EA</td>
-            <td>500</td>
-            <td>700</td>
-            <td>350,000</td>
-            <td>17,000</td>
-            <td>385,000</td>
-          </tr>
-          </tbody>
-          <tfoot>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>합계</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>2,050</td>
-            <td>2,450</td>
-            <td>1,717,500</td>
-            <td>171,750</td>
-            <td>1,889,250</td>
-          </tr>
-          </tfoot>
-        </table>
-      </div>
-    </form>
-  </div>
-</div>
-
-
 
 
     <!-- 스크립트 -->

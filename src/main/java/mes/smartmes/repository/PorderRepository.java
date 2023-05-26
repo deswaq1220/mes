@@ -3,13 +3,18 @@ package mes.smartmes.repository;
 import mes.smartmes.entity.Porder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface PorderRepository extends JpaRepository<Porder, String> {
 
     Porder save(Porder porder);
+
+
+    Optional<Porder> findById(String id);
 
     //발주번호 생성
     @Query(value = "SELECT MAX(RIGHT(p.porder_no,4)) FROM porder p WHERE (select date_format(porder_date, '%Y%m%d')) = (Select date_format(sysdate(), '%Y%m%d'))",nativeQuery = true)
@@ -35,7 +40,18 @@ public interface PorderRepository extends JpaRepository<Porder, String> {
     String emergencyYn(String porderNo);
 
     @Query(value = "SELECT ingredient_id FROM porder p WHERE porder_no = :porderNo", nativeQuery = true)
-    String selectIngreName(String porderNo);
+    String selectIngreId(String porderNo);
+
+    @Query("SELECT p FROM Porder p WHERE p.porderStatus = :porderStatus")
+    List<Porder> findByPorderStatus(@Param("porderStatus") String porderStatus);
+
+    @Query("SELECT p FROM Porder p WHERE p.porderNo = :porderNo")
+    Porder findByPorderNo(String porderNo);
+
+    @Query(value= "SELECT dayofweek(:date) " ,nativeQuery = true)
+    Integer checkDay(LocalDateTime date);
+
+
 
 
 

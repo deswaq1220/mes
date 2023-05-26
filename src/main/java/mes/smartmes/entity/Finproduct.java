@@ -20,15 +20,15 @@ public class Finproduct {
 
     @Id
     @Column(length = 20, nullable = false)
-    private String finProduct_no;
+    private String finProductNo;
 
     @Column(length = 20, nullable = false)
-    private String product_id;
+    private String productId;
 
     @Column(nullable = false)
-    private int finProduct_quantity;
+    private int finProductQuantity;
 
-    @Column(nullable = false)
-    private Date product_date;
+//    @Column(nullable = false)
+    private Date productDate;
 
 }

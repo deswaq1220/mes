@@ -2,10 +2,8 @@ package mes.smartmes.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -19,6 +17,7 @@ public class Ingredients {
 
     @Id
     @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ingredientNo;
 
     @Column(length = 20, nullable = false)
@@ -29,4 +28,8 @@ public class Ingredients {
 
     @Column(nullable = false)
     private String productId;
+
+    @Column(name = "input_date")
+    private LocalDate inputDate;
+
 }

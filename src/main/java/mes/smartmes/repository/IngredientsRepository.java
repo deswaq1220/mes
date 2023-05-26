@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface IngredientsRepository extends JpaRepository<Ingredients, String> {
     @Query("SELECT i.ingredientName FROM Ingredients i WHERE i.productId = :productId")
@@ -53,6 +55,8 @@ public interface IngredientsRepository extends JpaRepository<Ingredients, String
     @Query("SELECT i.ingredientId FROM Ingredients i WHERE i.productId = :productId AND i.ingredientName = '콜라겐'")
     String findCollagenIdByProductId(@Param("productId") String productId);
 
+
+    List<Ingredients> findAll();
 
 
 

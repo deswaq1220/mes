@@ -9,9 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
-@Table(name="workorder")
+@Table(name="workOrder")
 @Getter
 @Setter
 @ToString
@@ -24,6 +25,8 @@ public class WorkOrder {
 
     private LocalDateTime workOrderDate;
 
+    private LocalDateTime workOrderFinshDate;
+
     @Column(length = 20)
     private String prodPlanNo;
 
@@ -31,11 +34,14 @@ public class WorkOrder {
 
     @Column(length = 20)
     private String productId;
+
     private String processNo;
 
-    private int orderQuantity;
+    private int inputQuantity;
 
-    @Column(length = 1)
+    private int outputQuantity;
+
+    @Column(length = 20)
     private String workStatus;
 
     @Column(length = 20)
