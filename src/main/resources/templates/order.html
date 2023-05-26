@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>수주등록 </title>
+  <!-- css -->
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/order.css">
+  <link rel="stylesheet" href="/css/popUpOrder.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+</head>
+<body>
+ <div id="wrap">
+  <nav th:replace="sideMenu::nav"></nav>
+
+  <aside>
+    <form class="orderForm">
+    <div class="topArea">
+      <h1> 수주등록</h1>
+      <div id="btnWrap">
+        <button class="return">
+          <svg xmlns="http://www.w3.org/2000/svg" width="17.303" height="16.221" viewBox="0 0 17.303 16.221">
+            <path id="redo_FILL0_wght400_GRAD0_opsz48" d="M166.272,272.221a6.251,6.251,0,0,1-4.42-1.73,5.852,5.852,0,0,1,0-8.543,6.251,6.251,0,0,1,4.42-1.73h7.948l-3.082-3.082L172.274,256l5.029,5.029-5.029,5.029-1.136-1.135,3.082-3.082h-7.975a4.644,4.644,0,0,0-3.258,1.257,4.254,4.254,0,0,0,0,6.245,4.644,4.644,0,0,0,3.258,1.257h7.813v1.622Z" transform="translate(-160 -256)" fill="#fff"/>
+          </svg>
+        </button>
+
+
+        <form action="/mes/orderList" method="get">
+        <button class="check" type="submit">조회</button>
+        </form>
+
+
+        <button class="new" type="button">신규</button>
+        <button class="retouch" type="button">수정</button>
+      </div>
+    </div>
+
+    <div id="tableCheckWrap">
+      <table id="tableCheck">
+        <tr class="tablerow">
+          <td class="inventory">회사</td>
+          <td>
+            <select class="company">
+              <option value="select">회사명</option>
+              <option value="cupang">쿠팡</option>
+              <option value="Gmarket">지마켓</option>
+              <option value="11">11번가</option>
+            </select>
+          </td>
+
+          <td class="inventory">수주일자</td>
+          <td><input type="date" class="datepicker"></td>
+          <td>~</td>
+          <td><input type="date" class="datepicker" id="picker"></td>
+          <td class="inventory">수주번호</td>
+          <td>
+            <input type="text">
+          </td>
+        </tr>
+        <tr class="tablerow">
+          <td class="inventory">품목</td>
+          <td>
+
+            <select class="drop">
+              <option value="select">품목</option>
+              <option value="cabbage">양배추즙</option>
+              <option value="garlic">흑마늘즙</option>
+              <option value="Pomegranate">석류젤리</option>
+              <option value="plum">매실젤리</option>
+            </select>
+
+          </td>
+          <td class="inventory">거래처</td>
+          <td>
+            <select class="drop">
+              <option value="select">거래처</option>
+              <option value="cupang">코드하우스</option>
+              <option value="Gmarket">하나로마트</option>
+              <option value="Gmarket">에이농장</option>
+              <option value="Gmarket">팔피엠</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+    </div>
+    </form>
+
+
+    <div id="orderList">
+      <h1> 수주 </h1>
+      <div class="table-container">
+      <table class="orderData">
+        <thead>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>수주일자</td>
+          <td>수주번호</td>
+          <td>거래처</td>
+          <td>품목(수)</td>
+          <td>가격</td>
+          <td>합계</td>
+        </tr>
+        <tr th:each="order, rowStat : ${orderList}" onclick="changeColor(this)">
+          <td th:text="${rowStat.index + 1}"></td>
+          <td th:text="${order.orderStatus}"></td>
+          <td th:text="${order.orderNo}"></td>
+          <td th:text="${order.deliveryDate}"></td>
+          <td th:text="${order.orderQuantity}"></td>
+          <td th:text="${order.orderPrice}"></td>
+        </tr>
+
+
+        </tbody>
+        <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>합계</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>1</td>
+          <td>17,000</td>
+          <td>1,700</td>
+          <td>18,700</td>
+        </tr>
+        </tfoot>
+      </table>
+        </div>
+    </div>
+    <div id="orderDetails">
+      <h1> 수주상세 </h1>
+      <div class="table-container">
+      <table class="orderData">
+        <thead>
+        <tr>
+          <td></td>
+          <td>진행상태</td>
+          <td>품목명</td>
+          <td>납품예정일</td>
+          <td>수량</td>
+          <td>단가</td>
+          <td>삭제</td>
+          <td>수정</td>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 반복문을 사용하여 조회된 데이터를 동적으로 테이블에 추가 -->
+        <!-- Thymeleaf 문법을 활용하여 모델 데이터를 가져옴 -->
+        <tr th:each="order, rowStat : ${orderList}" onclick="changeColor(this)">
+          <td th:text="${rowStat.index + 1}"></td>
+          <td th:text="${order.orderStatus}"></td>
+          <td th:text="${order.orderNo}"></td>
+          <td th:text="${order.deliveryDate}"></td>
+          <td th:text="${order.orderQuantity}"></td>
+          <td th:text="${order.orderPrice}"></td>
+          <td>
+            <form th:action="@{/mes/deleteOrder/{orderNo}(orderNo=${order.orderNo})}" method="get">
+              <button type="submit">삭제</button>
+            </form>
+          <form th:action="@{/mes/orderUpdate/{orderNo}(orderNo=${order.orderNo})}" method="get">
+            <button type="submit"> 수정 </button>
+          </form>
+          </td>
+        </tr>
+
+
+
+
+       <!-- <tr onclick="changeColor(this)">
+          <td>1</td>
+          <td style="color:rgb(184, 0, 0)">미결</td>
+          <td>SMFT0002</td>
+          <td>양배추즙</td>
+          <td>파우치</td>
+          <td>2023-05-15</td>
+          <td>EA</td>
+          <td>100</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+       <tr onclick="changeColor(this)">
+          <td>1</td>
+          <td style="color:rgb(184, 0, 0)">미결</td>
+          <td>SMFT0002</td>
+          <td>양배추즙</td>
+          <td>파우치</td>
+          <td>2023-05-15</td>
+          <td>EA</td>
+          <td>100</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>-->
+        </tbody>
+      </table>
+        </div>
+      <button id="fileSave">엑셀저장</button>
+    </div>
+  </aside>
+
+</div>
+
+<!-- 팝업영역입니당다랄당당당 -->
+<!-- 팝업영역입니당다랄당당당 -->
+<!-- 팝업영역입니당다랄당당당 -->
+<!-- 팝업영역입니당다랄당당당 -->
+<!-- 팝업영역입니당다랄당당당 -->
+<!-- 팝업영역입니당다랄당당당 -->
+<!-- 팝업영역입니당다랄당당당 -->
+<!-- 팝업영역입니당다랄당당당 -->
+<!-- 팝업영역입니당다랄당당당 -->
+<!-- 팝업영역입니당다랄당당당 -->
+<!-- 팝업영역입니당다랄당당당 -->
+<!-- 팝업영역입니당다랄당당당 -->
+
+<!-- 팝업영역입니당다랄당당당 -->
+
+<div id="popUP_wrap">
+  <div id="registrationWrap">
+    <form id="wrapper" action="/mes/addOrder" method="post">
+      <div class="popupTopArea">
+        <h1> 수주등록</h1>
+        <div id="popUpBtnWrap">
+          <button class="save" type="submit">저장</button>
+          <button class="close">닫기</button>
+        </div>
+      </div>
+
+      <div id="popUp_tableCheckWrap">
+        <table id="popUp_tableCheck">
+          <tr class="tablerow" onclick="toggleCheckbox(this)">
+            <td class="inventory">회사</td>
+            <td>
+              <select class="company" name="companyId">
+                <option value="select">회사명</option>
+                <option value="cupang">쿠팡</option>
+                <option value="Gmarket">지마켓</option>
+                <option value="11">11번가</option>
+              </select>
+            </td>
+
+            <td class="inventory">담당자</td>
+            <td>
+              <!-- <form>
+                <input type="search" placeholder="CODE">
+                <input type="search" placeholder="NAME">
+                <button class="searchBtn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="25.002" height="25" viewBox="0 0 25.002 25">
+                    <path id="패스_31" data-name="패스 31" d="M501.807,542.86l-5.147-5.147a10.693,10.693,0,1,0-.947.947l5.147,5.147a.655.655,0,0,0,.473.193.683.683,0,0,0,.473-.193.664.664,0,0,0,0-.94ZM488.667,540A9.333,9.333,0,1,1,498,530.667,9.344,9.344,0,0,1,488.667,540Z" transform="translate(-477.5 -519.5)" fill="#fff" stroke="#fff" stroke-width="1"/>
+                  </svg>
+
+                </button>
+              </form> -->
+              <select class="drop">
+                <option value="select">담당자</option>
+                <option >양은영</option>
+                <option >박희람</option>
+                <option >성현일</option>
+                <option >조현화</option>
+                <option >변경원</option>
+              </select>
+            </td>
+            <td class="inventory">수주번호</td>
+            <td>
+              <input type="text" class="systemAuto" placeholder="시스템 자동발번" disabled>
+            </td>
+
+           <td class="inventory">납기일</td>
+            <td>
+              <input type="datetime-local" class="datepicker" name="deliveryDate" >
+            </td>
+          </tr>
+          <tr>
+              <td class="inventory"> 주문상태</td>
+                <td>
+                  <input type="text" name="orderStatus">
+               </td>
+
+          </tr>
+
+          <tr class="tablerow">
+            <td class="inventory">거래처</td>
+         <!--   <td>
+              &lt;!&ndash; <form>
+                <input type="search" placeholder="smartMES">
+                <input type="search" placeholder="매출처">
+                <button class="searchBtn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="25.002" height="25" viewBox="0 0 25.002 25">
+                    <path id="패스_31" data-name="패스 31" d="M501.807,542.86l-5.147-5.147a10.693,10.693,0,1,0-.947.947l5.147,5.147a.655.655,0,0,0,.473.193.683.683,0,0,0,.473-.193.664.664,0,0,0,0-.94ZM488.667,540A9.333,9.333,0,1,1,498,530.667,9.344,9.344,0,0,1,488.667,540Z" transform="translate(-477.5 -519.5)" fill="#fff" stroke="#fff" stroke-width="1"/>
+                  </svg>
+
+                </button>
+              </form> &ndash;&gt;
+              <select class="drop">
+                <option value="select">거래처</option>
+                <option value="cupang">코드하우스</option>
+                <option value="Gmarket">하나로마트</option>
+                <option value="Gmarket">에이농장</option>
+                <option value="Gmarket">팔피엠</option>
+              </select>
+
+            </td>-->
+     <!--       <td class="inventory">내/외자구분</td>
+            <td>
+              <select class="drop">
+                <option value="select">내자/외자</option>
+                <option value="cupang">내자</option>
+                <option value="Gmarket">외자</option>
+              </select>
+            </td>-->
+     <!--       <td class="inventory">부가세적용</td>
+            <td>
+              <select class="drop">
+                <option value="select">적용/미적용</option>
+                <option value="apply">적용</option>
+                <option value="Unapplied">미적용</option>
+              </select>
+            </td>-->
+<!--            <td class="inventory">통화</td>
+            <td>
+              <input type="text" class="systemAuto" placeholder="KRW" readonly required>
+            </td>
+          </tr>
+          <tr class="tablerow">
+            <td class="inventory">비고</td>
+            <td><textarea></textarea></td>
+          </tr>-->
+        </table>
+      </div>
+
+      <div id="popUp_orderList">
+        <div id="popUp_orderDetails">
+          <h1> 수주상세 </h1>
+          <div id="popUPbtn">
+            <button class="popUPbtn">품목정보적용</button>
+            <button class="popUPbtn">단가적용</button>
+            <button class="popUPbtn">현재고적용</button>
+            <button class="popUPbtn">삭제</button>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>품목코드</td>
+            <td>품목명</td>
+            <td>규격</td>
+            <td>납품예정일</td>
+            <td>기준단위</td>
+            <td>수량</td>
+            <td>단가</td>
+            <td>공급가</td>
+            <td>부가세</td>
+            <td>합계</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr onclick="toggleCheckbox(this)">
+            <td>1</td>
+            <td>
+              <input type="checkbox" id="checkbox">
+            </td>
+            <td>CBSM0002</td>
+            <td>양배추즙</td>
+            <td></td>
+            <td>2023-05-04</td>
+            <td>EA</td>
+            <td>1,000</td>
+            <td>900</td>
+            <td>900,000</td>
+            <td>90,000</td>
+            <td>990,000</td>
+          </tr>
+          <tr onclick="toggleCheckbox(this)">
+            <td>2</td>
+            <td>
+              <input type="checkbox" id="checkbox">
+            </td>
+            <td>GRSM0005</td>
+            <td>흑마늘즙</td>
+            <td></td>
+            <td>2023-05-15</td>
+            <td>EA</td>
+            <td>550</td>
+            <td>850</td>
+            <td>467,500</td>
+            <td>46,750</td>
+            <td>514,250</td>
+          </tr>
+          <tr onclick="toggleCheckbox(this)">
+            <td>3</td>
+            <td>
+              <input type="checkbox" id="checkbox">
+            </td>
+            <td>POSM0008</td>
+            <td>석류젤리</td>
+            <td></td>
+            <td>2023-05-04</td>
+            <td>EA</td>
+            <td>500</td>
+            <td>700</td>
+            <td>350,000</td>
+            <td>17,000</td>
+            <td>385,000</td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>합계</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>2,050</td>
+            <td>2,450</td>
+            <td>1,717,500</td>
+            <td>171,750</td>
+            <td>1,889,250</td>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+    <!-- 스크립트 -->
+
+    <script src="js/datapicker.js"></script>
+    <script src="js/popUP.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="js/download.js"></script>
+    <script src="js/click.js"></script>
+    <script>
+
+      $(document).ready(function() {
+
+        $(".new").click(function() {
+          $("#popUP_wrap").fadeIn();
+
+        });
+
+        $(".close").click(function() {
+
+          $("#popUP_wrap").fadeOut();
+
+        });
+
+      });
+
+    </script>
+
+
+
+    <!-- "excel download" -->
+    <!-- Sheet JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+    <!--FileSaver savaAs 이용 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+</body>
+</html>

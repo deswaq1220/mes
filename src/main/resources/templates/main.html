@@ -1,0 +1,89 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMART MES MAIN</title>
+  <!-- css -->
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+ <div id="wrap">
+  <nav>
+    <button onclick="location.href='main.html'">HOME</button>
+    <ul id="business">
+      <span class="title">영업관리</span>
+      <li><a href="/mes/order">수주등록</a></li>
+      <li><a href="ordermanagement.html">수주관리</a></li>
+      <li><a href="/shipment/shipmentList">출하관리</a></li>
+    </ul>
+    <ul id="Purchase">
+      <span class="title">구매관리</span>
+      <li><a href="">발주관리</a></li>
+      <li><a href="">재고관리</a></li>
+      <li><a href="">입출고관리</a></li>
+    </ul>
+    <ul id="Production">
+      <span class="title">생산관리</span>
+      <!-- <li></li> -->
+      <li><a href="">생산계획</a></li>
+      <li><a href="">작업지시</a></li>
+      <li><a href="">작업실적등록</a></li>
+      <li><a href="">작업실적수정</a></li>
+    </ul>
+    <ul id="standard">
+      <span class="title">기준정보</span>
+      <!-- <li></li> -->
+      <li><a href="">공정등록</a></li>
+      <li><a href="">라우팅등록</a></li>
+      <li><a href="">제조BOM</a></li>
+    </ul>
+  </nav>
+  
+  <aside>
+    <div id="asideWrap">
+      <div id="notice">
+        <h1>현황관리</h1>
+        
+      </div>
+  
+      <div id="CalendarWrap">
+        <h1>달력</h1>
+        <table class="Calendar">
+          <thead>
+              <tr>
+                  <td onClick="prevCalendar();" style="cursor:pointer;">&#60;</td>
+                  <td colspan="5">
+                      <span id="calYear"></span>년
+                      <span id="calMonth"></span>월
+                  </td>
+                  <td onClick="nextCalendar();" style="cursor:pointer;">&#62;</td>
+              </tr>
+              <tr>
+                  <td>일</td>
+                  <td>월</td>
+                  <td>화</td>
+                  <td>수</td>
+                  <td>목</td>
+                  <td>금</td>
+                  <td>토</td>
+              </tr>
+          </thead>
+
+          <tbody>
+          </tbody>
+      </table>
+    </div>
+    </div>
+  </aside>
+ </div>
+
+ <!-- 스크립트 -->
+
+ <script src="js/Calendar.js"></script>
+<!-- 그래프 -->
+ <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</body>
+</html>
