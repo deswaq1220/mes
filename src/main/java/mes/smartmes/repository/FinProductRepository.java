@@ -9,8 +9,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import java.util.List;
+
 @Repository
-public interface FinProductRepository extends JpaRepository<Finproduct, String> {
+public interface FinproductRepository extends JpaRepository<Finproduct, String> {
+
+    List<Finproduct> findAll();
+
 
     @Query("SELECT f FROM Finproduct f WHERE f.productId = :productId")
     Finproduct findByProductId(String productId);
@@ -20,6 +26,4 @@ public interface FinProductRepository extends JpaRepository<Finproduct, String> 
     @Transactional
     @Query("UPDATE Finproduct fi SET fi.finProductQuantity = fi.finProductQuantity - :finProductQuantity WHERE fi.productId = :productId")
     void decreaseStockQuantity(@Param("productId") String productId, @Param("finProductQuantity") int finProductQuantity);
-
-
 }
