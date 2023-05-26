@@ -183,6 +183,7 @@ public class OrdersController {
 
 
 
+<<<<<<< Updated upstream
     //검색
     @GetMapping("/ordersSearch")
     public String search(@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
@@ -200,6 +201,8 @@ public class OrdersController {
 
         return "order";
     }
+=======
+>>>>>>> Stashed changes
 
 }
 
