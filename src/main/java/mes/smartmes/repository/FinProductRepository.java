@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface FinProductRepository extends JpaRepository<Finproduct, String> {
+public interface FinproductRepository extends JpaRepository<Finproduct, String> {
 
     @Query("SELECT f FROM Finproduct f WHERE f.productId = :productId")
     Finproduct findByProductId(@Param("productId")String productId);

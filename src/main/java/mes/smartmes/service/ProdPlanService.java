@@ -23,7 +23,7 @@ public class ProdPlanService {
     private IngredientStockRepository ingredientStockRepository;
     private PorderRepository porderRepository;
     private ProductionPlanRepository productionPlanRepository;
-    private FinProductRepository finproductRepository;
+    private FinproductRepository finproductRepository;
     private IngredientsRepository ingredientsRepository;
     private ShipmentRepository shipmentRepository;
     private ProductRepository productRepository;
@@ -32,7 +32,7 @@ public class ProdPlanService {
     @Autowired
     public ProdPlanService(OrdersRepository ordersRepository, IngredientStockRepository ingredientStockRepository,
                            PorderRepository porderRepository, ProductionPlanRepository productionPlanRepository,
-                           FinProductRepository finproductRepository, IngredientsRepository ingredientsRepository,
+                           FinproductRepository finproductRepository, IngredientsRepository ingredientsRepository,
                            ShipmentRepository shipmentRepository, ProductRepository productRepository) {
         this.ordersRepository = ordersRepository;
         this.ingredientStockRepository = ingredientStockRepository;

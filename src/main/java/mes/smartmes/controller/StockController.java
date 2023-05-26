@@ -3,7 +3,8 @@ package mes.smartmes.controller;
 import lombok.RequiredArgsConstructor;
 import mes.smartmes.entity.Finproduct;
 import mes.smartmes.entity.IngredientStock;
-import mes.smartmes.service.FinProductService;
+
+import mes.smartmes.service.FinproductService;
 import mes.smartmes.service.IngredientStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ import java.util.List;
 public class StockController {
 
     private final IngredientStockService ingredientStockService;
-    private final FinProductService finproductService;
+    private final FinproductService finproductService;
 
     @GetMapping("/stock")
     public String selectList(Model model){

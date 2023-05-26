@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @EntityListeners(value = {AuditingEntityListener.class})
@@ -31,7 +32,7 @@ public class Shipment {
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    private LocalDateTime shipmentDate;
+    private LocalDate shipmentDate;
 
     private int shipmentQuantity;
 
