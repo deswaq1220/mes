@@ -1,21 +1,30 @@
 package mes.smartmes.service;
 
+
+import lombok.RequiredArgsConstructor;
+
 import mes.smartmes.dto.Weekday;
 import mes.smartmes.entity.Porder;
 import mes.smartmes.repository.PorderRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+
 import java.util.List;
 
 @Service
 @Transactional
+
+@RequiredArgsConstructor
+
 public class PorderService {
 
     private final PorderRepository porderRepository;
+
 
     public List<Porder> selectList(){
         return porderRepository.findAll();
@@ -28,17 +37,18 @@ public class PorderService {
 
     public List<Porder> findSearch(java.util.Date startDate, java.util.Date endDate, String porderStatus, String supplierId) {
         return porderRepository.findSearch(startDate, endDate, porderStatus, supplierId);
+
     }
 
     //발주 내역 리스트
     public List<Porder> selectPorderList() {
         return porderRepository.findAll();
     }
+
     private LocalDateTime setTime(LocalDateTime currentTime, int day, int hour) {
         currentTime = currentTime.plusDays(day).withHour(hour).withMinute(0).withSecond(0);
         return currentTime;
     }
-
 
 
     //입고 예정 일자 생성
@@ -92,6 +102,8 @@ public class PorderService {
 
         return inputIngreDate;
     }
+
+
 
 
 

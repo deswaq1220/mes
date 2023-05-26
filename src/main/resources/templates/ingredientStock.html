@@ -15,7 +15,10 @@
 </head>
 <body>
  <div id="wrap">
+
    <nav th:replace="sideMenu::nav"></nav>
+
+
   <aside>
     <form class="orderForm">
     <div class="topArea">
@@ -30,6 +33,7 @@
       <br>
     <div id="orderList">
       <h1> 재고목록 </h1>
+      <div class="allSelect">전체선택</div>
       <div class="table-container">
       <table class="orderData">
         <thead>
@@ -78,8 +82,7 @@
       </table>
         </div>
     </div>
-      <br>
-      <br>
+
     <div id="orderDetails">
       <h1> 완제품 재고 목록 </h1>
       <div class="table-container">

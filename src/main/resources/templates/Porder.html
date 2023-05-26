@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>발주관리 </title>
   <!-- css -->
-  <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="/css/nav.css">
-  <link rel="stylesheet" href="/css/Porder.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/Porder.css">
   <!-- <link rel="stylesheet" href="css/popUpOrder.css"> -->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
@@ -18,6 +18,7 @@
   <nav th:replace="sideMenu::nav"></nav>
 
     <aside>
+
       <form class="orderForm" action="/mes/porderSearch" method="post">
       <div class="topArea">
         <h1>발주관리</h1>
@@ -26,6 +27,7 @@
               <path id="redo_FILL0_wght400_GRAD0_opsz48" d="M166.272,272.221a6.251,6.251,0,0,1-4.42-1.73,5.852,5.852,0,0,1,0-8.543,6.251,6.251,0,0,1,4.42-1.73h7.948l-3.082-3.082L172.274,256l5.029,5.029-5.029,5.029-1.136-1.135,3.082-3.082h-7.975a4.644,4.644,0,0,0-3.258,1.257,4.254,4.254,0,0,0,0,6.245,4.644,4.644,0,0,0,3.258,1.257h7.813v1.622Z" transform="translate(-160 -256)" fill="#fff"/>
             </svg>
         <button class="check" type="submit">조회</button>
+
         </div>
       </div>
 
@@ -58,12 +60,14 @@
           </tr>
         </table>
       </div>
-      </form>
+    </form>
+      
 
       <div id="orderList">
-        <div class="table-container">
         <h1> 구매발주 </h1>
-        <table id="orderData">
+        <div class="allSelect">전체선택</div>
+        <div class="table-container">
+        <table class="orderData">
           <thead>
             <tr>
               <td></td>
@@ -247,6 +251,7 @@
       }
 
  </script>
+
 
 
 <!-- "excel download" -->

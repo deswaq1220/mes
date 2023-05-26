@@ -6,6 +6,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+
+import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 
 @EntityListeners(value = {AuditingEntityListener.class})
@@ -21,20 +24,28 @@ public class Shipment {
 
     @Id
     @Column(length = 20)
-    private String shipmentNo;
+
+
+
+    private String shipmentNo; // 출하번호
 
     @Column(length = 20)
-    private String productId;
+    private String productId;    // 제품코드
 
     @Column(length = 50)
-    private String companyName;
+    private String companyName; // 거래처이름
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    private LocalDateTime shipmentDate;
+    private LocalDate shipmentDate; // 출하일자
 
-    private int shipmentQuantity;
+    private int shipmentQuantity; // 상태
 
     @Column(length = 20)
-    private String shipmentStatus;
+    private String shipmentStatus; // 수량
+
+    @OneToOne                        // 수주관리
+    @JoinColumn(name = "order_id")
+    private Orders order;
+
 }

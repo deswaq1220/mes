@@ -1,12 +1,16 @@
 package mes.smartmes.entity;
 
 import lombok.*;
+
 import org.hibernate.annotations.ColumnDefault;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+
 import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 
 @EntityListeners(value = {AuditingEntityListener.class})
@@ -25,7 +29,9 @@ public class Porder {      // 발주 테이블
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
+
     private LocalDate porderDate;               // 발주 날짜
+
 
 
 //    @Column(length = 20, nullable= false)
@@ -44,7 +50,9 @@ public class Porder {      // 발주 테이블
 
 
     @Column(length = 20)
+
     private String ingredientId;                   // 재료 이름
+
 
     private int porderQuantity;                     // 주문 수량
 
@@ -53,6 +61,7 @@ public class Porder {      // 발주 테이블
 
     @Column(columnDefinition = "varchar(1) default 'N'" , nullable = false)
     private  String emergencyYn;                     // 긴급 요청 여부
+
 
 
 }

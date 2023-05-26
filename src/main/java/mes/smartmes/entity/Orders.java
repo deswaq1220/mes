@@ -1,6 +1,7 @@
 package mes.smartmes.entity;
 
 import lombok.*;
+
 import mes.smartmes.dto.OrdersDTO;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,6 +14,12 @@ import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
 
 
 @Entity
@@ -48,6 +55,11 @@ public class Orders {
 
     @Column(length = 1)
     private String orderStatus;            // 주문 상태 A = 주문접수 , B =  수주확정, C = 생산계획 완료
+
+
+    @OneToOne(mappedBy = "order")  // 출하관리 좀 가지고 올게경..
+    private Shipment shipment;
+
 
 
 

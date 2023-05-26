@@ -68,7 +68,9 @@ public class ProdPlanController {
         model.addAttribute("prodPlans", searchResults);
 
 
+
         return "Production"; // 검색 결과를 표시하는 뷰로 반환
     }
 }
+
 

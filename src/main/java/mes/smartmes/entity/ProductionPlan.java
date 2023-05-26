@@ -5,7 +5,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+
 import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 
 @EntityListeners(value = {AuditingEntityListener.class})
@@ -27,7 +29,9 @@ public class ProductionPlan {
 
     @CreatedDate
     @Column(updatable = false)
+
     private LocalDate prodPlanDate;
+
 
     @Column(length = 20, nullable = false)
     private String productId;

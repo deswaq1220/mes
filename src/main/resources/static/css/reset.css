@@ -28,7 +28,7 @@ button{
 }
 
 body::-webkit-scrollbar{
-  width: 10px;
+  width: 5px;
 }
 
 body::-webkit-scrollbar-thumb{
@@ -62,7 +62,8 @@ input[type="text"]{
 .orderData{
   font-weight: 400;
 }
-input[type="search"],input[type="date"],input[type="text"]{
+
+input[type="search"],input[type="date"],input[type="text"],input[type="number"]{
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -78,5 +79,19 @@ input[type="search"],input[type="date"],input[type="text"]{
 
 select{
   font-family: 'Pretendard-Regular';
+}
+
+
+#orderList h1{
+  display: inline-block;
+}
+
+.allSelect{
+  margin: 20px 10px 4px 0;
+  cursor: pointer;
+  float: right;
+}
+.allSelect:hover{
+  color: red;
 }
 

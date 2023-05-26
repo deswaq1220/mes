@@ -1,25 +1,29 @@
 package mes.smartmes.service;
 
-import lombok.AllArgsConstructor;
+
+import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
-import mes.smartmes.dto.OrdersDTO;
 import mes.smartmes.dto.Ratio;
 import mes.smartmes.dto.Weekday;
-import mes.smartmes.entity.Orders;
+
+
 import mes.smartmes.entity.Routing;
 import mes.smartmes.repository.OrdersRepository;
 import mes.smartmes.repository.RoutingRepository;
+import mes.smartmes.repository.ShipmentRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManagerFactory;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 
 
 @Service
@@ -31,6 +35,7 @@ public class OrdersService {
 
     private final OrdersRepository ordersRepository;
     private final RoutingRepository rr;
+
 
     Scanner sc = new Scanner(System.in);
     double totalTime = 0;
@@ -386,6 +391,7 @@ public class OrdersService {
 
         return null;
     }
+
 }
 
 
@@ -424,5 +430,6 @@ public class OrdersService {
             System.out.println("totalProcessTime = " + totalProcessTime);
 
 }*/
+
 
 

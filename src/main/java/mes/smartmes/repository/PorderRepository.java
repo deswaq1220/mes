@@ -1,17 +1,21 @@
 package mes.smartmes.repository;
 
 import mes.smartmes.entity.Porder;
+
 import mes.smartmes.entity.ProductionPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
-import java.util.Date;
+
+
+
 import java.util.List;
 
 public interface PorderRepository extends JpaRepository<Porder, String> {
+
 
     List<Porder> findAll();
 
@@ -34,6 +38,7 @@ public interface PorderRepository extends JpaRepository<Porder, String> {
 
     //발주 등록 날짜
     @Query(value = "SELECT p.porder_date FROM porder p WHERE porder_no = :porderNo ", nativeQuery = true)
+
     LocalDateTime selectDate(String porderNo);
 
     //긴급입고여부
@@ -44,8 +49,10 @@ public interface PorderRepository extends JpaRepository<Porder, String> {
     String selectIngreName(String porderNo);
 
 
+
     //검색
     @Query("SELECT p FROM Porder p WHERE DATE(p.porderDate) BETWEEN :startDate AND :endDate AND p.porderStatus = :porderStatus AND p.supplierId = :supplierId")
     List<Porder> findSearch(@Param("startDate") java.util.Date startDate, @Param("endDate") java.util.Date endDate, @Param("porderStatus") String porderStatus, @Param("supplierId") String supplierId);
+
 }
 
