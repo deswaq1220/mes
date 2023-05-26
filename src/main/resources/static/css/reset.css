@@ -61,7 +61,7 @@ input[type="text"]{
 .orderData{
   font-weight: 400;
 }
-input[type="search"],input[type="date"],input[type="text"]{
+input[type="search"],input[type="date"],input[type="text"],input[type="number"]{
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;

@@ -41,7 +41,7 @@ aside{
 .return svg{
   margin: 13px 12.7px 13.8px 13px;
 }
-.check,.new,.retouch,.closing,.closingCancel{
+.check,.new,.retouch,.closing,.closingCancel,.confirmed,.nowork{
   width: 88px;
   height: 43px;
   background-color: #022454;

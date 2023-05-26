@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //전체버튼 클릭
 function selectAllRows() {
+    console.log("dhlsdofjsd")
     const table = document.querySelector('.orderData');
     const checkboxes = table.querySelectorAll('input[type="checkbox"]');
     const allSelectButton = document.querySelector('.allSelect');
@@ -57,13 +58,13 @@ function exportToExcel() {
         const worksheet = createWorksheet(selectedRows, table);
 
         // 워크시트를 워크북에 추가
-        const sheetName = `Shipment Data ${index + 1}`;
+        const sheetName = `SmartMes Data ${index + 1}`;
         XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
     });
 
     // 엑셀 파일 생성 및 다운로드
     const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    saveAsExcelFile(excelBuffer, 'shipment_data.xlsx');
+    saveAsExcelFile(excelBuffer, 'SmartMes.xlsx');
 }
 
 function getSelectedRows(table) {
