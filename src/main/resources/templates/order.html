@@ -79,8 +79,8 @@
               </select>
             </td>
 
-            <td class="inventory">수주일자</td>
-            <td><input type="date" class="datepicker"></td>
+            <td class="inventory">등록일자</td>
+            <td><input type="date" class="datepicker" name="startDate"></td>
             <td>~</td>
             <td><input type="date" class="datepicker" id="picker"></td>
             <td class="inventory">수주번호</td>
@@ -122,6 +122,20 @@
 
           </tr>
           <tr class="tablerow">
+            <td class="inventory">품목</td>
+            <td>
+
+              <select class="drop">
+                <option value="select">품목</option>
+                <option th:each = "productList : ${productList}" th:value="${productList.getProductId()}" th:text = "${productList.getProductName()}"></option>
+                <!--<option value="select">품목</option>
+                <option value="cabbage">양배추즙</option>
+                <option value="garlic">흑마늘즙</option>
+                <option value="Pomegranate">석류젤리스틱</option>
+                <option value="plum">매실젤리</option>-->
+              </select>
+
+            </td>
             <td class="inventory">수주번호</td>
             <td>
               <input type="text">
@@ -130,6 +144,7 @@
         </table>
       </div>
     </form>
+
 
 
     <div id="orderList">
@@ -202,6 +217,7 @@
   </aside>
 
 </div>
+
 
 <!-- 팝업영역입니당다랄당당당 -->
 <!-- 팝업영역입니당다랄당당당 -->
