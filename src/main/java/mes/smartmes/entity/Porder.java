@@ -46,7 +46,15 @@ public class Porder {      // 발주 테이블
     }
 
     @Column(length = 20, nullable = false)
-    private String porderStatus;                      // 발주 주문 상태
+    private String porderStatus;
+
+
+
+
+
+
+
+    // 발주 주문 상태
 
 
     @Column(length = 20)
