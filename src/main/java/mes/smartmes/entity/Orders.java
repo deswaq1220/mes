@@ -33,7 +33,7 @@ public class Orders {
     @Column(length = 20)
     private String companyId;               //  업체 id
 
-    private LocalDateTime orderDate;                 // 주문날짜
+    private LocalDate orderDate;                 // 주문날짜
 
     @Column(length = 20)
     private String productId;               // (고객 주문) 제품 id
@@ -50,6 +50,14 @@ public class Orders {
     private String orderStatus;            // 주문 상태 A = 주문접수 , B =  수주확정, C = 생산계획 완료
 
 
+<<<<<<< Updated upstream
+=======
+   // @OneToOne(mappedBy = "order")  // 출하관리 좀 가지고 올게경..
+   // private Shipment shipment;
+
+
+
+>>>>>>> Stashed changes
 
  /*   // Orders -> OrdersDTO
     public OrdersDTO toOrderDTO(Orders orders) {

@@ -4,15 +4,27 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import mes.smartmes.entity.Ingredients;
 import mes.smartmes.entity.Orders;
+<<<<<<< Updated upstream
 import mes.smartmes.entity.Product;
 import mes.smartmes.repository.IngredientsRepository;
+=======
+import mes.smartmes.entity.Shipment;
+>>>>>>> Stashed changes
 import mes.smartmes.repository.OrdersRepository;
 import mes.smartmes.repository.ProcessRepository;
 import mes.smartmes.repository.ProductRepository;
 import mes.smartmes.service.LotService;
 import mes.smartmes.service.OrdersService;
+<<<<<<< Updated upstream
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+=======
+import mes.smartmes.service.ShipmentService;
+import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
+>>>>>>> Stashed changes
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,7 +53,11 @@ public class OrdersController {
     private OrdersRepository ordersRepository;
 
     @Autowired
+<<<<<<< Updated upstream
     private ProductRepository productRepository;
+=======
+    private ShipmentService shipmentService;
+>>>>>>> Stashed changes
 
     @GetMapping("/main")
     public String main(){
@@ -74,11 +90,16 @@ public class OrdersController {
 
     //수주 등록 후 오더페이지로
     @PostMapping("/addOrder")
+<<<<<<< Updated upstream
     @ResponseStatus(value= HttpStatus.OK)
     public void saveOder(Orders orders, @RequestParam("orderDateStr")String orderDateStr , Model model, HttpServletRequest request){
         System.out.println("=========================");
 
         //orders.setOrderDate(LocalDateTime.now());
+=======
+    public String saveOder(Orders orders, Model model){
+        orders.setOrderDate(LocalDate.now());
+>>>>>>> Stashed changes
         String dayNo = "OD" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         int orderIntNo=0;
         String orderNo;
@@ -86,10 +107,23 @@ public class OrdersController {
         // 값이 없을 시 값 시작 값 생성
         if (ordersService.selectOrderNo() == null) {
             orderIntNo = 1;
+<<<<<<< Updated upstream
             orderNo = dayNo + String.format("%04d", orderIntNo);
         } else {
             orderIntNo = Integer.parseInt(ordersService.selectOrderNo()) + 1;
             orderNo = dayNo + String.format("%04d", orderIntNo);
+=======
+            String orderNo = dayNo + String.format("%04d", orderIntNo);
+            orders.setOrderNo(orderNo);
+            orders.setOrderDate(LocalDate.now());
+            ordersRepository.save(orders);
+        } else {
+            orderIntNo = Integer.parseInt(ordersService.selectOrderNo()) + 1;
+            String orderNo = dayNo + String.format("%04d", orderIntNo);
+            orders.setOrderNo(orderNo);
+            orders.setOrderDate(LocalDate.now());
+            ordersRepository.save(orders);
+>>>>>>> Stashed changes
         }
         System.out.println(orderNo);
 
@@ -144,6 +178,26 @@ public class OrdersController {
 
     @GetMapping("/mainOrder")
     public String mainSave(){
+        return "order";
+    }
+
+
+
+    //검색
+    @GetMapping("/ordersSearch")
+    public String search(@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+                         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
+                         @RequestParam(name = "orderNo") String orderNo,
+                         @RequestParam(name = "productId") String productId,
+
+                         Model model) {
+
+        // 여기에서 검색 로직을 수행하고, 결과를 모델에 저장합니다.
+        // 예시로서 각 매개변수를 모델에 추가하고 "searchResults"라는 이름으로 반환합니다.
+        List<Orders> orders = shipmentService.searchOrders(orderNo,productId,startDate,endDate);
+        System.out.println(orders);
+        model.addAttribute("orderList",orders);
+
         return "order";
     }
 
@@ -214,5 +268,13 @@ public class OrdersController {
         return "order";
     }
 */
+
+// 다중검색
+
+
+
+
+
+
 
 

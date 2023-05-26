@@ -5,6 +5,11 @@ import lombok.RequiredArgsConstructor;
 import mes.smartmes.dto.OrdersDTO;
 import mes.smartmes.dto.Ratio;
 import mes.smartmes.dto.Weekday;
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 import mes.smartmes.entity.Orders;
 import mes.smartmes.entity.Routing;
 import mes.smartmes.repository.OrdersRepository;
@@ -384,4 +389,52 @@ public class OrdersService {
         return null;
     }
 
+
 }
+<<<<<<< Updated upstream
+=======
+
+
+
+        /*long findWorkDay = ordersRepository.findWorkDay();*//*              //요일 출력
+
+        A
+
+
+
+
+
+
+
+     /*   은영님 작업
+        if(time >=120000 && time < 130000){
+            totalProcessTime = totalProcessTime.withHour(13).withMinute(0).withSecond(0);
+        }else if(time >=180000 && time <= 235959){
+            totalProcessTime = totalProcessTime.plusDays(1).withHour(9).withMinute(0).withSecond(0);
+        }else if(time <90000){
+            totalProcessTime = totalProcessTime.withHour(9).withMinute(0).withSecond(0);
+        }
+
+    }else if(workTime >=120000 && workTime <130000){
+        totalProcessTime = totalProcessTime.withHour(13).withMinute(0).withSecond(0).plusMinutes(workLeadTime+workProcessTime);
+
+    }else if(workTime >=180000 && workTime <=235959){
+        totalProcessTime = totalProcessTime.plusDays(1).withHour(9).withMinute(0).withSecond(0).plusMinutes(workLeadTime+workProcessTime);
+
+    }else if(workTime <90000){
+        totalProcessTime = totalProcessTime.withHour(9).withMinute(0).withSecond(0).plusMinutes(workLeadTime+workProcessTime);
+    }
+
+
+
+            System.out.println("totalProcessTime = " + totalProcessTime);
+
+}*/
+
+
+
+
+
+
+
+>>>>>>> Stashed changes
