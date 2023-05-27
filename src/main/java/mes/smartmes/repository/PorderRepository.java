@@ -50,6 +50,11 @@ public interface PorderRepository extends JpaRepository<Porder, String> {
     @Query(value= "SELECT dayofweek(:date) " ,nativeQuery = true)
     Integer checkDay(LocalDateTime date);
 
+    //검색
+    @Query("SELECT p FROM Porder p WHERE DATE(p.porderDate) BETWEEN :startDate AND :endDate AND p.porderStatus = :porderStatus AND p.supplierId = :supplierId")
+    List<Porder> findSearch(@Param("startDate") java.util.Date startDate, @Param("endDate") java.util.Date endDate, @Param("porderStatus") String porderStatus, @Param("supplierId") String supplierId);
+
+
 
 
 

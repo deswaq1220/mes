@@ -81,12 +81,12 @@ public class IngredientService {
 
                 ingredientInput.setPorderNo(porder.getPorderNo());              // 발주번호
 //            System.out.println("ingredientInput1 = " + ingredientInput);
-                ingredientInput.setIngredientId(porder.getIngredientId());   // 발주 된 제품명
+                ingredientInput.setIngredientId(porder.getIngredientName());   // 발주 된 제품명
 //            System.out.println("ingredientInput2 = " + ingredientInput);
                 ingredientInput.setInputQuantity(porder.getPorderQuantity());    // 발주 수량
 //            System.out.println("ingredientInput3 = " + ingredientInput);
                 ingredientInput.setInputDate(LocalDateTime.now());
-                ingredientInput.setIngredientId(porder.getIngredientId());
+                ingredientInput.setIngredientId(porder.getIngredientName());
                 System.out.println("ingredientInput4 = " + ingredientInput);
                 ingredientInputRepository.save(ingredientInput);
                 System.out.println(ingredientInput.getIngredientInId());
@@ -97,7 +97,7 @@ public class IngredientService {
                 // 현재 재고를 업데이트  // 저장 된 재고를 더하기
 
                 System.out.println("이건 리스트고" + porder.toString());
-                System.out.println("이건 뭐고2 " + porder.getIngredientId());
+                System.out.println("이건 뭐고2 " + porder.getIngredientName());
 
 
                 // stockNo 생성

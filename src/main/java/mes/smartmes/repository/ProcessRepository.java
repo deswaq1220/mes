@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface ProcessRepository extends JpaRepository<Process, String> {
 
     @Query("SELECT p.processName FROM Process p WHERE p.processNO = :processNo")
-    String findByProcessNo(@Param("processNo") String processNo);
+    String findByProcessNo(String processNo);
 }

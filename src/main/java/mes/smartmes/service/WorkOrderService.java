@@ -264,7 +264,7 @@ public class WorkOrderService {
 
 
 
-    @Scheduled(cron = "*/5 * * * * ?") // 30초 마다 실행
+    @Scheduled(cron = "*/15 * * * * ?") // 30초 마다 실행
     public void processOrdersAutomatically() {
         List<ProductionPlan> plans = productionPlanRepository.findByProdPlanFinYn("진행중");
         if (plans != null && !plans.isEmpty()) {

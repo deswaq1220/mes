@@ -96,11 +96,9 @@ public class OrdersController {
 
         orders.setOrderNo(orderNo);
         //orders.setOrderDate(LocalDate.parse(orderDateStr).atStartOfDay());
-        orders.setOrderQuantity(5);
         orders.setCompanyId(request.getParameter("companyId"));
         orders.setProductId(request.getParameter("productId"));
         //orders.setOrderQuantity(Integer.parseInt(request.getParameter("orderQty")));
-        orders.setOrderStatus("A");
 
         ordersRepository.save(orders);
         System.out.println(orders);

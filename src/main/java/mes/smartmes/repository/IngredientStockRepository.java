@@ -6,25 +6,27 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Repository
 public interface IngredientStockRepository extends JpaRepository<IngredientStock, String> {
 
     // 현일
     @Query("SELECT i FROM IngredientStock i WHERE i.productId = :productId")
-    IngredientStock findByProductId(@Param("productId")String productId);
+    IngredientStock findByProductId(String productId);
 
     @Transactional
     @Modifying
     @Query("UPDATE IngredientStock ig SET ig.quantity = ig.quantity - :quantity WHERE ig.productId = :product_id")
-    void decreaseStockQuantity(@Param("product_id")String product_id, @Param("quantity")int quantity);
+    void decreaseStockQuantity(String product_id, int quantity);
 
     @Transactional
     @Modifying
     @Query("UPDATE IngredientStock ig SET ig.quantity = ig.quantity - :quantity WHERE ig.ingredientId = :ingredientId")
-    void decreaseStock1Quantity(@Param("ingredientId") String ingredientId, @Param("quantity")int quantity);
+    void decreaseStock1Quantity(String ingredientId, int quantity);
 
     @Query("SELECT i.quantity FROM IngredientStock i WHERE i.productId = :productId AND i.ingredientId = 'I008'")
     int findCabbageBoxConcentrateByProductId(@Param("productId") String productId);

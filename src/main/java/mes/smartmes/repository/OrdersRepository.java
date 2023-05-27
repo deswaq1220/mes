@@ -1,18 +1,21 @@
 package mes.smartmes.repository;
 
 import mes.smartmes.entity.Orders;
+import mes.smartmes.entity.Shipment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-
-public interface OrdersRepository extends JpaRepository<Orders, String> {
+@Repository
+public interface OrdersRepository extends JpaRepository<Orders, String>, QuerydslPredicateExecutor<Orders> {
 
     // 은영
     Orders save(Orders Orders);
@@ -31,6 +34,7 @@ public interface OrdersRepository extends JpaRepository<Orders, String> {
 
     Orders findByCompanyId(String companyId);
     int deleteByOrderNo(String orderNo);
+
     List<Orders> findAll();
 
 
@@ -40,24 +44,24 @@ public interface OrdersRepository extends JpaRepository<Orders, String> {
 
     //리드타임
     @Query(value = "SELECT p.lead_time FROM process p WHERE processno = :processNo" ,nativeQuery = true)
-    long findLeadTime(@Param("processNo") String processNo);
+    long findLeadTime(String processNo);
 
     //생산시간
     @Query(value = "SELECT p.process_time FROM process p WHERE processno = :processNo" ,nativeQuery = true)
-    long findProcessTime(@Param("processNo") String processNo);
+    long findProcessTime(String processNo);
 
     //생산능력(prcess_capacity)
     @Query(value = "SELECT p.process_capacity FROM process p WHERE processno = :processNo" ,nativeQuery = true)
-    long findCapa(@Param("processNo") String processNo);
+    long findCapa(String processNo);
 
     @Query(value ="SELECT dayofweek(:currentTime)",nativeQuery = true)
-    long findWorkDay(@Param("currentTime") LocalDateTime currentTime);
+    long findWorkDay(LocalDateTime currentTime);
 
     @Query(value ="SELECT date_format(:totalProcessTime,'%H%i%S')",nativeQuery = true)
-    String findWorkTime(@Param("totalProcessTime") LocalDateTime totalProcessTime);
+    String findWorkTime(LocalDateTime totalProcessTime);
 
     @Query("SELECT o FROM Orders o WHERE o.orderNo = :orderNo")
-    Orders findByOrderNo(@Param("orderNo")String orderNo);
+    Orders findByOrderNo(String orderNo);
 
 
 

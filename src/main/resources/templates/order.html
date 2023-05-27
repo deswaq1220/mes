@@ -85,19 +85,19 @@
       <div class="table-container">
         <table class="orderData" id="orderData">
           <thead>
-            <tr>
-              <td></td>
-              <td></td>
-              <td>진행상태</td>
-              <td onclick="clickDate()">등록일자</td>
-              <td onclick="clickNum()">수주번호</td>
-              <td>품목명</td>
-              <td>거래처</td>
-              <td>품목(수)</td>
-              <td>기준단위</td>
-              <td>납품예정일</td>
-              <td>수주확정</td>
-            </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>진행상태</td>
+            <td onclick="clickDate()">등록일자</td>
+            <td onclick="clickNum()">수주번호</td>
+            <td>품목명</td>
+            <td>거래처</td>
+            <td>품목(수)</td>
+            <td>기준단위</td>
+            <td>납품예정일</td>
+            <td>수주확정</td>
+          </tr>
           </thead>
           <tbody>
           <tr th:each="order, rowStat : ${orderList}" onclick="toggleCheckbox(this)">
@@ -120,8 +120,8 @@
             <td th:text="BOX"></td>
             <td th:text="1"></td>
             <td th:index="0">
-                <button th:if = "${order.orderStatus == 'A'}" class="confirmed" type="button" th:onclick="confirmed([[${order.orderNo}]])">수주확정</button>
-                <button th:if = "${order.orderStatus == 'B' || order.orderStatus == 'C'}" class="nowork" type="button" disabled="disabled">확정완료</button>
+              <button th:if = "${order.orderStatus == 'A'}" class="confirmed" type="button" th:onclick="confirmed([[${order.orderNo}]])">수주확정</button>
+              <button th:if = "${order.orderStatus == 'B' || order.orderStatus == 'C'}" class="nowork" type="button" disabled="disabled">확정완료</button>
             </td>
           </tr>
           </tbody>
@@ -159,43 +159,43 @@
 
 <div id="popUP_wrap" class="hidden">
   <div id="registrationWrap">
-      <div class="popupTopArea">
-        <h1> 수주등록</h1>
-        <div id="popUpBtnWrap">
-          <button class="save" onclick="saveOrder();">저장</button>
-          <button class="close" onclick="closePopup()">닫기</button>
-        </div>
+    <div class="popupTopArea">
+      <h1> 수주등록</h1>
+      <div id="popUpBtnWrap">
+        <button class="save" onclick="saveOrder();">저장</button>
+        <button class="close" onclick="closePopup()">닫기</button>
       </div>
-      <br>
-      <br>
-      <div id="popUp_tableCheckWrap">
-        <table id="popUp_tableCheck">
-          <tr class="tablerow">
-            <td class="inventory">수주번호</td>
-            <td>
-              <input type="text" class="systemAuto" placeholder="시스템 자동발번" readonly required>
-            </td>
-            <td class="inventory" >거래처</td>
-            <td>
-              <select class="company" required id = "company">
-                <option value="select">회사명</option>
-                <option value="cupang">쿠팡</option>
-                <option value="Gmarket">지마켓</option>
-                <option value="11">11번가</option>
-              </select>
-            </td>
+    </div>
+    <br>
+    <br>
+    <div id="popUp_tableCheckWrap">
+      <table id="popUp_tableCheck">
+        <tr class="tablerow">
+          <td class="inventory">수주번호</td>
+          <td>
+            <input type="text" class="systemAuto" placeholder="시스템 자동발번" readonly required>
+          </td>
+          <td class="inventory" >거래처</td>
+          <td>
+            <select class="company" required id = "company">
+              <option value="select">회사명</option>
+              <option value="cupang">쿠팡</option>
+              <option value="Gmarket">지마켓</option>
+              <option value="11">11번가</option>
+            </select>
+          </td>
 
-            <td class="inventory">담당자</td>
-            <td>
-              <select class="drop" required>
-                <option value="select">담당자</option>
-                <option>양은영</option>
-                <option>박희람</option>
-                <option>성현일</option>
-                <option>조현화</option>
-                <option>변경원</option>
-              </select>
-            </td>
+          <td class="inventory">담당자</td>
+          <td>
+            <select class="drop" required>
+              <option value="select">담당자</option>
+              <option>양은영</option>
+              <option>박희람</option>
+              <option>성현일</option>
+              <option>조현화</option>
+              <option>변경원</option>
+            </select>
+          </td>
         </tr>
         <tr class="tablerow">
           <td class="inventory">수주일</td>
@@ -213,7 +213,7 @@
           </td>
           <td class="inventory" style="line-height: 57px !important;">개수</td>
           <td>
-              <input type = "number" required id = "orderqty" name ="orderqty"> BOX
+            <input type = "number" required id = "orderqty" name ="orderqty"> BOX
           </td>
         </tr>
         <tr class="tablerow" >
@@ -222,28 +222,28 @@
             <input type = "text">
           </td>
         </tr>
-            <td class="inventory">수주번호</td>
-            <td>
-              <input type="text" class="systemAuto" placeholder="시스템 자동발번" disabled>
-            </td>
+        <td class="inventory">수주번호</td>
+        <td>
+          <input type="text" class="systemAuto" placeholder="시스템 자동발번" disabled>
+        </td>
 
-           <td class="inventory">납기일</td>
-            <td>
-              <input type="datetime-local" class="datepicker" name="deliveryDate" >
-            </td>
-          </tr>
-          <tr>
-              <td class="inventory"> 주문상태</td>
-                <td>
-                  <input type="text" name="orderStatus">
-               </td>
+        <td class="inventory">납기일</td>
+        <td>
+          <input type="datetime-local" class="datepicker" name="deliveryDate" >
+        </td>
+        </tr>
+        <tr>
+          <td class="inventory"> 주문상태</td>
+          <td>
+            <input type="text" name="orderStatus">
+          </td>
 
-          </tr>
+        </tr>
 
-          <tr class="tablerow">
-            <td class="inventory">거래처</td>
-        </table>
-      </div>
+        <tr class="tablerow">
+          <td class="inventory">거래처</td>
+      </table>
+    </div>
   </div>
 </div>
 
@@ -252,6 +252,7 @@
 
 <script src="/js/datapicker.js"></script>
 <script src="/js/popUP.js"></script>
+<script src="/js/order.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="/js/download.js"></script>

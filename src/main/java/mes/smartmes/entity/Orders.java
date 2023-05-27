@@ -36,12 +36,11 @@ public class Orders {
     @Column(length = 20)
     private String productId;               // (고객 주문) 제품 id
 
-    @PrePersist
-    public void prePersist() {
-            orderQuantity = 1;
-    }
+//    @PrePersist
+//    public void prePersist() {
+//            orderQuantity = 1;
+//    }
 
-    @ColumnDefault("1")
     private int orderQuantity;             // 주문 수량  box 단위
 
     private int orderPrice;                // 주문 가격
@@ -51,7 +50,7 @@ public class Orders {
     private LocalDateTime deliveryDate;              // 납품일자
 
     @Column(length = 1)
-    private String orderStatus;            // 주문 상태 A = 주문접수 , B =  수주확정, C = 생산계획 완료
+    private String orderStatus="A";            // 주문 상태 A = 주문접수 , B =  수주확정, C = 생산계획 완료
 
 
 

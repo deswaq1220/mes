@@ -133,7 +133,7 @@ public class LotService {
         return "LOT" + formattedSequence;
     }
 
-    @Scheduled(cron = "*/30 * * * * ?") // 30초 마다 실행
+    @Scheduled(cron = "*/20 * * * * ?") // 30초 마다 실행
     public void processOrdersAutomatically() {
         List<WorkOrder> plans = workOrderRepository.findByWorkStatus("작업완료");
         if (plans != null && !plans.isEmpty()) {
