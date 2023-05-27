@@ -17,13 +17,15 @@ public class Lot {
 
     @Id
     @Column(length = 20)
-    private  String lotId;                          //로트 id
+    private String lotId;                          //로트 id
 
-    private String ingredientId;                    //재료 id
+    //private String ingredientId;                    //재료 id
 
-    private int lotPlotNo;                          //직전 공정 로트 번호
+    @Column(length = 20)
+    private String lotPlotNo;                          //직전 공정 로트 번호
 
-    private int lotNo;                              //현재 공정 로트 번호
+    @Column(length = 30)
+    private String lotNo;                              //현재 공정 로트 번호
 
     @Column(length = 20)
     private String processNo;                       //공정 id
@@ -39,7 +41,7 @@ public class Lot {
 
     private LocalDateTime regDate;                  //등록일시
 
-    private LocalDateTime modDate;                  //수정일시
+    //private LocalDateTime modDate;                  //수정일시
 
 
 }

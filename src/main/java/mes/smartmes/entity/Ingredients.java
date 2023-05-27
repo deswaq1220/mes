@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -29,7 +30,7 @@ public class Ingredients {
     @Column(nullable = false)
     private String productId;
 
-    @Column(name = "input_date")
-    private LocalDate inputDate;
+    /*@Column(name = "input_date")
+    private LocalDateTime inputDate;*/
 
 }

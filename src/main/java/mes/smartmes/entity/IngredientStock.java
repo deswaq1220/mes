@@ -24,8 +24,7 @@ public class IngredientStock {
     private String stockNo;
 
 
-    //    @Column(length = 20, nullable = false)
-
+    @Column(length = 20, nullable = false)
     private String productId;
 
     @Column(length = 20, nullable = false)
