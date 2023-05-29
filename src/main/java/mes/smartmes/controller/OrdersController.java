@@ -74,45 +74,51 @@ public class OrdersController {
 
     //수주 등록 후 오더페이지로
     @PostMapping("/addOrder")
-    @ResponseStatus(value= HttpStatus.OK)
-    public void saveOder(Orders orders, Model model, HttpServletRequest request){
+    public String saveOder(@ModelAttribute Orders orders){
+
         System.out.println("=========================");
 
-        //orders.setOrderDate(LocalDateTime.now());
+        try {
         String dayNo = "OD" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         int orderIntNo=0;
-        String orderNo;
+        String orderNo = null;
 
         // 값이 없을 시 값 시작 값 생성
         if (ordersService.selectOrderNo() == null) {
             orderIntNo = 1;
             orderNo = dayNo + String.format("%04d", orderIntNo);
+            orders.setOrderNo(orderNo);
+            ordersRepository.save(orders);
+
         } else {
             orderIntNo = Integer.parseInt(ordersService.selectOrderNo()) + 1;
             orderNo = dayNo + String.format("%04d", orderIntNo);
+            orders.setOrderNo(orderNo);
+            ordersRepository.save(orders);
         }
         System.out.println(orderNo);
 
 
-        orders.setOrderNo(orderNo);
-        //orders.setOrderDate(LocalDate.parse(orderDateStr).atStartOfDay());
-        orders.setCompanyId(request.getParameter("companyId"));
-        orders.setProductId(request.getParameter("productId"));
-        //orders.setOrderQuantity(Integer.parseInt(request.getParameter("orderQty")));
-
-        ordersRepository.save(orders);
         System.out.println(orders);
-//        ordersService.selectProcessTime();
+
+        return "redirect:/mes/order";
+
+        } catch (Exception e ){
+            e.printStackTrace();
+            return "redirect:/mes/order";
+        }
+
 
     }
     // 조회
     @GetMapping("orderList")
     public String orderList(Model model){
 
-        List<Orders>  orderList = ordersRepository.findAll();
+        List<Orders>  ordersList = ordersRepository.findAll();
+        System.out.println("여기는 들어오나");
 
         // orderList 리스트 객체를 orderList 라는 이름으로 뷰페이지에서 사용 가능하게 세팅
-        model.addAttribute("orderList", orderList);
+        model.addAttribute("orderList", ordersList);
 
         return "order";
     }

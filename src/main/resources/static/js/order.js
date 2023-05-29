@@ -17,15 +17,16 @@ function confirmed(orderNo){
 
 function saveOrder(){
     //수주일
-    var orderDate = $("#orderDate").val();
+    let orderDate = $("#orderDate").val();
     //제품ID
-    var select = document.getElementById("selectedBox");
-    var productId = select.options[select.selectedIndex].value;
+    let select = document.getElementById("selectedBox");
+    let productId = select.options[select.selectedIndex].value;
     //거래처
-    var companySelect = document.getElementById("company");
-    var company = companySelect.options[companySelect.selectedIndex].value;
+    let companySelect = document.getElementById("company");
+    let company = companySelect.options[companySelect.selectedIndex].value;
     //개수
-    var orderQty = $("#orderqty").val();
+    let orderQty = $("#orderQuantity").val();
+
 
     $.ajax({
         url:'/mes/addOrder',

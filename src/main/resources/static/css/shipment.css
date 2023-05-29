@@ -1,4 +1,5 @@
-#business li:nth-child(2){
+
+#business li:nth-child(3){
   font-weight: 700;
 }
 
@@ -64,7 +65,7 @@ aside{
 
 /* 테이블1 */
 #tableCheckWrap{
-  width: 95%;
+  /*width:100%;*/
   height: 117px;
   /* background-color: khaki; */
   /* border-top: 1px solid #9F9D9D ;
@@ -94,7 +95,7 @@ aside{
   align-items: center;
   border-collapse: collapse;
   border-bottom: 1px solid #9F9D9D;
-  
+
 }
 
 .tablerow:nth-child(1){
@@ -126,6 +127,12 @@ form{
 form input:nth-child(1){
   margin-left:0;
 }
+
+
+form .tablerow:nth-child(1) td:nth-child(8) input{
+  margin-right: 12px;
+}
+
 
 
 .datepicker{
@@ -190,7 +197,7 @@ td{
 }
 
 #orderList{
-  width: 95%;
+  /*width: 95%;*/
   margin: 10px 45px 0 45px;
 
 }
@@ -256,7 +263,7 @@ td{
   box-sizing: border-box;
 }
 
-#orderList table tfoot tr td:nth-child(3),
+
 #orderList table tfoot tr td:nth-child(4),
 #orderList table tfoot tr td:nth-child(5),
 #orderList table tfoot tr td:nth-child(6),
@@ -269,6 +276,22 @@ td{
 {
   border: none;
 }
+
+
+
+#orderList table tbody tr td:nth-child(12),
+#orderList table tbody tr td:nth-child(13)
+{
+  border: none;
+}
+
+#orderList table thead tr td:nth-child(12),
+#orderList table thead tr td:nth-child(13)
+{
+  border: none;
+}
+
+
 
 #orderList table tfoot tr td:nth-child(7),
 #orderList table tfoot tr td:nth-child(8),
@@ -289,8 +312,10 @@ td{
 
 /* 수주상세 테이블 시작 */
 #orderDetails{
-  width: 100%;
+
+  /*width: 100%;*/
   margin-top: 10px;
+  margin-bottom: 100px;
 
 }
 
@@ -338,6 +363,8 @@ td{
   padding: 12px;
   box-sizing: border-box;
 }
+
+
 
 
 #orderDetails table tfoot{
@@ -391,6 +418,10 @@ td{
   font-weight: 600;
   float: right;
 
+
+  margin: 0;
+
+
 }
 
 
@@ -404,7 +435,7 @@ td{
 
 
 
- 
+
 
 
 
