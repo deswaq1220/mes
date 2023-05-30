@@ -1,6 +1,5 @@
 package mes.smartmes.controller;
 
-
 import lombok.RequiredArgsConstructor;
 import mes.smartmes.entity.Porder;
 import mes.smartmes.repository.PorderRepository;
@@ -48,38 +47,8 @@ public class PorderController {
         System.out.println(result);
         System.out.println("Total Pages:"+result.getTotalPages());
 
-
         return "Porder";
     }
-
-    private Porder porder;
-    private PorderRepository porderRepository;
-    @Autowired
-    private PorderService porderService;
-
-    @Autowired
-    private IngredientService ingredientService;
-
-    @GetMapping("/porder")
-    public String save(){
-//        porderService.("PD20230522003");
-
-        ingredientService.updatePorderStatusAndInsertIngredient("PD202305260009");
-        ingredientService.updatePorderStatusAndInsertIngredient("PD202305260010");
-        ingredientService.updatePorderStatusAndInsertIngredient("PD202305260011");
-        ingredientService.updatePorderStatusAndInsertIngredient("PD202305260012");
-        System.out.println("===========================");
-        System.out.println("===========================");
-        System.out.println("===========================");
-        System.out.println("===========================");
-        System.out.println("===========================");
-
-
-
-
-
-
-}
 
     @GetMapping("/porderSearch")
     public String searchForm(){
@@ -100,4 +69,3 @@ public class PorderController {
     }
 
 }
-

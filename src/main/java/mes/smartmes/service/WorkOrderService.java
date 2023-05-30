@@ -11,8 +11,6 @@ import mes.smartmes.repository.ProductionPlanRepository;
 import mes.smartmes.repository.RoutingRepository;
 import mes.smartmes.repository.WorkOrderRepository;
 
-import mes.smartmes.entity.ProductionPlan;
-import mes.smartmes.repository.ProductionPlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -27,6 +25,7 @@ public class WorkOrderService {
     private RoutingRepository routingRepository;
     private WorkOrderRepository workOrderRepository;
     private ProcessRepository processRepository;
+
     private Ratio ratio;
 
 
@@ -53,6 +52,7 @@ public class WorkOrderService {
     public void processOrder(String planNo){
 
         System.out.println("생산계획번호 : "+planNo);
+
         ProductionPlan pp = productionPlanRepository.findByPlanNo(planNo);
         ratio = new Ratio(pp);
         lotService.find(pp);
@@ -104,7 +104,7 @@ public class WorkOrderService {
                         workOrder.setInputQuantity(pp.getProdPlanQuantity());
                         workOrder.setOutputQuantity(pp.getProdPlanQuantity());
                     }else if("추출".equals(eq)){
-                        workOrder.setInputQuantity(pp.getProdPlanQuantity());
+                        workOrder.setInputQuantity((int) ratio.getCabbageWater());
                         workOrder.setOutputQuantity((int) ratio.getCabbageWaterOutput());
                     }else if("혼합 및 살균_즙".equals(eq)){
                         workOrder.setInputQuantity((int) ratio.getCabbageWaterOutput());
@@ -125,50 +125,50 @@ public class WorkOrderService {
                 }else if("P002".equals(pp.getProductId())){
                     if("원료계량".equals(eq)){
                         workOrder.setInputQuantity(pp.getProdPlanQuantity());
+                        workOrder.setOutputQuantity(pp.getProdPlanQuantity());
                     }else if("전처리".equals(eq)){
                         workOrder.setInputQuantity(pp.getProdPlanQuantity());
+                        workOrder.setOutputQuantity(pp.getProdPlanQuantity());
                     }else if("추출".equals(eq)){
                         System.out.println("in-추출");
                         System.out.println("추출투입개수 : "+ratio.getBlackGarlicWater());
-                        workOrder.setInputQuantity((int) ratio.getBlackGarlicWater());  //추출후 나온양 = 투입량*0.6 => (int) ratio.getBlackGarlicWater()*0.6
+                        workOrder.setInputQuantity(pp.getProdPlanQuantity());
+                        workOrder.setOutputQuantity((int) ratio.getBlackGarlicOutput());  //추출후 나온양 = 투입량*0.6 => (int) ratio.getBlackGarlicWater()*0.6
                     }else if("혼합 및 살균_즙".equals(eq)){
-                        workOrder.setInputQuantity((int) ratio.getBlackGarlicOutput()); // 혼합 후 나온양 = (int) ratio.getBlackGarlicOutput()*4
+                        workOrder.setInputQuantity((int) ratio.getBlackGarlicOutput());
+                        workOrder.setOutputQuantity((int) ratio.getBlackGarlicOutput()*4); // 혼합 후 나온양 = (int) ratio.getBlackGarlicOutput()*4
                     }else if("충진_즙".equals(eq)){
-                        workOrder.setInputQuantity((int) ratio.getBlackGarlicOutput()); //충진후 생산량 = (int) ratio.getBlackGarlicOutput()*4*1000/80
+                        workOrder.setInputQuantity((int) ratio.getBlackGarlicOutput()*4);
+                        workOrder.setOutputQuantity((int) ratio.getBlackGarlicOutput()*4*1000/80); //충진후 생산량 = (int) ratio.getBlackGarlicOutput()*4*1000/80
                     }else if("검사".equals(eq)){
-                        workOrder.setInputQuantity((int) ratio.getBlackGarlicOutput());
+                        workOrder.setInputQuantity((int) ratio.getBlackGarlicOutput()*4*1000/80);
+                        workOrder.setOutputQuantity((int) ratio.getBlackGarlicOutput()*4*1000/80);
                     }else if("식힘".equals(eq)){
-                        workOrder.setInputQuantity((int) ratio.getBlackGarlicOutput());
+                        workOrder.setInputQuantity((int) ratio.getBlackGarlicOutput()*4*1000/80);
+                        workOrder.setOutputQuantity((int) ratio.getBlackGarlicOutput()*4*1000/80);
                     }else if("포장".equals(eq)){
-                        workOrder.setInputQuantity((int) ratio.getBlackGarlicOutput()); //(int) ratio.getBlackGarlicOutput()*4*1000/80/30
+                        workOrder.setInputQuantity((int) ratio.getBlackGarlicOutput()*4*1000/80);
+                        workOrder.setOutputQuantity((int) ratio.getBlackGarlicOutput()*4*1000/80/30); //(int) ratio.getBlackGarlicOutput()*4*1000/80/30
                     }
-                }else if("P003".equals(pp.getProductId())){
+                }else if("P003".equals(pp.getProductId()) || "P004".equals(pp.getProductId())){
                     if("원료계량".equals(eq)){
                         workOrder.setInputQuantity((int) ratio.getJellyInputQty()); //완료 수량 그대로
+                        workOrder.setOutputQuantity((int) ratio.getJellyInputQty());
                     }else if("혼합 및 살균_젤리".equals(eq)){
                         workOrder.setInputQuantity((int) ratio.getJellyInputQty());
+                        workOrder.setOutputQuantity((int) ratio.getJellyInputQty());
                     }else if("충진_젤리".equals(eq)){
                         workOrder.setInputQuantity((int) ratio.getJellyInputQty());
+                        workOrder.setOutputQuantity((int) ratio.getJellyInputQty()/15);
                     }else if("검사".equals(eq)){
                         workOrder.setInputQuantity((int) ratio.getJellyInputQty()/15);
+                        workOrder.setOutputQuantity((int) ratio.getJellyInputQty()/15);
                     }else if("식힘".equals(eq)){
                         workOrder.setInputQuantity((int) ratio.getJellyInputQty()/15);
+                        workOrder.setOutputQuantity((int) ratio.getJellyInputQty()/15);
                     }else if("포장".equals(eq)){
-                        workOrder.setInputQuantity((int) ((ratio.getJellyInputQty()/15/25)));
-                    }
-                }else if("P004".equals(pp.getProductId())){
-                    if("원료계량".equals(eq)){
-                        workOrder.setInputQuantity(pp.getProdPlanQuantity());
-                    }else if("혼합 및 살균_젤리".equals(eq)){
-                        workOrder.setInputQuantity((int) ratio.getJellyInputQty());
-                    }else if("충진_젤리".equals(eq)){
-                        workOrder.setInputQuantity((int) ratio.getJellyInputQty());
-                    }else if("검사".equals(eq)){
-                        workOrder.setInputQuantity((int) ratio.getJellyInputQty());
-                    }else if("식힘".equals(eq)){
-                        workOrder.setInputQuantity((int) ratio.getJellyInputQty());
-                    }else if("포장".equals(eq)){
-                        workOrder.setInputQuantity((int) ratio.getJellyInputQty());
+                        workOrder.setInputQuantity((int) ratio.getJellyInputQty()/15);
+                        workOrder.setOutputQuantity((int) ((ratio.getJellyInputQty()/15/25)));
                     }
                 }
                 Map<String ,Object> resultMap = lotService.countTime(pp.getProductId());
@@ -209,7 +209,7 @@ public class WorkOrderService {
 
                 LocalDateTime processTime = processTimesList.get(i);
                 System.out.println(i+"번"+processTime);
-                workOrder.setWorkOrderFinshDate(processTime);
+                workOrder.setWorkOrderFinishDate(processTime);
                 // 작업 수행
 
                 System.out.println( "시발여기요 - "+processTimes);
@@ -226,9 +226,14 @@ public class WorkOrderService {
                 // 작업지시테이블에 insert 작업 수행
                 workOrderRepository.save(workOrder);
                 workOrderRepository.flush();
+                productionPlanRepository.setPlanStatus(planNo,"작업지시완료");
+                System.out.println("야야야야야야야야야");
+//                productionPlanRepository.save(pp);
+//                productionPlanRepository.flush();
 
             }
         }
+
     }
 
 //    private String getProcessNoFromRouting(Routing routing, int processNumber) {
@@ -260,7 +265,7 @@ public class WorkOrderService {
 
 
 
-    @Scheduled(cron = "*/30 * * * * ?") // 30초 마다 실행
+    @Scheduled(cron = "*/15 * * * * ?") // 30초 마다 실행
     public void processOrdersAutomatically() {
         List<ProductionPlan> plans = productionPlanRepository.findByProdPlanFinYn("진행중");
         if (plans != null && !plans.isEmpty()) {
@@ -270,7 +275,10 @@ public class WorkOrderService {
                 processOrder(planNo);
             }
         }
+
     }
+
+
 
     private String determineProgressStatus() {
         // 생산계획 테이블에서 모든 로우를 조회
@@ -295,6 +303,15 @@ public class WorkOrderService {
         String formattedDate = now.format(formatter);
         // 시퀀스 값을 문자열로 변환합니다.
         String formattedSequence = String.format("%03d", sequence);
+
+        List<String> no = workOrderRepository.findByPlanNo1();
+        for(int i=0;i<no.size();i++){
+            if(("WO"+formattedDate+formattedSequence) == no.get(i)){
+                int incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                formattedSequence = String.format("%03d", incrementedValue);
+            }
+        }
+
         // 시퀀스 값을 1 증가시킵니다.
         sequence++;
         // 생산계획번호를 조합하여 반환합니다.

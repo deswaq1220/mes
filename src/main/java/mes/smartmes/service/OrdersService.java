@@ -1,28 +1,14 @@
 package mes.smartmes.service;
 
-
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import mes.smartmes.dto.OrdersDTO;
 import mes.smartmes.dto.Ratio;
 import mes.smartmes.dto.Weekday;
-
 import mes.smartmes.entity.Orders;
 import mes.smartmes.entity.Routing;
 import mes.smartmes.repository.OrdersRepository;
 import mes.smartmes.repository.RoutingRepository;
-
-import com.querydsl.core.BooleanBuilder;
-import lombok.RequiredArgsConstructor;
-import mes.smartmes.dto.Ratio;
-import mes.smartmes.dto.Weekday;
-
-
-import mes.smartmes.entity.Routing;
-import mes.smartmes.repository.OrdersRepository;
-import mes.smartmes.repository.RoutingRepository;
-import mes.smartmes.repository.ShipmentRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,10 +62,8 @@ public class OrdersService {
     }
 
 
+
     public String processSetting(String productId) {
-
-        System.out.println("공정번호 입력 p001 ~ p004");
-
 
 
         // 라우팅에 productId를 받아오고
@@ -113,7 +97,6 @@ public class OrdersService {
 
 
     // 공정 1~6번
-
 //    public long selectProcessOneToSix(String productId) {
 //
 //        System.out.println(productId);
@@ -401,6 +384,4 @@ public class OrdersService {
 //        return null;
 //    }
 
-
 }
-   

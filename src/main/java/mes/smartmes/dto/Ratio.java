@@ -1,6 +1,5 @@
 package mes.smartmes.dto;
 
-
 import mes.smartmes.entity.ProductionPlan;
 import mes.smartmes.repository.ProductionPlanRepository;
 import mes.smartmes.service.WorkOrderService;
@@ -32,8 +31,6 @@ public class Ratio {
         return getJellyInputQty()*1000/80;
     }
 
-
-
     public double getWaterOrderInputQty() {
         return getOrderInput() * 30;
     }
@@ -62,6 +59,10 @@ public class Ratio {
         return getCabbageWater() * 0.8;
     }
 
+    public double getCabbageWaterOutput1() {
+        return getCabbageWaterOutput()*1000.0/80;
+    }
+
     //흑마늘 투입량(kg)
     public double getGarlicInputQty() {
         return getOrderInput();
@@ -87,7 +88,6 @@ public class Ratio {
         return (getOrderInput()/5) * 15;                    //250
     }
 }
-
 
 
 

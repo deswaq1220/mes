@@ -28,16 +28,14 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	annotationProcessor 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	runtimeOnly 'com.h2database:h2'
 	implementation 'org.springframework.boot:spring-boot-starter-mustache'
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
@@ -49,8 +47,6 @@ dependencies {
 			"javax.annotation:javax.annotation-api",
 
 			"com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
-
-
 }
 
 tasks.named('test') {

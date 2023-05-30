@@ -1,20 +1,17 @@
-
-function toggleCheckbox(row) {
-  const checkbox = row.querySelector('input[type="checkbox"]');
-
+function toggleCheckbox(event) {
+  const checkbox = event.target;
+  const row = checkbox.closest('tr');
   checkbox.checked = !checkbox.checked;
   if (checkbox.checked) {
     row.style.backgroundColor = '#DDEAFD';
   } else {
-
-    row.style.backgroundColor = ''; // 기본값으로 돌아가도록 함
+    row.style.backgroundColor = '';
   }
 }
 
-// function changeColor(row) {
-//   row.style.backgroundColor = '#DDEAFD';
-// }
-
+function changeColor(row) {
+  row.style.backgroundColor = '#DDEAFD';
+}
 
 //라우팅 배정 버튼 이벤트
 
@@ -41,7 +38,4 @@ for (var i = 0; i < buttons.length; i++) {
       this.style.color = "white"; // 색상 변경
     }
   });
-
 }
-
-

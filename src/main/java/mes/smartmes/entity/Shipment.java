@@ -6,8 +6,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -20,33 +18,27 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "shipment")
-
 public class Shipment {
 
     @Id
     @Column(length = 20)
-
-
-
-    private String shipmentNo; // 출하번호
+    private String shipmentNo;
 
     @Column(length = 20)
-    private String productId;    // 제품코드
+    private String orderNo;
+
+    @Column(length = 20)
+    private String productId;
 
     @Column(length = 50)
-    private String companyName; // 거래처이름
+    private String companyName;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    private LocalDate shipmentDate; // 출하일자
+    private LocalDateTime shipmentDate;
 
-    private int shipmentQuantity; // 상태
+    private int shipmentQuantity;
 
     @Column(length = 20)
-    private String shipmentStatus; // 수량
-
-    @OneToOne                        // 수주관리
-    @JoinColumn(name = "order_id")
-    private Orders order;
-
+    private String shipmentStatus;
 }

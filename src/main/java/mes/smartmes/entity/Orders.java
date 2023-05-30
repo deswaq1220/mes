@@ -2,21 +2,15 @@ package mes.smartmes.entity;
 
 import lombok.*;
 import mes.smartmes.dto.OrdersDTO;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
-import javax.persistence.*;
-
-
 
 
 @Entity
@@ -42,6 +36,11 @@ public class Orders {
     @Column(length = 20)
     private String productId;               // (고객 주문) 제품 id
 
+//    @PrePersist
+//    public void prePersist() {
+//            orderQuantity = 1;
+//    }
+
     private int orderQuantity;             // 주문 수량  box 단위
 
     private int orderPrice;                // 주문 가격
@@ -55,8 +54,19 @@ public class Orders {
 
 
 
-
-
+ /*   // Orders -> OrdersDTO
+    public OrdersDTO toOrderDTO(Orders orders) {
+        OrdersDTO ordersDTO = new OrdersDTO();
+        ordersDTO.setOrderNo(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+        ordersDTO.setCompanyId(orders.getCompanyId());
+        ordersDTO.setProductId(orders.getProductId());
+        ordersDTO.setOrderQuantity(orders.getOrderQuantity());
+        ordersDTO.setOrderPrice(orders.getOrderPrice());
+        ordersDTO.setDeliveryDate(orders.getDeliveryDate());
+        ordersDTO.setOrderStatus(orders.getOrderStatus());
+        return ordersDTO;
+    }
+*/
 
 
 }
