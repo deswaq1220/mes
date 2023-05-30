@@ -21,8 +21,6 @@ public class QPorder extends EntityPathBase<Porder> {
 
     public final StringPath emergencyYn = createString("emergencyYn");
 
-    public final StringPath ingredientId = createString("ingredientId");
-
     public final StringPath ingredientName = createString("ingredientName");
 
     public final DateTimePath<java.time.LocalDateTime> porderDate = createDateTime("porderDate", java.time.LocalDateTime.class);

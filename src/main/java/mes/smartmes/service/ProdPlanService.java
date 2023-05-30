@@ -1369,7 +1369,7 @@ public class ProdPlanService {
         return "진행중"; // "진행중"인 로우가 없는 경우 "진행중" 상태 반환
     }
 
-    @Scheduled(cron = "*/5 * * * * ?") // 30초 마다 실행
+    @Scheduled(cron = "*/10 * * * * ?") // 30초 마다 실행
     public void processOrdersAutomatically() {
         List<Orders> orders = ordersRepository.findByOrderStatus("B");
         if (orders != null && !orders.isEmpty()) {
@@ -1453,7 +1453,7 @@ public class ProdPlanService {
 
     //현화
     public List<ProductionPlan> selectList(){
-        return prodPlanRepository.findAll();
+        return productionPlanRepository.findAll();
     }
     public void prodPlanService(ProdPlanRepository prodPlanRepository){
         this.prodPlanRepository = prodPlanRepository;

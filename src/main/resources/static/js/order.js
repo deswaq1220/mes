@@ -17,27 +17,38 @@ function confirmed(orderNo){
 
 function saveOrder(){
     //수주일
-    var orderDate = $("#orderDate").val();
+    let orderDate = document.getElementById("orderDate").value;
+    // let orderDate = new Date(oderDateInput).toISOString().slice(0, 16); // ISO 8601 형식으로 변환
     //제품ID
-    var select = document.getElementById("selectedBox");
-    var productId = select.options[select.selectedIndex].value;
+    let select = document.getElementById("selectedBox");
+    let productId = select.options[select.selectedIndex].value;
     //거래처
-    var companySelect = document.getElementById("company");
-    var company = companySelect.options[companySelect.selectedIndex].value;
+    let companySelect = document.getElementById("company");
+    let company = companySelect.options[companySelect.selectedIndex].value;
     //개수
-    var orderQty = $("#orderqty").val();
+    let orderQty = document.getElementById("orderQuantity").value;
+
+    // 납품 예정일
+    let deliveryDate = document.getElementById("deliveryDate").value;
+    // let deliveryDate = new Date(deliveryDateInput).toISOString().slice(0, 16); // ISO 8601 형식으로 변환
+    console.log(orderDate);
+    console.log(productId);
+    console.log(orderQty);
+    console.log(deliveryDate);
+
 
     $.ajax({
         url:'/mes/addOrder',
         type: 'post',
         data:{
-            "orderDateStr" : orderDate,
+            "orderDate" : orderDate,
             "companyId" : company,
             "productId" : productId,
-            "orderQty" : orderQty
+            "orderQuantity" : orderQty,
+            "deliveryDate" : deliveryDate
         },
         success: function (){
-            location.href = "order";
+         location.href = "order";
         },
         error: function (){
             alert("에러");

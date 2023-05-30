@@ -41,8 +41,7 @@ aside{
 .return svg{
   margin: 13px 12.7px 13.8px 13px;
 }
-
-.check,.new,.retouch,.closing,.closingCancel,.confirmed,.nowork{
+.check,.new,.retouch,.closing,.closingCancel, .confirmed{
   width: 88px;
   height: 43px;
   background-color: #022454;
@@ -51,6 +50,18 @@ aside{
   margin-right: 4px;
   margin-top: 0px;
   margin-left: 0px;
+}
+.nowork {
+  option: disabled;
+  width: 88px;
+  height: 43px;
+  background-color: grey;
+  color: white;
+  font-size: 16px;
+  margin-right: 4px;
+  margin-top: 0px;
+  margin-left: 0px;
+
 }
 .retouch{
   margin-right: 0;
@@ -251,14 +262,17 @@ td{
   background-color: #F2F3F4;
 }
 
-#orderList table tbody td:nth-child(9),
-#orderList table tbody td:nth-child(10),
 #orderList table tbody td:nth-child(11),
 #orderList table tbody td:nth-child(12)
 {
   text-align: right;
   padding: 12px;
   box-sizing: border-box;
+}
+
+#orderList table tbody td:nth-child(11){
+  display: flex;
+  justify-content: center;
 }
 
 #orderList table tfoot{
@@ -339,7 +353,6 @@ td{
 
 #orderDetails table tbody td:nth-child(9),
 #orderDetails table tbody td:nth-child(10),
-#orderDetails table tbody td:nth-child(11),
 #orderDetails table tbody td:nth-child(12)
 {
   text-align: right;
@@ -394,21 +407,7 @@ td{
   font-weight: 600;
   float: right;
 
-  margin-left: 4px;
-
 }
-
-#confirmation{
-  width: 88px;
-  height: 43px;
-  background-color: #022454;
-  text-align: center;
-  line-height: 43px;
-  font-size: 16px;
-  font-weight: 600;
-  float: right;
-}
-
 
 
 

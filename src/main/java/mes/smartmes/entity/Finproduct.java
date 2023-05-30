@@ -26,7 +26,6 @@ public class Finproduct {
     private String productId;
 
     @Column(nullable = false)
-
     private int finProductQuantity;
 
 //    @Column(nullable = false)

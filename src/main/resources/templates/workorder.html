@@ -6,16 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>작업지시 </title>
   <!-- css -->
-
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="/css/nav.css">
   <link rel="stylesheet" href="/css/workorder.css">
-
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 </head>
 <body>
-<div id="wrap">
+ <div id="wrap">
 
 
   <nav th:replace="sideMenu :: nav"></nav>
@@ -24,11 +22,13 @@
     <form class="orderForm" th:action="@{/mes/workordersearch}" method="get">
       <div class="topArea">
         <h1> 작업지시</h1>
+        <div class="allSelect">전체선택</div>
         <div id="btnWrap">
           <button class="return">
             <svg xmlns="http://www.w3.org/2000/svg" width="17.303" height="16.221" viewBox="0 0 17.303 16.221">
               <path id="redo_FILL0_wght400_GRAD0_opsz48" d="M166.272,272.221a6.251,6.251,0,0,1-4.42-1.73,5.852,5.852,0,0,1,0-8.543,6.251,6.251,0,0,1,4.42-1.73h7.948l-3.082-3.082L172.274,256l5.029,5.029-5.029,5.029-1.136-1.135,3.082-3.082h-7.975a4.644,4.644,0,0,0-3.258,1.257,4.254,4.254,0,0,0,0,6.245,4.644,4.644,0,0,0,3.258,1.257h7.813v1.622Z" transform="translate(-160 -256)" fill="#fff"/>
             </svg>
+            
           </button>
           <button class="check" type="submit">조회</button>
         </div>
@@ -41,7 +41,7 @@
             <td>
               <input type="text" name="processNo">
             </td>
-
+  
             <td class="inventory">조회날짜</td>
             <td><input type="date" class="datepicker" name="startDate"></td>
             <td>~</td>
@@ -68,21 +68,17 @@
                 <option value="P003">석류젤리</option>
                 <option value="P004">매실젤리</option>
               </select>
-
+             
             </td>
           </tr>
         </table>
+      </form>
       </div>
-    </form>
+      
 
-
-
-    <div id="orderList">
-      <h1> 작업지시목록 </h1>
-
-      <div class="allSelect">전체선택</div>
-
-      <div class="table-container">
+      <div id="orderList">
+        <h1> 작업지시목록 </h1>
+        <div class="table-container">
         <table class="orderData">
           <thead>
           <tr>
@@ -159,7 +155,7 @@
             <td></td>
             <td></td>
             <td></td>
-
+            
           </tr>
           </thead>
           <tbody>
@@ -181,7 +177,7 @@
             <td></td>
             <td></td>
           </tr>
-
+          
           </tbody>
           <!-- <tfoot>
           <tr>
@@ -202,14 +198,14 @@
           </tr>
           </tfoot> -->
         </table>
+        </div>
+        <button id="fileSave">엑셀저장</button>
+          </div>
       </div>
-      <button id="fileSave">엑셀저장</button>
-    </div>
-</div>
-</aside>
-</div>
-</div>
-</div>
+    </aside>
+      </div>
+     </div>
+ </div>
 
 <!-- 스크립트 -->
 

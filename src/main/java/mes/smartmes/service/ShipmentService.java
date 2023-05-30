@@ -1,23 +1,25 @@
 package mes.smartmes.service;
 
-
-
-import com.fasterxml.jackson.databind.util.ArrayBuilders;
 import com.querydsl.core.BooleanBuilder;
+import lombok.RequiredArgsConstructor;
+import mes.smartmes.entity.Orders;
+import mes.smartmes.entity.QOrders;
 import mes.smartmes.entity.QShipment;
 import mes.smartmes.entity.Shipment;
 import mes.smartmes.repository.OrdersRepository;
 import mes.smartmes.repository.ShipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class ShipmentService {
-    private final ShipmentRepository shipmentRepository;
+
+    private  final ShipmentRepository shipmentRepository;
     private final OrdersRepository ordersRepository;
 
     @Autowired
@@ -30,12 +32,26 @@ public class ShipmentService {
         return shipmentRepository.findAll();
     }
 
+
+
+    //조회
+    public String selectShipmentNo(){
+        String shipmentIntNo = shipmentRepository.findByShipmentNo();
+        return  shipmentIntNo;
+    }
+
+    //삭제
+    public int deleteByShipmentNo(String shipmentNo){
+
+        return shipmentRepository.deleteByShipmentNo(shipmentNo);
+    }
+
     // 다중검색
 
-    @Transactional
-    public List<Shipment> searchShipment(String shipmentNo, LocalDate startDate, LocalDate endDate, String companyName) {
+    @javax.transaction.Transactional
+    public List<Shipment> searchShipment(String shipmentNo, LocalDateTime startDate, LocalDateTime endDate, String companyName) {
         QShipment qShipment = QShipment.shipment;
-       BooleanBuilder builder = new BooleanBuilder();
+        BooleanBuilder builder = new BooleanBuilder();
 
 
         if (shipmentNo != null && shipmentNo != "") {
@@ -55,5 +71,26 @@ public class ShipmentService {
 
 //        return (List<Shipment>) shipmentRepository.findAll(builder.getValue());
     }
+
+
+    //오더 리스트 다중검색
+    @javax.transaction.Transactional
+    public List<Orders> searchOrders(String orderNo , String productId){
+        QOrders qOrders = QOrders.orders;
+        BooleanBuilder builder = new BooleanBuilder();
+
+        if(orderNo != null && orderNo != ""){
+            builder.and(qOrders.orderNo.contains(orderNo));
+        }
+        if(productId != null && productId != ""){
+            builder.and(qOrders.productId.contains(productId));
+        }
+
+        return (List<Orders>) ordersRepository.findAll(builder);
+
+    }
+
+
+
 
 }

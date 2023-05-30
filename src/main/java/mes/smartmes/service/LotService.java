@@ -133,7 +133,7 @@ public class LotService {
         return "LOT" + formattedSequence;
     }
 
-    @Scheduled(cron = "*/30 * * * * ?") // 30초 마다 실행
+    @Scheduled(cron = "*/20 * * * * ?") // 30초 마다 실행
     public void processOrdersAutomatically() {
         List<WorkOrder> plans = workOrderRepository.findByWorkStatus("작업완료");
         if (plans != null && !plans.isEmpty()) {
@@ -718,7 +718,7 @@ public class LotService {
                 long workDay = ordersRepository.findWorkDay(totalWorkTime);
                 if(workDay == Weekday.FRIDAY){
                     currentTime = currentTime.plusDays(3).withHour(9);
-                    //totalWorkTime = currentTime.plusMinutes(totalTime).plusDays(3).withHour(9);
+                    totalWorkTime = currentTime.plusMinutes(totalTime).plusDays(3).withHour(9);
                 }
 //                    Long toTime = (long) Integer.parseInt(ordersRepository.findWorkTime(totalWorkTime));
 //                    System.out.println("셀프투타임 - "+toTime);
@@ -728,7 +728,7 @@ public class LotService {
 //                        System.out.println("셀프토탈(이프이프_) - "+totalWorkTime);
 //                    }else{
 //                    ////////////////////////여기수정/////////////////////////
-//                    totalWorkTime = currentTime.plusMinutes(totalTime).plusDays(3).withHour(9);//plusDay가 4가되야 맞지않나?
+                    totalWorkTime = currentTime.plusMinutes(totalTime).plusDays(3).withHour(9);//plusDay가 4가되야 맞지않나?
 //                    System.out.println("셀프totalWorkTime(if안) - "+totalWorkTime);
 //                    }
 

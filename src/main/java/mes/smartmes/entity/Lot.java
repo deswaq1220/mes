@@ -24,7 +24,7 @@ public class Lot {
     @Column(length = 20)
     private String lotPlotNo;                          //직전 공정 로트 번호
 
-    @Column(length = 20)
+    @Column(length = 30)
     private String lotNo;                              //현재 공정 로트 번호
 
     @Column(length = 20)

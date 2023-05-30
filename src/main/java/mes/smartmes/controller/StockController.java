@@ -3,10 +3,8 @@ package mes.smartmes.controller;
 import lombok.RequiredArgsConstructor;
 import mes.smartmes.entity.Finproduct;
 import mes.smartmes.entity.IngredientStock;
-
 import mes.smartmes.service.FinproductService;
 import mes.smartmes.service.IngredientStockService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

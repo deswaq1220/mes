@@ -14,7 +14,7 @@
 
 </head>
 <body>
-<div id="wrap">
+ <div id="wrap">
   <nav th:replace="sideMenu::nav"></nav>
 
   <aside>
@@ -31,6 +31,7 @@
           <button class="check" type="submit">조회</button>
         </div>
       </div>
+    </div>
 
       <div id="tableCheckWrap">
         <table id="tableCheck">
@@ -44,8 +45,8 @@
               <input type="text" name="processName">
             </td>
 
-            <td class="inventory">진행상태</td>
-            <td>
+          <td class="inventory">진행상태</td>
+          <td>
 
               <select class="drop" name="processDivision">
                 <option value="">진행상태</option>
@@ -54,10 +55,10 @@
                 <option value="검사">검사</option>
               </select>
 
-            </td>
-          </tr>
-        </table>
-      </div>
+          </td>
+        </tr>
+      </table>
+    </div>
     </form>
 
 
@@ -116,7 +117,7 @@
 </div>
 
 
-<!-- 스크립트 -->
+    <!-- 스크립트 -->
 
 <script src="js/datapicker.js"></script>
 <!-- <script src="js/popUP.js"></script> -->
@@ -126,29 +127,29 @@
 <!--<script src="js/click.js"></script>-->
 <script>
 
-  $(document).ready(function() {
+      $(document).ready(function() {
 
-    $(".new").click(function() {
-      $("#popUP_wrap").fadeIn();
+        $(".new").click(function() {
+          $("#popUP_wrap").fadeIn();
 
-    });
+        });
 
-    $(".close").click(function() {
+        $(".close").click(function() {
 
-      $("#popUP_wrap").fadeOut();
+          $("#popUP_wrap").fadeOut();
 
-    });
+        });
 
-  });
+      });
 
-</script>
+    </script>
 
 
 
-<!-- "excel download" -->
-<!-- Sheet JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
-<!--FileSaver savaAs 이용 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+    <!-- "excel download" -->
+    <!-- Sheet JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+    <!--FileSaver savaAs 이용 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 </body>
 </html>

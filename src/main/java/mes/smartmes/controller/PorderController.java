@@ -1,11 +1,14 @@
 package mes.smartmes.controller;
 
-
+import lombok.RequiredArgsConstructor;
 import mes.smartmes.entity.Porder;
 import mes.smartmes.repository.PorderRepository;
-import mes.smartmes.service.IngredientService;
 import mes.smartmes.service.PorderService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,44 +17,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Date;
+import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
-
 @Controller
+@Transactional
+@RequiredArgsConstructor
 @RequestMapping("/mes")
 public class PorderController {
 
-    private Porder porder;
-    private PorderRepository porderRepository;
-    @Autowired
-    private PorderService porderService;
-
-    @Autowired
-    private IngredientService ingredientService;
-
+    private final PorderService porderService;
+    private final PorderRepository porderRepository;
     private Date convertToDate(LocalDate localDate) {
         return java.sql.Date.valueOf(localDate);
     }
 
+    @GetMapping("/porder")
+    public String selectList(Model model) {
+        List<Porder> porderList = porderService.selectList();
+        model.addAttribute("porders", porderList);
 
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Porder> result = porderRepository.findAll(pageable);
+        model.addAttribute("pageable",pageable);
 
-    @GetMapping("/Porder")
-    public String save(){
-//        porderService.("PD20230522003");
-
-        ingredientService.updatePorderStatusAndInsertIngredient("PD202305260009");
-        ingredientService.updatePorderStatusAndInsertIngredient("PD202305260010");
-        ingredientService.updatePorderStatusAndInsertIngredient("PD202305260011");
-        ingredientService.updatePorderStatusAndInsertIngredient("PD202305260012");
-        System.out.println("===========================");
-        System.out.println("===========================");
-        System.out.println("===========================");
-        System.out.println("===========================");
-        System.out.println("===========================");
-
-
+        System.out.println("===================================");
+        System.out.println(result);
+        System.out.println("Total Pages:"+result.getTotalPages());
 
         return "Porder";
     }
@@ -73,8 +67,5 @@ public class PorderController {
         model.addAttribute("porders", searchResults);
         return "Porder";
     }
-
-
-
 
 }

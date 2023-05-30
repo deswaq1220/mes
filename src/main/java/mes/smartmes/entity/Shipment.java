@@ -32,7 +32,7 @@ public class Shipment {
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    private LocalDate shipmentDate;
+    private LocalDateTime shipmentDate;
 
     private int shipmentQuantity;
 

@@ -16,10 +16,10 @@ import java.util.List;
 public interface ProductionPlanRepository extends JpaRepository<ProductionPlan, String> {
 
     @Query("SELECT p FROM ProductionPlan p WHERE p.productId = :productId")
-    List<ProductionPlan> findByProductId(@Param("productId")String productId);
+    List<ProductionPlan> findByProductId(String productId);
 
     @Query("SELECT o FROM ProductionPlan o WHERE o.prodPlanNo = :planNo")
-    ProductionPlan findByPlanNo(@Param("planNo")String planNo);
+    ProductionPlan findByPlanNo(String planNo);
 
     @Transactional
     @Modifying

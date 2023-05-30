@@ -23,7 +23,7 @@ public class QShipment extends EntityPathBase<Shipment> {
 
     public final StringPath productId = createString("productId");
 
-    public final DatePath<java.time.LocalDate> shipmentDate = createDate("shipmentDate", java.time.LocalDate.class);
+    public final DateTimePath<java.time.LocalDateTime> shipmentDate = createDateTime("shipmentDate", java.time.LocalDateTime.class);
 
     public final StringPath shipmentNo = createString("shipmentNo");
 

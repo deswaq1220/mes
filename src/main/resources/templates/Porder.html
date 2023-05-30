@@ -90,14 +90,14 @@
             <td th:text="${porder.porderNo}"></td>
             <td th:text="${porder.porderDate}"></td>
             <td th:text="${porder.supplierId}"></td>
-            <td th:if="${porder.ingredientId=='I001'}">양배추</td>
-            <td th:if="${porder.ingredientId=='I002'}">흑마늘</td>
-            <td th:if="${porder.ingredientId=='I003'}">석류농축액</td>
-            <td th:if="${porder.ingredientId=='I004'}">매실농축액</td>
-            <td th:if="${porder.ingredientId=='I005'}">콜라겐</td>
-            <td th:if="${porder.ingredientId=='I006'}">파우치</td>
-            <td th:if="${porder.ingredientId=='I007'}">스틱파우치</td>
-            <td th:if="${porder.ingredientId=='I008'}">포장Box</td>
+            <td th:text="${porder.ingredientName}"></td>
+<!--            <td th:if="${porder.ingredientName}"></td>-->
+<!--            <td th:if="${porder.ingredientName}"></td>-->
+<!--            <td th:if="${porder.ingredientName}"></td>-->
+<!--            <td th:if="${porder.ingredientName}"></td>-->
+<!--            <td th:if="${porder.ingredientName}"></td>-->
+<!--            <td th:if="${porder.ingredientName}"></td>-->
+<!--            <td th:if="${porder.ingredientName}"></td>-->
             <td th:text="${porder.porderQuantity}"></td>
             <td th:text="${porder.porderStatus}"></td>
             <td th:text="${porder.emergencyYn}"></td>

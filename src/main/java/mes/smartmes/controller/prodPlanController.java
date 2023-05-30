@@ -25,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 
 
-@RequestMapping("/mes")
+@RequestMapping("mes")
 public class prodPlanController {
 
     private final ProdPlanService prodplanservice;
