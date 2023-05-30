@@ -129,6 +129,7 @@ public class OrdersController {
                 orderIntNo = 1;
                 orderNo = dayNo + String.format("%04d", orderIntNo);
             } else {
+                System.out.println("여길 안들어오나");
                 orderIntNo = Integer.parseInt(ordersService.selectOrderNo()) + 1;
                 orderNo = dayNo + String.format("%04d", orderIntNo);
             }
@@ -144,7 +145,7 @@ public class OrdersController {
             orders.setProductId(productId);
             orders.setOrderQuantity(orderQuantity);
             orders.setDeliveryDate(deliveryDateTime);
-
+            System.out.println(orderNo);
             ordersRepository.save(orders);
 
             return ResponseEntity.ok("수주 저장 완료.");

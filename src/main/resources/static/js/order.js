@@ -48,8 +48,7 @@ function saveOrder(){
             "deliveryDate" : deliveryDate
         },
         success: function (){
-            alert("저장하시겠습니까?")
-            location.href = "order";
+         location.href = "order";
         },
         error: function (){
             alert("에러");
