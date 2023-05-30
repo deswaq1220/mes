@@ -176,7 +176,7 @@
           </td>
           <td class="inventory" >거래처</td>
           <td>
-            <select class="company" required id = "company">
+            <select class="company" required id = "company" name="company">
               <option value="">회사명</option>
               <option value="cupang">쿠팡</option>
               <option value="Gmarket">지마켓</option>
@@ -374,14 +374,16 @@
   function confirmSave() {
     var modal = document.getElementById("confirmModal");
     modal.style.display = "block"; // 모달 표시
+
   }
 
   function saveAndClose() {
+    // 저장 동작 수행하는 코드 작성
+    saveOrder();
     closeModal(); // 모달 창 닫기
 
-    // 저장 동작 수행하는 코드 작성
 
-    saveOrder();
+
     showSuccessMessage("저장되었습니다."); // 성공 메시지 표시
     closePopup(); // 팝업 창 닫기
   }
