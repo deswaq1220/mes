@@ -92,15 +92,15 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:each="order, rowStat : ${orderList}">
+          <tr th:each="order, rowStat : ${orderList}" onclick="toggleCheckbox(this)">
             <td th:text="${rowStat.index + 1}"></td>
             <td>
-              <input type="checkbox" onclick="handleCheckboxClick(event)" class="row-checkbox">
+              <input type="checkbox" onclick="event.stopPropagation()" class="row-checkbox">
             </td>
             <td th:if="${order.orderStatus == 'A'}"> 주문 접수</td>
             <td th:if="${order.orderStatus == 'B'}"> 수주 확정 </td>
             <td th:if="${order.orderStatus == 'C'}"> 생산계획완료 </td>
-            <td th:text="${#temporals.format(order.orderDate, 'yyyy.MM.dd')}" th:value="${order.orderDate}">
+            <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}" th:value="${order.orderDate}">
             </td>
             <td th:text="${order.orderNo}"></td>
             <td th:if ="${order.getProductId() == 'P001'}"> 양배추즙</td>
@@ -110,7 +110,7 @@
             <td th:text="${order.getCompanyId()}"></td>
             <td th:text="${order.orderQuantity}"></td>
             <td th:text="BOX"></td>
-            <td th:text="${order.deliveryDate}"></td>
+            <td th:text="${#temporals.format(order.orderDate, 'yyyy.MM.dd')}" th:value="${order.deliveryDate}">
             <td th:index="0">
               <button th:if = "${order.orderStatus == 'A'}" class="confirmed" type="button" th:onclick="confirmed([[${order.orderNo}]])">수주확정</button>
               <button th:if = "${order.orderStatus == 'B' || order.orderStatus == 'C'}" class="nowork" type="button" disabled="disabled">확정완료</button>
@@ -187,7 +187,7 @@
           </td>
           <td class="inventory">수주일</td>
           <td>
-            <input type="datetime-local" class="orderPopupDatepicker" required id = "orderDate" name ="orderDate" >
+            <input type="datetime-local" class="orderPopupDatepicker" required id = "orderDate2" name ="orderDate2" >
           </td>
         </tr>
         <tr class="tablerow">
@@ -200,7 +200,7 @@
           </td>
           <td class="inventory">개수</td>
           <td>
-            <input type = "number" required id = "orderQuantity" name ="orderQuantity" placeholder="BOX" min="0">
+            <input type = "number" required id = "orderQuantity2" name ="orderQuantity2" placeholder="BOX" min="0">
           </td>
           <td class="inventory">납품예정일</td>
           <td>
@@ -208,7 +208,7 @@
           </td>
 
           <td>
-            <input type="datetime-local" class="datepicker" required id = "deliveryDate" name="deliveryDate" >
+            <input type="datetime-local" class="datepicker" required id = "deliveryDate2" name="deliveryDate2" >
           </td>
         </tr>
 
