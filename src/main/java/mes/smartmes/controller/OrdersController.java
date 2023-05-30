@@ -9,8 +9,10 @@ import mes.smartmes.repository.IngredientsRepository;
 import mes.smartmes.repository.OrdersRepository;
 import mes.smartmes.repository.ProcessRepository;
 import mes.smartmes.repository.ProductRepository;
+import mes.smartmes.service.CheckService;
 import mes.smartmes.service.LotService;
 import mes.smartmes.service.OrdersService;
+import mes.smartmes.service.PorderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -44,8 +48,11 @@ public class OrdersController {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private CheckService checkService;
+
     @GetMapping("/main")
-    public String main() {
+    public String main(){
         return "main";
     }
 
@@ -53,7 +60,7 @@ public class OrdersController {
     // 수주 화면에 수주목록 띄우기
     @GetMapping("/order")
     public String save(Model model) {
-        List<Orders> orderList = ordersRepository.findAll();
+        List<Orders>  orderList = ordersRepository.findAll();
         List<Product> productList = productRepository.findAll();
 
         // order에 수주 상세 표시
@@ -65,49 +72,13 @@ public class OrdersController {
 
     //삭제
     @GetMapping("/deleteOrder/{orderNo}")
-    public String deleteOrder(@PathVariable String orderNo) {
+    public String  deleteOrder(@PathVariable String orderNo) {
         ordersService.deleteByOrderNo(orderNo);
 
         return "redirect:/mes/order";
     }
 
 
-    //수주 등록 후 오더페이지로
-    /*@PostMapping("/addOrder")
-    public @ResponseBody Orders saveOder(@ModelAttribute Orders orders){
-        System.out.println(orders);
-        System.out.println("=========================");
-
-        try {
-        String dayNo = "OD" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        int orderIntNo=0;
-        String orderNo = null;
-
-        // 값이 없을 시 값 시작 값 생성
-        if (ordersService.selectOrderNo() == null) {
-            orderIntNo = 1;
-            orderNo = dayNo + String.format("%04d", orderIntNo);
-            orders.setOrderNo(orderNo);
-            ordersRepository.save(orders);
-
-        } else {
-            orderIntNo = Integer.parseInt(ordersService.selectOrderNo()) + 1;
-            orderNo = dayNo + String.format("%04d", orderIntNo);
-            orders.setOrderNo(orderNo);
-            ordersRepository.save(orders);
-        }
-        System.out.println(orderNo);
-
-
-        System.out.println(orders);
-
-        return orders;
-
-        } catch (Exception e ){
-            e.printStackTrace();
-            return orders;
-        }
-    }*/
 
     @PostMapping("/addOrder")
     public ResponseEntity<String> saveOrder(@RequestParam("orderDate") String orderDate,
@@ -119,7 +90,7 @@ public class OrdersController {
         System.out.println("값이 넘어오나");
         System.out.println(ordersService.selectOrderNo());
 
-        
+
         try{
             String dayNo = "OD" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
             int orderIntNo = 0;
@@ -157,54 +128,87 @@ public class OrdersController {
         }
     }
 
-        // 조회
-        @GetMapping("orderList")
-        public String orderList (Model model){
 
-            List<Orders> ordersList = ordersRepository.findAll();
-            System.out.println("여기는 들어오나");
 
-            // orderList 리스트 객체를 orderList 라는 이름으로 뷰페이지에서 사용 가능하게 세팅
-            model.addAttribute("orderList", ordersList);
 
-            return "order";
-        }
 
-        //주문 수정 페이지
-        @GetMapping("/orderUpdate/{orderNo}")
-        public String updateOrderDetail (@PathVariable("orderNo") String orderNo, Model model ){
-            // 오더
-            Orders orderView = new Orders();
-            model.addAttribute("orders", orderView);
-            Orders orders = ordersRepository.findById(orderNo).get();
-            System.out.println(orders);
 
-            // 뷰단에 넘겨줄 때 이름 체크
-            model.addAttribute("orderList", orders);
+    // 조회
+    @GetMapping("orderList")
+    public String orderList(Model model){
 
-            return "order";
-        }
+        List<Orders>  orderList = ordersRepository.findAll();
 
-        //수정 후 저장
-        @PostMapping("/orderUpdate")
-        public String updateOrderPage (Orders orders, BindingResult result){
+        // orderList 리스트 객체를 orderList 라는 이름으로 뷰페이지에서 사용 가능하게 세팅
+        model.addAttribute("orderList", orderList);
 
-            ordersRepository.save(orders);
+        return "order";
+    }
+
+    //주문 수정 페이지
+    @GetMapping("/orderUpdate/{orderNo}")
+    public String updateOrderDetail(@PathVariable("orderNo") String orderNo, Model model ){
+        // 오더
+        Orders orderView = new Orders();
+        model.addAttribute("orders", orderView);
+        Orders orders = ordersRepository.findById(orderNo).get();
+        System.out.println(orders);
+
+        // 뷰단에 넘겨줄 때 이름 체크
+        model.addAttribute("orderList", orders);
+
+        return "order";
+    }
+    
+    //수정 후 저장
+    @PostMapping("/orderUpdate")
+    public String updateOrderPage(@RequestBody Orders orders,BindingResult result) {
+        try {
+            System.out.println("========================try 통과");
+            System.out.println("orders: " + orders);
+
+            switch (orders.getProductId().trim()) {
+                case "양배추즙":
+                    orders.setProductId("P001");
+                    break;
+                case "흑마늘즙":
+                    orders.setProductId("P002");
+                    break;
+                case "석류젤리스틱":
+                    orders.setProductId("P003");
+                    break;
+                case "매실젤리스틱":
+                    orders.setProductId("P004");
+                    break;
+                default:
+                    // 기본값 설정 또는 예외 처리
+                    break;
+            }
+
+            orders.setOrderDate(LocalDateTime.now());
+            orders.setOrderStatus("A");
+
+
+            ordersService.updateOrder(orders);
             return "redirect:/mes/orderList";
-        }
+        } catch (Exception e) {
+
+            System.out.println("========================안댐안댐");
+            System.out.println("orders: " + orders);
 
 
-        @GetMapping("/mainOrder")
-        public String mainSave () {
-            return "order";
+            return "order"; // 오류 페이지로 리다이렉트 또는 오류 메시지를 표시하는 뷰를 반환
         }
     }
 
 
 
+        @GetMapping("/mainOrder")
+    public String mainSave(){
+        return "order";
+    }
 
-
-
+}
 
 
 

@@ -2,11 +2,14 @@ package mes.smartmes.repository;
 
 import mes.smartmes.entity.Porder;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface PorderRepository extends JpaRepository<Porder, String> {
@@ -18,6 +21,10 @@ public interface PorderRepository extends JpaRepository<Porder, String> {
     //발주번호 생성
     @Query(value = "SELECT MAX(RIGHT(p.porder_no,4)) FROM porder p WHERE (select date_format(porder_date, '%Y%m%d')) = (Select date_format(sysdate(), '%Y%m%d'))",nativeQuery = true)
     String findByPorderNo();
+
+
+    @Query("select i.porderNo from Porder i")
+    List<String> findByPlanNo1();
 
     //발주 내역 리스트
     List<Porder> findAll();
@@ -38,7 +45,7 @@ public interface PorderRepository extends JpaRepository<Porder, String> {
     @Query(value = "SELECT emergency_yn FROM porder WHERE porder_no = :porderNo", nativeQuery = true)
     String emergencyYn(String porderNo);
 
-    @Query(value = "SELECT ingredient_id FROM porder p WHERE porder_no = :porderNo", nativeQuery = true)
+    @Query(value = "SELECT ingredient_name FROM porder p WHERE porder_no = :porderNo", nativeQuery = true)
     String selectIngreId(String porderNo);
 
     @Query("SELECT p FROM Porder p WHERE p.porderStatus = :porderStatus")
@@ -55,12 +62,22 @@ public interface PorderRepository extends JpaRepository<Porder, String> {
     List<Porder> findSearch(@Param("startDate") java.util.Date startDate, @Param("endDate") java.util.Date endDate, @Param("porderStatus") String porderStatus, @Param("supplierId") String supplierId);
 
 
+    List<Porder> findByPorderStatusAndPorderDateBefore(String porderStatsus, LocalDateTime porderDate);
 
 
 
+    @Modifying
+    @Transactional
+    @Query("update Porder p set p.porderStatus = :porderStatus where p.porderNo = :porderNo")
+    void updatePorderStatus(@Param("porderNo") String porderNo,@Param("porderStatus") String porderStatus);
 
+    @Query("update Porder p set p.thinkInputDate = :time where p.porderNo = :porderNo")
+    void setThinkInputDate(@Param("time") LocalDateTime time, @Param("porderNo") String porderNo);
 
+    @Query("select p.ingredientName from Porder p where p.ProdPlanNo =:orderNo and p.porderStatus =:status")
+    List<String> findByNo(@Param("orderNo") String orderNo, @Param("status") String status);
 
-
+    @Query("select p.porderQuantity from Porder p where p.ProdPlanNo =:orderNo and p.porderStatus =:status")
+    List<Integer> findByNo1(@Param("orderNo") String orderNo, @Param("status") String status);
 }
 

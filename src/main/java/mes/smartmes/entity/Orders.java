@@ -31,7 +31,6 @@ public class Orders {
     @Column(length = 20)
     private String companyId;               //  업체 id
 
-    // 스프링이 시간을 적용 되게 해주는 어노테이션
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime orderDate;                 // 주문날짜
 
@@ -51,8 +50,9 @@ public class Orders {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime deliveryDate;              // 납품일자
 
+    @Builder.Default
     @Column(length = 1)
-    private String orderStatus = "A";            // 주문 상태 A = 주문접수 , B =  수주확정, C = 생산계획 완료
+    private String orderStatus="A";            // 주문 상태 A = 주문접수 , B =  수주확정, C = 생산계획 완료
 
 
 

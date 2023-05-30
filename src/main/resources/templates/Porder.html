@@ -42,7 +42,7 @@
             <td class="inventory">진행상태</td>
             <td>
               <select class="drop" name="porderStatus">
-                <option value="select">진행상태</option>
+                <option value="">진행상태</option>
                 <option value="입고대기">입고대기</option>
                 <option value="입고완료">입고완료</option>
                 <option value="적재완료">적재완료</option>
@@ -51,7 +51,7 @@
             <td class="inventory">거래처</td>
             <td>
               <select class="drop" name="supplierId">
-                <option value="select">거래처</option>
+                <option value="">거래처</option>
                 <option value="양배추농장">양배추농장</option>
                 <option value="흑마늘농장">흑마늘농장</option>
                 <option value="파우치공장">파우치공장</option>
@@ -90,14 +90,14 @@
             <td th:text="${porder.porderNo}"></td>
             <td th:text="${porder.porderDate}"></td>
             <td th:text="${porder.supplierId}"></td>
-            <td th:text="${porder.ingredientName}"></td>
-<!--            <td th:if="${porder.ingredientName}"></td>-->
-<!--            <td th:if="${porder.ingredientName}"></td>-->
-<!--            <td th:if="${porder.ingredientName}"></td>-->
-<!--            <td th:if="${porder.ingredientName}"></td>-->
-<!--            <td th:if="${porder.ingredientName}"></td>-->
-<!--            <td th:if="${porder.ingredientName}"></td>-->
-<!--            <td th:if="${porder.ingredientName}"></td>-->
+            <td th:if="${porder.ingredientName=='양배추'}">양배추</td>
+            <td th:if="${porder.ingredientName=='흑마늘'}">흑마늘</td>
+            <td th:if="${porder.ingredientName=='석류농축액'}">석류농축액</td>
+            <td th:if="${porder.ingredientName=='매실농축액'}">매실농축액</td>
+            <td th:if="${porder.ingredientName=='콜라겐'}">콜라겐</td>
+            <td th:if="${porder.ingredientName=='파우치'}">파우치</td>
+            <td th:if="${porder.ingredientName=='스틱파우치'}">스틱파우치</td>
+            <td th:if="${porder.ingredientName=='포장Box'}">포장Box</td>
             <td th:text="${porder.porderQuantity}"></td>
             <td th:text="${porder.porderStatus}"></td>
             <td th:text="${porder.emergencyYn}"></td>

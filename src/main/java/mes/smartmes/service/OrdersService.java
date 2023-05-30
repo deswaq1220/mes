@@ -95,6 +95,11 @@ public class OrdersService {
 
     }
 
+    public void updateOrder(Orders orders) {
+        ordersRepository.save(orders);
+    }
+
+
 
     // 공정 1~6번
 //    public long selectProcessOneToSix(String productId) {

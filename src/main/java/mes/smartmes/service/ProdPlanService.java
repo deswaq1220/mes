@@ -2,7 +2,9 @@ package mes.smartmes.service;
 
 import lombok.extern.log4j.Log4j2;
 import mes.smartmes.entity.*;
+import mes.smartmes.entity.RealPorderSelect;
 import mes.smartmes.repository.*;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,9 @@ public class ProdPlanService {
     private ShipmentRepository shipmentRepository;
     private ProductRepository productRepository;
     private ProdPlanRepository prodPlanRepository;
+    private IngredientOutputService ingredientOutputService;
+
+
 
     @Autowired
     public ProdPlanService(OrdersRepository ordersRepository, IngredientStockRepository ingredientStockRepository,
@@ -46,6 +51,8 @@ public class ProdPlanService {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private PorderService porderService;
 
     public void processOrder(String orderNo) {
 
@@ -73,10 +80,10 @@ public class ProdPlanService {
                 System.out.println("완재품빼기 왔어");
                 finproductRepository.decreaseStockQuantity(finproduct.getProductId(), order.getOrderQuantity());
                 Shipment shipment = new Shipment();
-                Date planDate = Calendar.getInstance().getTime();
-                //shipment.setShipmentDate(planDate);
+                shipment.setShipmentDate(LocalDateTime.now());
                 shipment.setShipmentStatus("남은 완제품 생산될때까지 출하 대기");
                 shipment.setCompanyName(order.getCompanyId());
+                shipment.setOrderNo(orderNo);
                 shipment.setProductId(productId);
                 //자동채번
                 String shipno = generateShipNumber();
@@ -134,6 +141,7 @@ public class ProdPlanService {
                     Porder porder = new Porder();
                     String Porderno = generatePorderNumber();
                     porder.setPorderNo(Porderno);
+                    porder.setProdPlanNo(orderNo);
                     porder.setEmergencyYn("N");
                     String porderIngredientName = ingredientsRepository.findBoxConcentrateByProductId(productId);
                     porder.setIngredientName(porderIngredientName);
@@ -169,8 +177,13 @@ public class ProdPlanService {
                                 additionalPorder.setPorderQuantity(10000);
                                 remainingQuantity -= 10000;
                             }
+
+                            //rps.setRealporderid();
                             porderRepository.save(additionalPorder);
                             porderRepository.flush();
+
+
+
                             // 추가 발주 객체(porder)를 처리하는 로직 작성
                             // 예를 들어, 추가 발주 객체를 저장하는 리스트에 추가하거나 데이터베이스에 저장하는 등의 처리를 수행
                         }
@@ -1179,6 +1192,7 @@ public class ProdPlanService {
                 System.out.println("1차생산 플랜번호 : "+ planno);
                 productionPlan.setProdPlanNo(planno);
                 productionPlan.setOrderNo(orderNo);
+
                 Date planDate = Calendar.getInstance().getTime();
                 //productionPlan.setProdPlan_date(planDate);
                 Optional<Integer> maxSeqOptional = Optional.ofNullable(productionPlanRepository.getMaxProdPlanSeqByOrderNo(orderNo));
@@ -1208,6 +1222,7 @@ public class ProdPlanService {
                 if(haveMaterials <= 0){
                     productionPlan.setProdPlanQuantity(orderMaterials);
                     productionPlan.setProdPlanFinYn("발주입고대기중");
+
 
                 }else if(haveMaterials > 0){
                     productionPlan.setProdPlanQuantity(haveMaterials);
@@ -1252,6 +1267,7 @@ public class ProdPlanService {
 //                        productionPlan.setProduct_name(productName1);
                         productionPlan.setProdPlanQuantity(remainingMaterials);
                         productionPlan.setProdPlanFinYn("발주입고대기중");
+
                         //원자재 재고량 빼기
                         if (haveMaterials < 0) {
                             ingredientStockRepository.decreaseStock1Quantity(ingredientStock.getIngredientId(), productionPlan.getProdPlanQuantity());
@@ -1317,6 +1333,12 @@ public class ProdPlanService {
                 ordersRepository.setOrderStatus(orderNo,"C");
                 productionPlanRepository.save(productionPlan);
                 productionPlanRepository.flush();
+//                System.out.println("하이 in_포더서비스");
+//                LocalDateTime time = porderService.prodPlanDay(planno1);
+//                System.out.println("하이 in_포더서비스끝");
+//                productionPlan.setExpectInputDate(time);
+//                productionPlanRepository.save(productionPlan);
+//                productionPlanRepository.flush();
             }
         }else{
             //수주량과 완제품량을 비교해서 완제품량이 충분할 경우 바로 출고 부분
@@ -1333,8 +1355,10 @@ public class ProdPlanService {
             //자동채번
             String shipno = generateShipNumber();
             shipment.setShipmentNo(shipno);
+            shipment.setOrderNo(orderNo);
             shipment.setShipmentQuantity(order.getOrderQuantity());
             int outquantity = shipment.getShipmentQuantity();
+            order.setOrderStatus("납품완료");
             shipmentRepository.save(shipment);
             shipmentRepository.flush();
 
@@ -1415,6 +1439,15 @@ public class ProdPlanService {
         String formattedDate = now.format(formatter);
         // 시퀀스 값을 문자열로 변환합니다.
         String formattedSequence = String.format("%03d", sequence);
+
+        List<String> no = productionPlanRepository.findByPlanNo1();
+        for(int i=0;i<no.size();i++){
+            if(("PP"+formattedDate+formattedSequence) == no.get(i)){
+                int incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                formattedSequence = String.format("%03d", incrementedValue);
+            }
+        }
+
         // 시퀀스 값을 1 증가시킵니다.
         sequence++;
         // 생산계획번호를 조합하여 반환합니다.
@@ -1430,6 +1463,17 @@ public class ProdPlanService {
         String formattedDate = now.format(formatter);
         // 시퀀스 값을 문자열로 변환합니다.
         String formattedSequence = String.format("%03d", sequence1);
+
+        List<String> no = porderRepository.findByPlanNo1();
+        for(int i=0;i<no.size();i++){
+            if(("PD"+formattedDate+formattedSequence) == no.get(i)){
+                int incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                formattedSequence = String.format("%03d", incrementedValue);
+            }
+        }
+
+
+
         // 시퀀스 값을 1 증가시킵니다.
         sequence1++;
         // 생산계획번호를 조합하여 반환합니다.
@@ -1445,6 +1489,17 @@ public class ProdPlanService {
         String formattedDate = now.format(formatter);
         // 시퀀스 값을 문자열로 변환합니다.
         String formattedSequence = String.format("%03d", sequence2);
+
+
+        List<String> no = shipmentRepository.findByPlanNo1();
+        for(int i=0;i<no.size();i++){
+            if(("SM"+formattedDate+formattedSequence) == no.get(i)){
+                int incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                formattedSequence = String.format("%03d", incrementedValue);
+            }
+        }
+
+
         // 시퀀스 값을 1 증가시킵니다.
         sequence2++;
         // 생산계획번호를 조합하여 반환합니다.

@@ -61,6 +61,17 @@ public class ShipmentController {
     }
 
 
+//    //출하 등록
+//    @GetMapping("/shipment")
+//    public String save(Model model){
+//        List<Shipment> shipmentList =  shipmentRepository.findAll();
+//
+//        model.addAttribute("shipmentList" , shipmentList);
+//
+//
+//        return "shipment";
+//
+//    }
 
     @GetMapping("/event") //ajax 데이터 전송 URL
     public @ResponseBody List<Map<String, Object>> getEvent(){
@@ -68,6 +79,48 @@ public class ShipmentController {
     }
 
 
+    //출하 등록
+    @PostMapping("/addShipment")
+    // 저장할 모델 객체, 보내줄 디비 객체
+    public String saveShipment(Shipment shipment, Model model){
+        shipment.setShipmentDate(LocalDateTime.now());
+        String dayNo = "SD" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        int shipmentIntNo=0;
+
+        // 값이 없을 시 값 시작 값 생성
+        if (shipmentService.selectShipmentNo() == null) {
+            shipmentIntNo = 1;
+            String shipmentNo = dayNo + String.format("%04d", shipmentIntNo);
+            shipment.setShipmentNo(shipmentNo);
+            shipment.setShipmentDate(LocalDateTime.now());
+            shipmentRepository.save(shipment);
+        } else {
+            shipmentIntNo = Integer.parseInt(shipmentService.selectShipmentNo()) + 1;
+            String shipmentNo = dayNo + String.format("%04d", shipmentIntNo);
+            shipment.setShipmentNo(shipmentNo);
+            shipment.setShipmentDate(LocalDateTime.now());
+            shipmentRepository.save(shipment);
+        }
+        shipmentRepository.save(shipment);
+        System.out.println(shipment);
+
+        return  "redirect:/shipment/shipment";
+    }
+
+
+    // 조회
+    @GetMapping("/shipmentList")
+    public String shipmentList(Model model){
+
+        List<Shipment> shipmentList = shipmentRepository.findAll();
+
+        // orderList 리스트 객체를 orderList 라는 이름으로 뷰페이지에서 사용 가능하게 세팅
+        model.addAttribute("shipmentList", shipmentList);
+        System.out.println("쉽먼트 : " + shipmentList.getClass());
+
+
+        return "redirect:/shipment/shipment";
+    }
 
     // 디비에 있는 데이터  뷰페이지에 전달
     @GetMapping("/shipment")

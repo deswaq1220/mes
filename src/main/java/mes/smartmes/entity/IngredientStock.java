@@ -39,6 +39,8 @@ public class IngredientStock {
     private LocalDate inputDate;
 
 
+
+
     //재고관리 스탁 은 합계만 나타낸다.
     // 총재고량 표시 업데이트
 

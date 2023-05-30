@@ -32,9 +32,9 @@ textarea::-webkit-scrollbar{
 
 textarea::-webkit-scrollbar-thumb{
   background-color: #022454;
-  border-radius: 10px;
-  background-clip: padding-box;
-  border: 2px solid transparent;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
 }
 
 #popUp_orderList{
@@ -144,8 +144,6 @@ textarea::-webkit-scrollbar-thumb{
   height: 900px;
   background-color: white;
   margin: 5% auto;
-  padding: 0 45px;
-  box-sizing: border-box;
 }
 
 #wrapper{
@@ -174,7 +172,7 @@ textarea::-webkit-scrollbar-thumb{
   /* background-color: khaki; */
   /* border-top: 1px solid #9F9D9D ;
   border-bottom: 1px solid #9F9D9D ; */
-
+  
 }
 
 #popUp_tableCheck{
@@ -199,7 +197,7 @@ textarea::-webkit-scrollbar-thumb{
   align-items: center;
   border-collapse: collapse;
   border-bottom: 1px solid #9F9D9D;
-
+  
 }
 
 .tablerow:nth-child(1){
@@ -239,8 +237,8 @@ input[type="text"]{
 }
 
 form{
-  width: 100%;
-  height: auto;
+width: 100%;
+height: auto;
 }
 
 form input:nth-child(1){
@@ -515,9 +513,11 @@ td{
 }
 
 
-
+#popUp_tableCheck tbody tr:nth-child(3) {
+  height: 90px;
+}
 #popUp_tableCheck tbody tr:nth-child(3) .inventory {
-  line-height: 57px;
+line-height: 90px;
 }
 
 #popUp_tableCheck tr:nth-child(1) td:nth-child(8) input{
@@ -529,21 +529,5 @@ td{
 #popUp_tableCheck tr:nth-child(2) td:nth-child(7) {
   margin-left: 12px;
 }
-#popUp_tableCheck tr:nth-child(2) td:nth-child(7) {
-  margin-right: 0px;
-}
-#popUp_tableCheck tr:nth-child(2) td:nth-child(3){
-  margin-right: 0;
-}
-
-#popUp_tableCheck tr:nth-child(2) td:nth-child(4){
-  margin-right: 12px;
-}
-
-#popUp_tableCheck tr:nth-child(3) td:nth-child(2){
-  margin-right: 12px;
-}
-
-
 
 

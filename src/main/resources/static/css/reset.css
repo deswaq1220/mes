@@ -28,7 +28,7 @@ button{
 }
 
 body::-webkit-scrollbar{
-  width: 10px;
+  width: 5px;
 }
 
 body::-webkit-scrollbar-thumb{
@@ -37,6 +37,7 @@ body::-webkit-scrollbar-thumb{
   background-clip: padding-box;
   border: 2px solid transparent;
 }
+
 
 .table-container::-webkit-scrollbar{
   width: 10px;
@@ -61,7 +62,8 @@ input[type="text"]{
 .orderData{
   font-weight: 400;
 }
-input[type="search"],input[type="date"],input[type="text"],input[type="number"],input[type="datetime-local"]{
+
+input[type="search"],input[type="date"],input[type="text"],input[type="number"]{
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -78,6 +80,7 @@ input[type="search"],input[type="date"],input[type="text"],input[type="number"],
 select{
   font-family: 'Pretendard-Regular';
 }
+
 
 #orderList h1{
   display: inline-block;

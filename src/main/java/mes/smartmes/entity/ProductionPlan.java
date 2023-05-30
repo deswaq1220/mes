@@ -37,7 +37,7 @@ public class ProductionPlan {
     @Column(length = 20)
     private String orderNo;
 
-    @Column(length = 10)
+    @Column(length = 20)
     private String prodPlanFinYn;
 
     @Column(length = 10)

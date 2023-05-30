@@ -25,6 +25,9 @@ public class Shipment {
     private String shipmentNo;
 
     @Column(length = 20)
+    private String orderNo;
+
+    @Column(length = 20)
     private String productId;
 
     @Column(length = 50)

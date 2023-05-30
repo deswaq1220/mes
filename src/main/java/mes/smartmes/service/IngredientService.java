@@ -45,6 +45,9 @@ public class IngredientService {
     private PorderRepository porderRepository;
 
     @Autowired
+    private PorderService porderService;
+
+    @Autowired
     public IngredientService(IngredientInputRepository ingredientInputRepository, IngredientStockRepository ingredientStockRepository, PorderRepository porderRepository) {
         this.ingredientInputRepository = ingredientInputRepository;
         this.ingredientStockRepository = ingredientStockRepository;
@@ -56,23 +59,27 @@ public class IngredientService {
     public void updatePorderStatusAndInsertIngredient(String porderNo) {
 
         List<Porder> porders = porderRepository.findAll();
+        //IngredientStock ingredientStock = new IngredientStock();
 
+
+        Porder pd = new Porder();
+        pd.setPorderStatus("입고완료");
+        //porderRepository.updatePorderStatus(porderNo, "입고완료");
         for(Porder porder : porders) {
             //재고 넘버링 부여할 스트링 필드
             String selectStockNo = ingredientStockRepository.selectMaxStockNo();
             // 자재 입고 테이블
             IngredientInput ingredientInput = new IngredientInput();
-
             // 자재 테이블
-            IngredientStock ingredientStock = new IngredientStock();
+
 
 
 
             // 지금 보다 이전이면
             System.out.println("일단 제일 첫 번째" + porder.getPorderStatus());
 
-
-            if (porder != null && porder.getPorderDate().isBefore(LocalDateTime.now()) && porder.getPorderStatus().equals("입고대기")) {
+            //이걸 스케줄링으로변경
+            if (porder != null && porder.getThinkInputDate().isBefore(LocalDateTime.now()) && porder.getPorderStatus().equals("입고대기")) {
                 porder.setPorderStatus("입고완료");
                 porderRepository.save(porder);
                 System.out.println("입고완료" + porder.toString());
@@ -81,12 +88,27 @@ public class IngredientService {
 
                 ingredientInput.setPorderNo(porder.getPorderNo());              // 발주번호
 //            System.out.println("ingredientInput1 = " + ingredientInput);
-                ingredientInput.setIngredientId(porder.getIngredientName());   // 발주 된 제품명
+                if(porder.getIngredientName().equals("양배추")){
+                    ingredientInput.setIngredientId("I001");   // 발주 된 제품명
+                }else if(porder.getIngredientName().equals("흑마늘")){
+                    ingredientInput.setIngredientId("I002");
+                }else if(porder.getIngredientName().equals("석류농축액")){
+                    ingredientInput.setIngredientId("I003");
+                }else if(porder.getIngredientName().equals("매실농축액")){
+                    ingredientInput.setIngredientId("I004");
+                }else if(porder.getIngredientName().equals("콜라겐")){
+                    ingredientInput.setIngredientId("I005");
+                }else if(porder.getIngredientName().equals("파우치")){
+                    ingredientInput.setIngredientId("I006");
+                }else if(porder.getIngredientName().equals("스틱파우치")){
+                    ingredientInput.setIngredientId("I007");
+                }else if(porder.getIngredientName().equals("포장Box")){
+                    ingredientInput.setIngredientId("I008");
+                }
 //            System.out.println("ingredientInput2 = " + ingredientInput);
                 ingredientInput.setInputQuantity(porder.getPorderQuantity());    // 발주 수량
 //            System.out.println("ingredientInput3 = " + ingredientInput);
                 ingredientInput.setInputDate(LocalDateTime.now());
-                ingredientInput.setIngredientId(porder.getIngredientName());
                 System.out.println("ingredientInput4 = " + ingredientInput);
                 ingredientInputRepository.save(ingredientInput);
                 System.out.println(ingredientInput.getIngredientInId());
@@ -99,40 +121,7 @@ public class IngredientService {
                 System.out.println("이건 리스트고" + porder.toString());
                 System.out.println("이건 뭐고2 " + porder.getIngredientName());
 
-
-                // stockNo 생성
-                String dayNo = "ST" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-                int orderIntNo=0;
-
-                // 값이 없을 시 값 시작 값 생성
-                if (ingredientStockRepository.findByStockNo() == null) {
-                    orderIntNo = 1;
-                    String stockNo = dayNo + String.format("%04d", orderIntNo);
-
-                    ingredientStock.setStockNo(stockNo);
-                    System.out.println("스톡남바" + ingredientStock.getStockNo());
-                    System.out.println("인그리언트남바" + ingredientStock.getIngredientId());
-                    ingredientStockRepository.save(ingredientStock);
-                } else {
-                    orderIntNo = Integer.parseInt(ingredientStockRepository.findByStockNo()) + 1;
-                    String stockNo = dayNo + String.format("%04d", orderIntNo);
-                    ingredientStock.setStockNo(stockNo);
-                    ingredientStockRepository.save(ingredientStock);
-                }
-
-
-
-
-
-
-                ingredientStock.setIngredientId(ingredientInput.getIngredientId());
-//            ingredientStockRepository.increaseStockQuantity();
-//            ingredientStock.setInputDate(ingredientInput.getInputDate());
-                ingredientStock.setProductDate(new Date(System.currentTimeMillis()));
-
-                ingredientStock.setQuantity(ingredientInput.getInputQuantity());
-
-                ingredientStockRepository.save(ingredientStock);
+                ingredientStockRepository.increaseStockQuantity(ingredientInput.getIngredientId(), ingredientInput.getInputQuantity());
 
 
             }
@@ -140,8 +129,51 @@ public class IngredientService {
         }
     }
 
+    @Scheduled(cron = "*/20 * * * * ?") // 30초 마다 실행
+    public void processPordersAutomatically() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        List<Porder> porders = porderRepository.findByPorderStatusAndPorderDateBefore("입고대기", currentDateTime);
+        if (porders != null && !porders.isEmpty()) {
+            for (Porder porder : porders) {
+                String porderNo = porder.getPorderNo();
+                updatePorderStatusAndInsertIngredient(porderNo);
+            }
+        }
 
-       
+    }
 
-    
+    public void changePorder(String porderNo){
+        Porder po = porderRepository.findByPorderNo(porderNo);
+        LocalDateTime time = porderService.selectInputDate(porderNo);
+        po.setThinkInputDate(time);
+        po.setPorderStatus("입고대기");
+        System.out.println("업데이트포더 = "+po);
+        porderRepository.save(po);
+        porderRepository.flush();
+    }
+
+    @Scheduled(cron = "*/8 * * * * ?") // 30초 마다 실행
+    public void processPorderChangeAutomatically() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        List<Porder> porders = porderRepository.findByPorderStatus("입고준비");
+        if (porders != null && !porders.isEmpty()) {
+            for (Porder porder : porders) {
+                String porderNo = porder.getPorderNo();
+                changePorder(porderNo);
+            }
+        }
+
+    }
+
+
+
+
+
+
+
+
+
 }
+
+
+

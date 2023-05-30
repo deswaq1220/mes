@@ -2,21 +2,22 @@ package mes.smartmes.service;
 
 import lombok.RequiredArgsConstructor;
 import mes.smartmes.dto.Weekday;
-import mes.smartmes.entity.IngredientInput;
-import mes.smartmes.entity.IngredientStock;
-import mes.smartmes.entity.Ingredients;
-import mes.smartmes.entity.Porder;
+import mes.smartmes.entity.*;
 import mes.smartmes.repository.IngredientInputRepository;
 import mes.smartmes.repository.IngredientStockRepository;
 import mes.smartmes.repository.PorderRepository;
+import mes.smartmes.repository.ProdPlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -24,10 +25,15 @@ import java.util.List;
 public class PorderService {
 
     private final PorderRepository porderRepository;
+    private final ProdPlanRepository prodPlanRepository;
+
+//    @Autowired
+//    WorkOrderService workOrderService;
+    @Autowired
+    LotService lotService;
 
 
-
-    public List<Porder> selectList(){
+    public List<Porder> selectList() {
         return porderRepository.findAll();
     }
 
@@ -52,7 +58,7 @@ public class PorderService {
 
     //입고 예정 일자 생성
     public LocalDateTime selectInputDate(String porderNo) {
-
+        System.out.println("여기야여기");
         int inputTime = Integer.parseInt(porderRepository.selectTime(porderNo));            //발주 등록 시간
         System.out.println("inputTime = " + inputTime);
 
@@ -62,7 +68,7 @@ public class PorderService {
 
         LocalDateTime inputDate = porderRepository.selectDate(porderNo);                    //실제 발주 날짜(발주 등록 날짜랑 다름)
 
-        System.out.println("inputDate = "+ inputDate );
+        System.out.println("inputDate = " + inputDate);
 
         LocalDateTime inputIngreDate = inputDate;                                           //입고날짜
 
@@ -71,10 +77,10 @@ public class PorderService {
         if (inputTime > 120000) {
             inputDate = inputDate.plusDays(1);
             inputDay = porderRepository.checkDay(inputDate);
-            if(inputDay == Weekday.SATURDAY){
-                inputDate = setTime(inputDate,2,9);
+            if (inputDay == Weekday.SATURDAY) {
+                inputDate = setTime(inputDate, 2, 9);
                 inputDay = porderRepository.checkDay(inputDate);
-            }else{
+            } else {
                 inputDay = inputDay;
             }
         }
@@ -89,8 +95,6 @@ public class PorderService {
         String ingre = porderRepository.selectIngreId(porderNo);
 
 
-
-
         // 입고 예정 시간
 
 
@@ -99,19 +103,16 @@ public class PorderService {
         // 재고 관리에서 인서트??                        //  현재 재고
 
 
-
-
-
-        if (ingre.equals("I001") || ingre.equals("I002") || ingre.equals("I006") || ingre.equals("I007") || ingre.equals("I008")) {
+        if (ingre.equals("양배추") || ingre.equals("흑마늘") || ingre.equals("파우치") || ingre.equals("스틱파우치") || ingre.equals("포장Box")) {
             if (emerYn.equals("N")) {
                 inputDate = inputDate.plusDays(2);
                 inputDay = porderRepository.checkDay(inputDate);
                 System.out.println("+++++++++++++++++");
                 System.out.println(inputDay);
                 System.out.println("+++++++++++++++++");
-                if (inputDay == Weekday.MONDAY || inputDay  == Weekday.WEDNESDAY || inputDay  == Weekday.FRIDAY) {
+                if (inputDay == Weekday.MONDAY || inputDay == Weekday.WEDNESDAY || inputDay == Weekday.FRIDAY) {
                     inputIngreDate = setTime(inputDate, 0, 10);
-                } else if (inputDay == Weekday.SUNDAY || inputDay  == Weekday.TUESDAY || inputDay  == Weekday.THURSDAY) {
+                } else if (inputDay == Weekday.SUNDAY || inputDay == Weekday.TUESDAY || inputDay == Weekday.THURSDAY) {
                     inputIngreDate = setTime(inputDate, 1, 10);
                 } else if (inputDay == Weekday.SATURDAY) {
                     inputIngreDate = setTime(inputDate, 2, 10);
@@ -121,7 +122,7 @@ public class PorderService {
             }
 
 
-        } else if (ingre.equals("I003") || ingre.equals("I004") || ingre.equals("I005")) {
+        } else if (ingre.equals("석류농축액") || ingre.equals("매실농축액") || ingre.equals("콜라겐")) {
             if (emerYn.equals("N")) {
                 inputDate = inputDate.plusDays(3);
                 inputDay = porderRepository.checkDay(inputDate);
@@ -153,11 +154,144 @@ public class PorderService {
         return inputIngreDate;
     }
 
+    public LocalDateTime prodPlanDay(String planNo) {
+        System.out.println("포더서비스 플랜노 : " + planNo);
+        ProductionPlan pp = prodPlanRepository.selectPlanNo(planNo);
+        int inputTime = Integer.parseInt(prodPlanRepository.selectTime(planNo));            //발주 등록 시간
+        System.out.println("inputTime = " + inputTime);
 
-    //희람
+        int inputDay = prodPlanRepository.selectDay(planNo);                                //발주 등록 요일
 
+        System.out.println("inputDay = " + inputDay);
 
+        LocalDateTime inputDate = prodPlanRepository.selectDate(planNo);                    //실제 발주 날짜(발주 등록 날짜랑 다름)
+
+        System.out.println("inputDate = " + inputDate);
+
+        LocalDateTime inputIngreDate = inputDate;                                           //입고날짜
+
+        //12시 이후 주문 시 발주 날짜는 +1일
+        System.out.println(inputDay);
+        if (pp.getProductId().equals("P001") || pp.getProductId().equals("P002")) {
+            if (inputTime > 120000) {
+                inputDate = inputDate.plusDays(3);
+                inputDay = porderRepository.checkDay(inputDate);
+                if (inputDay == Weekday.SATURDAY) {
+                    inputDate = setTime(inputDate, 2, 10);
+                    inputDay = porderRepository.checkDay(inputDate);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.SUNDAY) {
+                    inputDate = setTime(inputDate, 1, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.TUESDAY) {
+                    inputDate = setTime(inputDate, 1, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.THURSDAY) {
+                    inputDate = setTime(inputDate, 1, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.MONDAY) {
+                    inputDate = setTime(inputDate, 0, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.WEDNESDAY) {
+                    inputDate = setTime(inputDate, 0, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.FRIDAY) {
+                    inputDate = setTime(inputDate, 0, 10);
+                    inputIngreDate = inputDate;
+                }
+            } else {
+                inputDate = inputDate.plusDays(2);
+                inputDay = porderRepository.checkDay(inputDate);
+                if (inputDay == Weekday.SATURDAY) {
+                    inputDate = setTime(inputDate, 2, 10);
+                    inputDay = porderRepository.checkDay(inputDate);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.SUNDAY) {
+                    inputDate = setTime(inputDate, 1, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.TUESDAY) {
+                    inputDate = setTime(inputDate, 1, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.THURSDAY) {
+                    inputDate = setTime(inputDate, 1, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.MONDAY) {
+                    inputDate = setTime(inputDate, 0, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.WEDNESDAY) {
+                    inputDate = setTime(inputDate, 0, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.FRIDAY) {
+                    inputDate = setTime(inputDate, 0, 10);
+                    inputIngreDate = inputDate;
+                }
+            }
+        }
+        if (pp.getProductId().equals("P003") || pp.getProductId().equals("P004")) {
+            if (inputTime > 150000) {
+                inputDate = inputDate.plusDays(4);
+                inputDay = porderRepository.checkDay(inputDate);
+                if (inputDay == Weekday.SATURDAY) {
+                    inputDate = setTime(inputDate, 2, 10);
+                    inputDay = porderRepository.checkDay(inputDate);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.SUNDAY) {
+                    inputDate = setTime(inputDate, 1, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.TUESDAY) {
+                    inputDate = setTime(inputDate, 1, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.THURSDAY) {
+                    inputDate = setTime(inputDate, 1, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.MONDAY) {
+                    inputDate = setTime(inputDate, 0, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.WEDNESDAY) {
+                    inputDate = setTime(inputDate, 0, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.FRIDAY) {
+                    inputDate = setTime(inputDate, 0, 10);
+                    inputIngreDate = inputDate;
+                }
+            } else{
+                inputDate = inputDate.plusDays(3);
+                inputDay = porderRepository.checkDay(inputDate);
+                if (inputDay == Weekday.SATURDAY) {
+                    inputDate = setTime(inputDate, 2, 10);
+                    inputDay = porderRepository.checkDay(inputDate);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.SUNDAY) {
+                    inputDate = setTime(inputDate, 1, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.TUESDAY) {
+                    inputDate = setTime(inputDate, 1, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.THURSDAY) {
+                    inputDate = setTime(inputDate, 1, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.MONDAY) {
+                    inputDate = setTime(inputDate, 0, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.WEDNESDAY) {
+                    inputDate = setTime(inputDate, 0, 10);
+                    inputIngreDate = inputDate;
+                } else if (inputDay == Weekday.FRIDAY) {
+                    inputDate = setTime(inputDate, 0, 10);
+                    inputIngreDate = inputDate;
+                }
+            }
+        }
+        return inputIngreDate;
+    }
 
 
 }
+
+
+        //희람
+
+
+
+
 

@@ -1,5 +1,6 @@
 package mes.smartmes.repository;
 
+import mes.smartmes.entity.IngredientOutput;
 import mes.smartmes.entity.IngredientStock;
 import mes.smartmes.entity.Ingredients;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,9 +15,14 @@ import java.util.Optional;
 @Repository
 public interface IngredientStockRepository extends JpaRepository<IngredientStock, String> {
 
+
+
     // 현일
     @Query("SELECT i FROM IngredientStock i WHERE i.productId = :productId")
     IngredientStock findByProductId(String productId);
+
+    @Query("SELECT i FROM IngredientStock i WHERE i.ingredientId = :ingredientId")
+    IngredientStock findByIngId(String ingredientId);
 
     @Transactional
     @Modifying
@@ -96,7 +102,6 @@ public interface IngredientStockRepository extends JpaRepository<IngredientStock
     // 재고 더하기
     @Transactional
     @Modifying
-
     @Query("UPDATE IngredientStock ig SET ig.quantity = ig.quantity + :quantity WHERE ig.ingredientId = :ingredientId")
     void increaseStockQuantity(String ingredientId, int quantity);
 

@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -29,6 +30,6 @@ public class Finproduct {
     private int finProductQuantity;
 
 //    @Column(nullable = false)
-    private Date productDate;
+    private LocalDateTime productDate;
 
 }

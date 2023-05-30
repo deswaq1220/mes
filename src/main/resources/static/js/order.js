@@ -17,7 +17,7 @@ function confirmed(orderNo){
 
 function saveOrder(){
     //수주일
-    let orderDate = document.getElementById("orderDate").value;
+    let orderDate = document.getElementById("orderDate2").value;
     // let orderDate = new Date(oderDateInput).toISOString().slice(0, 16); // ISO 8601 형식으로 변환
     //제품ID
     let select = document.getElementById("selectedBox");
@@ -26,10 +26,10 @@ function saveOrder(){
     let companySelect = document.getElementById("company");
     let company = companySelect.options[companySelect.selectedIndex].value;
     //개수
-    let orderQty = document.getElementById("orderQuantity").value;
+    let orderQty = document.getElementById("orderQuantity2").value;
 
     // 납품 예정일
-    let deliveryDate = document.getElementById("deliveryDate").value;
+    let deliveryDate = document.getElementById("deliveryDate2").value;
     // let deliveryDate = new Date(deliveryDateInput).toISOString().slice(0, 16); // ISO 8601 형식으로 변환
     console.log(orderDate);
     console.log(productId);
@@ -48,12 +48,12 @@ function saveOrder(){
             "deliveryDate" : deliveryDate
         },
         success: function (){
-         location.href = "order";
+            location.href = "order";
         },
         error: function (){
             alert("에러");
         }
 
-    })
+    });
 
 }

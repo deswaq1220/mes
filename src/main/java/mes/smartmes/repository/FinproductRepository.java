@@ -14,6 +14,9 @@ import java.util.List;
 @Repository
 public interface FinproductRepository extends JpaRepository<Finproduct, String> {
 
+    @Query("select i.finProductNo from Finproduct i")
+    List<String> findByPlanNo1();
+
     List<Finproduct> findAll();
 
     @Query("SELECT f FROM Finproduct f WHERE f.productId = :productId")

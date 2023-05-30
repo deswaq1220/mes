@@ -18,7 +18,9 @@ public class IngredientInput {
 
         @Id
         @Column(name = "ingredient_in_id")
+
         @GeneratedValue(strategy = GenerationType.IDENTITY)  // 오토인크리먼트 디비에 맡긴다
+
         private int ingredientInId;                  // 자재 입고 번호
 
         @Column(name = "porder_no")

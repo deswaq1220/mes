@@ -21,6 +21,12 @@ public class Porder {      // 발주 테이블
     @Column(length = 20)
     private String porderNo;                       // 발주 번호
 
+    @Column(length = 20)
+    private String ProdPlanNo;
+
+    @Column
+    private LocalDateTime thinkInputDate;
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime porderDate;               // 발주 날짜
@@ -33,7 +39,7 @@ public class Porder {      // 발주 테이블
     @PrePersist
     public void prePersist() {
         if (porderStatus == null) {
-            porderStatus = "입고대기";
+            porderStatus = "입고준비";
         }
     }
 
@@ -47,6 +53,8 @@ public class Porder {      // 발주 테이블
     private String ingredientName;                   // 재료 이름
 
     private int porderQuantity;                     // 주문 수량
+
+    private int realPorderQuantity;
 
     @Column(length = 20)
     private String supplierId;                      // 공급 업체 id

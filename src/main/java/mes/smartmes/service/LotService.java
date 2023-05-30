@@ -3,14 +3,13 @@ package mes.smartmes.service;
 import lombok.RequiredArgsConstructor;
 import mes.smartmes.dto.Ratio;
 import mes.smartmes.dto.Weekday;
-import mes.smartmes.entity.Lot;
-import mes.smartmes.entity.ProductionPlan;
-import mes.smartmes.entity.Routing;
-import mes.smartmes.entity.WorkOrder;
+import mes.smartmes.entity.*;
 import mes.smartmes.repository.LotRepository;
 import mes.smartmes.repository.OrdersRepository;
 import mes.smartmes.repository.RoutingRepository;
 import mes.smartmes.repository.WorkOrderRepository;
+import org.hibernate.jdbc.Work;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -27,61 +26,109 @@ import java.util.*;
 @RequiredArgsConstructor
 public class LotService {
 
-    private final LotRepository lotRepository;
-    private final OrdersRepository ordersRepository;
-    private final RoutingRepository routingRepository;
-    private final WorkOrderRepository workOrderRepository;
+    private  final LotRepository lotRepository;
+    private  final OrdersRepository ordersRepository;
+    private  final RoutingRepository routingRepository;
+    private  final WorkOrderRepository workOrderRepository;
     private Ratio ratio;
     private ProductionPlan productionPlan;
-    private WorkOrderService workOrderService;
 
 
 
+
+
+    private List<Lot> lo = new ArrayList<>();
 
     //lot번호 자동 생성
-    public String selectLot(String workNo) {
-        String dayNo = "L" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        int lotNo;
+    public void selectLot(String workNo) {
 
-        if (lotRepository.findBylotId() == null) {
-            lotNo = 1;
-        } else {
-            lotNo = Integer.parseInt(lotRepository.findBylotId()) + 1;
-        }
 
-        String lotId = dayNo + String.format("%04d", lotNo);
 
-        WorkOrder wo = workOrderRepository.findByWorkOrder(workNo);
+//                String dayNo = "L" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+//                int lotNo;
+//
+//                if (lotRepository.findBylotId() == null) {
+//                    lotNo = 1;
+//                } else {
+//                    lotNo = Integer.parseInt(lotRepository.findBylotId()) + 1;
+//                }
+//
+//                String lotId = dayNo + String.format("%04d", lotNo);
+        System.out.println("워크노 - "+workNo);
+        System.out.println("워크노1 - "+lo);
+                WorkOrder wo = workOrderRepository.findByWorkOrder(workNo);
+                List<String> work = new ArrayList<>();
+                work.add(workNo);
 
-        Lot lot = new Lot();
-        String id = generatePlanNumber();
-        lot.setLotId(id);
-        //lot.setIngredientId();
-        if(wo.getProcessNo().equals("process01")){
-            lot.setLotPlotNo("자재창고에서 출하");
-        }else{
-            lot.setLotPlotNo(lot.getLotPlotNo());
-        }
-        String Lno = generatePlanNumber1(wo);
-        lot.setLotNo(Lno);
-        lot.setProcessNo(wo.getProcessNo());
-        lot.setInputQuantity(wo.getInputQuantity());
-        lot.setOutputQuantity(wo.getOutputQuantity());
-        int io = (wo.getInputQuantity() - wo.getOutputQuantity());
-        lot.setInventoryQuantity(io);
-        lot.setProductId(wo.getProductId());
-        LocalDateTime date = LocalDateTime.now();
-        lot.setRegDate(date);
-        workOrderRepository.setWorkStatus(workNo,"작업완료(lot부여완료)");
+                Lot lot = new Lot();
+
+                    if (wo.getProcessNo().equals("process01")) {
+                        lot.setLotPlotNo("자재창고에서 출하");
+                    } else {
+                        if(wo.getProductId().equals("P001") || wo.getProductId().equals("P002")){
+                            if(wo.getProcessNo().equals("process02")){
+                                lot.setLotPlotNo(lo.get(0).getLotNo());
+                            }else if(wo.getProcessNo().equals("process03")){
+                                lot.setLotPlotNo(lo.get(1).getLotNo());
+                            }else if(wo.getProcessNo().equals("process04")){
+                                lot.setLotPlotNo(lo.get(2).getLotNo());
+                            }else if(wo.getProcessNo().equals("process07")){
+                                lot.setLotPlotNo(lo.get(3).getLotNo());
+                            }else if(wo.getProcessNo().equals("process09")){
+                                lot.setLotPlotNo(lo.get(4).getLotNo());
+                            }else if(wo.getProcessNo().equals("process06")){
+                                lot.setLotPlotNo(lo.get(5).getLotNo());
+                            }else if(wo.getProcessNo().equals("process10")){
+                                lot.setLotPlotNo(lo.get(6).getLotNo());
+                            }
+                        }else{
+                            if(wo.getProcessNo().equals("process05")){
+                                lot.setLotPlotNo(lo.get(0).getLotNo());
+                            }else if(wo.getProcessNo().equals("process08")){
+                                lot.setLotPlotNo(lo.get(1).getLotNo());
+                            }else if(wo.getProcessNo().equals("process09")){
+                                lot.setLotPlotNo(lo.get(2).getLotNo());
+                            }else if(wo.getProcessNo().equals("process06")){
+                                lot.setLotPlotNo(lo.get(3).getLotNo());
+                            }else if(wo.getProcessNo().equals("process10")){
+                                System.out.println("안녕하세요 = "+lo.get(4).getLotNo());
+                                lot.setLotPlotNo(lo.get(4).getLotNo());
+                            }
+                        }
+
+                    }
+
+                    String id = generateLotIdNumber();
+                    lot.setLotId(id);
+
+                    String Lno = generateLotNoNumber(wo);
+                    lot.setLotNo(Lno);
+                    lot.setProcessNo(wo.getProcessNo());
+                    lot.setInputQuantity(wo.getInputQuantity());
+                    lot.setOutputQuantity(wo.getOutputQuantity());
+                    int io = (wo.getInputQuantity() - wo.getOutputQuantity());
+                    lot.setInventoryQuantity(io);
+                    lot.setProductId(wo.getProductId());
+                    LocalDateTime date = LocalDateTime.now();
+                    lot.setRegDate(date);
+                    System.out.println("제발"+lot);
+                    lo.add(lot);
+                    System.out.println("lo -" +lo);
+
+
+                    workOrderRepository.setWorkStatus(workNo, "작업완료(lot부여완료)");
+
+                    //lotRepository.flush();
+
+
         lotRepository.save(lot);
-        lotRepository.flush();
+        System.out.println("ㅎㅇ -"+lo.get(0));
+        System.out.println("끝");
 
 
-
-        return lotId;
     }
     private static int sequence = 1;
-    public String generatePlanNumber() {
+    public String generateLotIdNumber() {
         // 현재 시간 정보를 가져옵니다.
         LocalDateTime now = LocalDateTime.now();
         // 형식 지정을 위한 DateTimeFormatter를 생성합니다.
@@ -90,6 +137,19 @@ public class LotService {
         String formattedDate = now.format(formatter);
         // 시퀀스 값을 문자열로 변환합니다.
         String formattedSequence = String.format("%03d", sequence);
+
+        List<String> no = lotRepository.findLotId();
+        for(int i=0;i<no.size();i++){
+            System.out.println("하이루 - "+no.get(i));
+            System.out.println("LOT"+formattedSequence);
+            if(("LOT"+formattedSequence).equals(no.get(i))){
+                System.out.println("앙아앙아 = "+formattedSequence);
+                int incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                formattedSequence = String.format("%03d", incrementedValue);
+                System.out.println("다음 = "+formattedSequence);
+
+            }
+        }
         // 시퀀스 값을 1 증가시킵니다.
         sequence++;
         // 생산계획번호를 조합하여 반환합니다.
@@ -97,7 +157,7 @@ public class LotService {
     }
 
     private static int sequence1 = 1;
-    public String generatePlanNumber1(WorkOrder wo) {
+    public String generateLotNoNumber(WorkOrder wo) {
         // 현재 시간 정보를 가져옵니다.
         LocalDateTime now = LocalDateTime.now();
         // 형식 지정을 위한 DateTimeFormatter를 생성합니다.
@@ -106,6 +166,23 @@ public class LotService {
         String formattedDate = now.format(formatter);
         // 시퀀스 값을 문자열로 변환합니다.
         String formattedSequence = String.format("%03d", sequence1);
+        String LotNo = formattedDate + formattedSequence;
+
+        List<String> no = lotRepository.findLotNo();
+        for(int i=0;i<no.size();i++){
+            if(("WYGY"+LotNo).equals(no.get(i)) || ("JCR"+LotNo).equals(no.get(i)) || ("CC"+LotNo).equals(no.get(i))
+                    || ("HHMSG_J"+LotNo).equals(no.get(i)) || ("HHMSG_JR"+LotNo).equals(no.get(i)) || ("SH"+LotNo).equals(no.get(i))
+                    || ("CJ_J"+LotNo).equals(no.get(i)) || ("CJ_JR"+LotNo).equals(no.get(i)) || ("GS"+LotNo).equals(no.get(i))
+                    || ("PJ"+LotNo).equals(no.get(i))){
+                System.out.println("앙아앙아 = "+formattedSequence);
+                int incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                formattedSequence = String.format("%03d", incrementedValue);
+                System.out.println("다음 = "+formattedSequence);
+
+            }
+        }
+
+
         if(wo.getProcessNo().equals("process01")){
             return "WYGY"+formattedDate+formattedSequence;
         }else if(wo.getProcessNo().equals("process02")){
@@ -135,6 +212,17 @@ public class LotService {
 
     @Scheduled(cron = "*/20 * * * * ?") // 30초 마다 실행
     public void processOrdersAutomatically() {
+
+//        List<WorkOrder> workorder = workOrderRepository.findAll();
+//        for(WorkOrder workOrder : workorder) {
+//            if (workOrder != null && workOrder.getWorkOrderDate().isBefore(LocalDateTime.now()) && workOrder.getWorkStatus().equals("대기중")) {
+//                workOrder.setWorkStatus("작업중");
+//                workOrderRepository.save(workOrder);
+//            }else if(workOrder != null && workOrder.getWorkOrderFinishDate().isBefore(LocalDateTime.now()) && workOrder.getWorkStatus().equals("작업중")) {
+//                workOrder.setWorkStatus("작업완료");
+//                workOrderRepository.save(workOrder);
+//            }
+//        }
         List<WorkOrder> plans = workOrderRepository.findByWorkStatus("작업완료");
         if (plans != null && !plans.isEmpty()) {
             for (WorkOrder workOrder : plans) {
@@ -145,6 +233,7 @@ public class LotService {
         }
 
     }
+
 
     public void find(ProductionPlan productionPlan) {
         this.productionPlan = productionPlan;
@@ -185,7 +274,7 @@ public class LotService {
         ArrayList<String> processList = selectProcess(productId);
         double workLeadTime = 0; // 공정별 총 리드타임
         double workProcessTime = 0; // 공정별 총 소요시간
-        System.out.println("Here - " + productionPlan.getProdPlanNo());
+        System.out.println("Here123 - " + productionPlan.getProdPlanNo());
         LocalDateTime totalProcessTime = LocalDateTime.now();  //총시간 = 끝난시간
         LocalDateTime currentTime = LocalDateTime.now();  //시작시간
         System.out.println("여기여기여기1111 - "+totalProcessTime);
@@ -207,7 +296,7 @@ public class LotService {
 
             switch (process) {
                 case "process01":
-                    process01(processTime, workProcessTime, cnt);
+                    //process01(processTime, workProcessTime, cnt);
                     System.out.println("in-process01");
                     AbstractMap.SimpleEntry<Double, Long> result = process01(processTime, workProcessTime, cnt);
                     workProcessTime = result.getKey();//30.0
@@ -215,108 +304,109 @@ public class LotService {
 //                    System.out.println("시발시발시발 - "+ totalProcessTime + workProcessTime);
                     cnt = result.getValue(); //1
                     System.out.println("프로세스1번토탈 - "+totalProcessTime);
-                    System.out.println("프로세스1번토탈 - "+workProcessTime);
-                    System.out.println("프로세스1번토탈 - "+cnt);
+                    System.out.println("프로세스1번워크 - "+workProcessTime);
+                    System.out.println("프로세스1번시엔티 - "+cnt);
                     //processTimes.put(process, totalProcessTime);
-                    System.out.println(processTimes.get("process01"));
+                    //System.out.println(processTimes.get("process01"));
 
                     break;
                 case "process02":
-                    process02(processTime, productId, workProcessTime, cnt);
+                    //process02(processTime, productId, workProcessTime, cnt);
                     System.out.println("in-process02");
                     AbstractMap.SimpleEntry<Double, Long> result1 = process02(processTime, productId, workProcessTime, cnt);
                     workProcessTime = result1.getKey();
                     cnt = result1.getValue();
-                    System.out.println("프로세스2 : "+workProcessTime);
-                    System.out.println("프로세스2 : "+cnt);
+                    System.out.println("프로세스2번토탈 - "+totalProcessTime);
+                    System.out.println("프로세스2번워크 : "+workProcessTime);
+                    System.out.println("프로세스2번시엔티 : "+cnt);
 
                     //processTimes.put(process, totalProcessTime);
                     break;
                 case "process03":
-                    process03(processTime, capa, productId, (long) workProcessTime, cnt);
+                    //process03(processTime, capa, productId, (long) workProcessTime, cnt);
                     System.out.println("in-process03");
                     AbstractMap.SimpleEntry<Double, Long> result2 = process03(processTime,capa, productId, (long) workProcessTime, cnt);
                     workProcessTime = result2.getKey();
                     cnt = result2.getValue();
                     System.out.println("프로세스3번토탈 - "+totalProcessTime);
-                    System.out.println("프로세스3번토탈 - "+workProcessTime);
-                    System.out.println("프로세스3번토탈 - "+cnt);
+                    System.out.println("프로세스3번워크 - "+workProcessTime);
+                    System.out.println("프로세스3번시엔티 - "+cnt);
                     //processTimes.put(process, totalProcessTime);
                     break;
                 case "process04":
-                    process04(processTime, productId, (long) workProcessTime, cnt);
+                    //process04(processTime, productId, (long) workProcessTime, cnt);
                     System.out.println("in-process04");
                     AbstractMap.SimpleEntry<Double, Long> result3 = process04(processTime, productId, (long) workProcessTime, cnt);
                     workProcessTime = result3.getKey();
                     cnt = result3.getValue();
                     System.out.println("프로세스4번토탈 - "+totalProcessTime);
-                    System.out.println("프로세스4번토탈 - "+workProcessTime);
-                    System.out.println("프로세스4번토탈 - "+cnt);
+                    System.out.println("프로세스4번워크 - "+workProcessTime);
+                    System.out.println("프로세스4번씨엔티 - "+cnt);
                     //processTimes.put(process, totalProcessTime);
                     break;
                 case "process05":
-                    process05(processTime, (long) workProcessTime, cnt);
+                    //process05(processTime, (long) workProcessTime, cnt);
                     System.out.println("in-process05");
                     AbstractMap.SimpleEntry<Double, Long> result4 = process05(processTime, (long) workProcessTime, cnt);
                     workProcessTime = result4.getKey();
                     cnt = result4.getValue();
                     System.out.println("프로세스5번토탈 - "+totalProcessTime);
-                    System.out.println("프로세스5번토탈 - "+workProcessTime);
-                    System.out.println("프로세스5번토탈 - "+cnt);
+                    System.out.println("프로세스5번워크 - "+workProcessTime);
+                    System.out.println("프로세스5번씨엔티 - "+cnt);
                     //processTimes.put(process, totalProcessTime);
                     break;
                 case "process06":
-                    process06(totalProcessTime);
+                    //process06(totalProcessTime);
                     System.out.println("in-process06");
                     totalProcessTime = process06(totalProcessTime);
                     workProcessTime = 1440.0;
                     System.out.println("프로세스6번토탈 - "+totalProcessTime);
-                    System.out.println("프로세스6번토탈 - "+workProcessTime);
-                    System.out.println("프로세스6번토탈 - "+cnt);
+                    System.out.println("프로세스6번워크 - "+workProcessTime);
+                    System.out.println("프로세스6번씨엔티 - "+cnt);
                     //processTimes.put(process, process06work);
                     break;
                 case "process07":
-                    process07(processTime, capa, (long) workProcessTime, cnt);
+                    //process07(processTime, capa, (long) workProcessTime, cnt);
                     System.out.println("in-process07");
                     AbstractMap.SimpleEntry<Double, Long> result5 = process07(processTime, capa, (long) workProcessTime, cnt);
                     workProcessTime = result5.getKey();
                     cnt = result5.getValue();
                     System.out.println("프로세스7번토탈 - "+totalProcessTime);
-                    System.out.println("프로세스7번토탈 - "+workProcessTime);
-                    System.out.println("프로세스7번토탈 - "+cnt);
+                    System.out.println("프로세스7번워크 - "+workProcessTime);
+                    System.out.println("프로세스7번씨엔티 - "+cnt);
                     //processTimes.put(process, totalProcessTime);
                     break;
                 case "process08":
-                    process08(processTime, (long) workProcessTime, cnt);
+                   // process08(processTime, (long) workProcessTime, cnt);
                     System.out.println("in-process08");
                     AbstractMap.SimpleEntry<Double, Long> result6 = process08(processTime, (long) workProcessTime, cnt);
                     workProcessTime = result6.getKey();
                     cnt = result6.getValue();
                     System.out.println("프로세스8번토탈 - "+totalProcessTime);
-                    System.out.println("프로세스8번토탈 - "+workProcessTime);
-                    System.out.println("프로세스8번토탈 - "+cnt);
+                    System.out.println("프로세스8번워크 - "+workProcessTime);
+                    System.out.println("프로세스8번씨엔티 - "+cnt);
                     //processTimes.put(process, totalProcessTime);
                     break;
                 case "process09":
-                    process09(processTime, capa, productId, (long) workProcessTime, cnt);
+                    //process09(processTime, capa, productId, (long) workProcessTime, cnt);
                     System.out.println("in-process09");
                     AbstractMap.SimpleEntry<Double, Long> result7 = process09(processTime,capa,productId, (long) workProcessTime, cnt);
                     workProcessTime = result7.getKey();
                     cnt = result7.getValue();
                     System.out.println("프로세스9번토탈 - "+totalProcessTime);
-                    System.out.println("프로세스9번토탈 - "+workProcessTime);
-                    System.out.println("프로세스9번토탈 - "+cnt);
+                    System.out.println("프로세스9번워크 - "+workProcessTime);
+                    System.out.println("프로세스9번씨엔티 - "+cnt);
                     //processTimes.put(process, totalProcessTime);
                     break;
                 case "process10":
-                    process10(processTime, capa, (long) workProcessTime, cnt);
+                    //process10(processTime, capa, (long) workProcessTime, cnt);
                     System.out.println("in-process10");
                     AbstractMap.SimpleEntry<Double, Long> result8 = process10(processTime,capa, (long) workProcessTime, cnt);
                     workProcessTime = result8.getKey();
                     cnt = result8.getValue();
                     System.out.println("프로세스10번토탈 - "+totalProcessTime);
-                    System.out.println("프로세스10번토탈 - "+workProcessTime);
-                    System.out.println("프로세스10번토탈 - "+cnt);
+                    System.out.println("프로세스10번워크 - "+workProcessTime);
+                    System.out.println("프로세스10번씨엔티 - "+cnt);
                     //processTimes.put(process, totalProcessTime);
                     break;
             }
@@ -325,9 +415,9 @@ public class LotService {
             //totalProcessTime = processTimes.get(process);
             //LocalDateTime totalProcessTime = productionPlan.getProdPlanDate();
             System.out.println("여기여기여기1111 - "+totalProcessTime);
-
+            processStartTimes.put(process, totalProcessTime);
             if (cnt == 0) {
-
+                System.out.println("씨엔티0");
                 list.add(String.valueOf(totalProcessTime));
                 list.add(process);
                 processTimes.put(process, totalProcessTime);
@@ -339,16 +429,23 @@ public class LotService {
                     for (int j = 0; j < cnt; j++) {
                         if (j == cnt - 1) {
                             long time = (long) workProcessTime - (processTime * (j)); //30
-                            System.out.println("프로세스1들어옴 - "+totalProcessTime);
+                            System.out.println("수작업이프문 - "+totalProcessTime);
                             currentTime = selfTimeCheck(totalProcessTime, leadTime, time);
                             totalProcessTime = currentTime.plusMinutes(leadTime+time);
-                            System.out.println("프로세스1번이프문 - "+totalProcessTime);
+                            System.out.println("수작업이프문 토탈 - "+totalProcessTime);
+                            System.out.println("수작업이프문 커런트 - "+currentTime);
+
                         } else {
+                            System.out.println("수작업엘즈문");
                             currentTime = selfTimeCheck(totalProcessTime, leadTime, processTime);
                             totalProcessTime = selfTimeCheck(totalProcessTime, leadTime, processTime);
+                            totalProcessTime = dayCheck(totalProcessTime);
+                            totalProcessTime = selfTimeCheck(totalProcessTime, leadTime, processTime);
+                            System.out.println("수작업엘즈문 토탈 - "+totalProcessTime);
+                            System.out.println("수작업엘즈문 커런트 - "+currentTime);
                         }
                         list.add(String.valueOf(totalProcessTime));
-
+                        processStartTimes.put(process, currentTime);
                         if (!list.isEmpty() && list.get(j).length() != 0) {
                             if (j >= 1) {
                                 System.out.println("11111111111111111111");
@@ -361,31 +458,43 @@ public class LotService {
                     }
                     // 자동작업
                 } else {
-
                     for (int j = 0; j < cnt; j++) {
                         if (j == cnt - 1) {
                             long time = (long) workProcessTime - (processTime * (j));
-                            System.out.println("여기시발 - "+String.valueOf(totalProcessTime));
+                            System.out.println("자동작업이프문 - "+String.valueOf(totalProcessTime));
                             if(process.equals("process04")){
+                                System.out.println("자동작업프로세스4번이프문");
                                 currentTime = processTimes.get("process03");
+                                System.out.println("자동작업프로세스4번이프문 커런트타임 - "+ currentTime);
                             }else{
+                                System.out.println("자동작업프로세스4번엘즈문");
                                 currentTime = autoTimeCheck(totalProcessTime, leadTime, time);
+                                System.out.println("자동작업프로세스4번엘즈문 커런트타임 - "+ currentTime);
                             }
                             totalProcessTime = currentTime.plusMinutes(leadTime+time);
+                            totalProcessTime = dayCheck(totalProcessTime);
+                            totalProcessTime = autoTimeCheck(totalProcessTime, leadTime, time);
+                            System.out.println("자동작업이프문 토탈 - "+totalProcessTime);
                         } else {
-                            System.out.println("여기시발1 - "+totalProcessTime);
+                            System.out.println("자동작업엘즈문 - "+totalProcessTime);
                             if(process.equals("process04")){
+                                System.out.println("자동작업프로세스4번엘즈이프문");
                                 currentTime = processTimes.get("process03");
+                                System.out.println("자동작업프로세스4번엘즈이프문 커런트타임 - "+ currentTime);
                             }else{
+                                System.out.println("자동작업프로세스4번엘즈이프엘즈문");
                                 currentTime = autoTimeCheck(totalProcessTime, leadTime, processTime);
+                                System.out.println("자동작업프로세스4번엘즈이프엘즈문 커런트타임 - "+ currentTime);
                             }
                             totalProcessTime = currentTime.plusMinutes(leadTime+processTime);
+                            System.out.println("자동작업엘즈문 토탈 - "+totalProcessTime);
                         }
                         list.add(String.valueOf(totalProcessTime));
 
+
                         if (!list.isEmpty() && list.get(j).length() != 0) {
                             if (j >= 1) {
-                                System.out.println("11111111111111111111");
+                                System.out.println("리스트엠티아닐때");
                                 System.out.println(totalProcessTime);
                                 //totalProcessTime = currentTime;
                                 System.out.println("2222222222222222222222");
@@ -396,9 +505,9 @@ public class LotService {
                 }
                 list.add(process);
                 processTimes.put(process, totalProcessTime);
-                processStartTimes.put(process, currentTime);
-                System.out.println("프로세스타임 - "+processTimes);
-                System.out.println("프로세스스타트타임 - "+processStartTimes);
+
+                System.out.println("토탈프로세스타임리스트(끝난시간) - "+processTimes);
+                System.out.println("프로세스스타트타임(시작시간) - "+processStartTimes);
 
                 resultMap.put("processTimes", processTimes);
                 resultMap.put("processStartTimes", processStartTimes);
@@ -420,15 +529,25 @@ public class LotService {
         }
 
         //System.out.println("Here!! - "+ totalProcessTime);
+        System.out.println("process01 - "+processStartTimes.get("process01"));
         System.out.println("process01 - "+processTimes.get("process01"));
+        System.out.println("process02 - "+processStartTimes.get("process02"));
         System.out.println("process02 - "+processTimes.get("process02"));
+        System.out.println("process03 - "+processStartTimes.get("process03"));
         System.out.println("process03 - "+processTimes.get("process03"));
+        System.out.println("process04 - "+processStartTimes.get("process04"));
         System.out.println("process04 - "+processTimes.get("process04"));
+        System.out.println("process05 - "+processStartTimes.get("process05"));
         System.out.println("process05 - "+processTimes.get("process05"));
+        System.out.println("process06 - "+processStartTimes.get("process06"));
         System.out.println("process06 - "+processTimes.get("process06"));
+        System.out.println("process07 - "+processStartTimes.get("process07"));
         System.out.println("process07 - "+processTimes.get("process07"));
+        System.out.println("process08 - "+processStartTimes.get("process08"));
         System.out.println("process08 - "+processTimes.get("process08"));
+        System.out.println("process09 - "+processStartTimes.get("process09"));
         System.out.println("process09 - "+processTimes.get("process09"));
+        System.out.println("process10 - "+processStartTimes.get("process10"));
         System.out.println("process10 - "+processTimes.get("process10"));
         return resultMap;
     }
@@ -438,10 +557,10 @@ public class LotService {
 
     public AbstractMap.SimpleEntry<Double, Long> process01(long processTime, double workProcessTime, long cnt) {
         System.out.println("inM-process01");
-        System.out.println("시발시발 - "+processTime);
-        System.out.println("시발시발 - "+workProcessTime);
+        System.out.println("프로세스1 프로세스타임 - "+processTime);
+        System.out.println("프로세스1 워크프로세스타임 - "+workProcessTime);
         workProcessTime = processTime;
-        System.out.println("시발시발 - "+workProcessTime);
+        System.out.println("프로세스1 워크프로세스타임 - "+workProcessTime);
         cnt = 1;
         // 추가 작업
         return new AbstractMap.SimpleEntry<>(workProcessTime, cnt);
@@ -451,10 +570,12 @@ public class LotService {
         System.out.println("inM-process02");
 
         if (productId.equals("P001")) {
-            workProcessTime = ratio.getCabbageInputQty() / 1000 * processTime;
-            cnt = (long) Math.ceil(ratio.getCabbageInputQty() / 1000);
+            workProcessTime = ratio.getOrderInput() / 1000 * processTime;
+            System.out.println("프로세스2 양배추인풋 - "+ratio.getOrderInput());
+            cnt = (long) Math.ceil(ratio.getOrderInput() / 1000);
         } else if (productId.equals("P002")) {
             workProcessTime = ratio.getGarlicInputQty() / 1000 * processTime;
+            System.out.println("프로세스2 갈릭인풋 - "+ratio.getGarlicInputQty());
             cnt = (long) Math.ceil(ratio.getGarlicInputQty() / 1000);
         }
         // 추가 작업
@@ -528,8 +649,8 @@ public class LotService {
         System.out.println("inM-process09");
 
         if (productId.equals("P001") || productId.equals("P002")) {
-            workProcessTime = (ratio.getWaterOrderInputQty() / 5000) * processTime;
-            cnt = (long) Math.ceil(ratio.getWaterOrderInputQty() / 5000);
+            workProcessTime = (ratio.getCabbageWaterOutput1() / 5000) * processTime;
+            cnt = (long) Math.ceil(ratio.getCabbageWaterOutput1() / 5000);
         } else if (productId.equals("P003") || productId.equals("P004")) {
             workProcessTime = ratio.getJellyOrderInputQty() / 5000 * processTime;
             cnt = (long) Math.ceil(ratio.getJellyOrderInputQty() / 5000);
@@ -540,8 +661,10 @@ public class LotService {
 
     private AbstractMap.SimpleEntry<Double, Long> process10(long processTime, long capa, long cnt, double workProcessTime) {
         System.out.println("inM-process10");
-
-        workProcessTime = (long) (ratio.getOrderInput() / capa) * processTime;
+        System.out.println(capa);
+        System.out.println(ratio.getCabbageWaterOutput1() / capa);
+        System.out.println(ratio.getCabbageWaterOutput1());
+        workProcessTime = (long) (ratio.getCabbageWaterOutput1() / capa) * processTime;
         cnt = 1;
         // 추가 작업
         return new AbstractMap.SimpleEntry<>(workProcessTime, cnt);
@@ -626,7 +749,12 @@ public class LotService {
         long currTime = Integer.parseInt(ordersRepository.findWorkTime(currentTime));
         System.out.println("자동currTime = " +currTime);
 
-
+        //System.out.println("현재시간에 전체작업시간더한것(addtime) = " + addTime);
+        System.out.println("전체작업시간 - "+ totalTime);
+        System.out.println("현재시간에리드타임더한것(addLeadTime) - "+addLeadTime);
+        System.out.println("리드타임 - "+leadTime);
+        System.out.println("현재시간을 %H%S%I 형태로 나타낸 것(currTime) = " +currTime);
+        System.out.println("현재시간 - "+currentTime);
 
         if((addLeadTime >= 90000 && addLeadTime < 120000)
                 || (addLeadTime >= 130000 && addLeadTime < 180000)){
@@ -657,7 +785,7 @@ public class LotService {
             currentTime = setTime(currentTime, 0,9);
         }
 
-        totalWorkTime = dayCheck(currentTime.plusMinutes(totalTime));
+        //totalWorkTime = dayCheck(currentTime.plusMinutes(totalTime)); ***************<<<<<<<<<<<<<<<<<<<<<<
 
         return currentTime;
 
@@ -673,7 +801,7 @@ public class LotService {
         System.out.println("workTime - "+workTime);
         System.out.println("totalTime - "+totalTime);
         currentTime = dayCheck(currentTime);
-        System.out.println("셀프커런트 - "+currentTime);
+        System.out.println("수작업데이체크후커런트 - "+currentTime);
         LocalDateTime totalWorkTime = null;
 
         //현재시간에 전체 작업 시간을 더한 시간을 %H$S%I 형태로 나타낸 것 ex) 13:50 -> 135000
@@ -687,6 +815,13 @@ public class LotService {
         //현재시간을 %H%S%I 형태로 나타낸 것
         long currTime = Integer.parseInt(ordersRepository.findWorkTime(currentTime));
         System.out.println("currTime = " +currTime);
+
+        System.out.println("현재시간에 전체작업시간더한것(addtime) = " + addTime);
+        System.out.println("전체작업시간 - "+ totalTime);
+        System.out.println("현재시간에리드타임더한것(addLeadTime) - "+addLeadTime);
+        System.out.println("리드타임 - "+leadTime);
+        System.out.println("현재시간을 %H%S%I 형태로 나타낸 것(currTime) = " +currTime);
+        System.out.println("현재시간 - "+currentTime);
 
         //점심시간 퇴근시간 제외
         if(currTime >= 120000 && currTime < 130000){
@@ -713,8 +848,8 @@ public class LotService {
                 currentTime = setTime(currentTime,1,9);
                 //totalWorkTime = currentTime.plusMinutes(totalTime);
             }else{
+                totalWorkTime = currentTime.plusMinutes(totalTime).plusDays(1).withHour(9);
                 currentTime = currentTime.plusDays(1).withHour(9);
-                //totalWorkTime = currentTime.plusMinutes(totalTime).plusDays(1).withHour(9);
                 long workDay = ordersRepository.findWorkDay(totalWorkTime);
                 if(workDay == Weekday.FRIDAY){
                     currentTime = currentTime.plusDays(3).withHour(9);
@@ -741,6 +876,11 @@ public class LotService {
         System.out.println("셀프토탈워크타임(if밖) - "+totalWorkTime);
         return currentTime;
     }
+
+
+
+
+
 
 
 }
