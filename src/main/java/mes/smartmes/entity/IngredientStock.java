@@ -24,8 +24,7 @@ public class IngredientStock {
     private String stockNo;
 
 
-    //    @Column(length = 20, nullable = false)
-
+    @Column(length = 20, nullable = false)
     private String productId;
 
     @Column(length = 20, nullable = false)
@@ -38,6 +37,8 @@ public class IngredientStock {
 
     @Column(name = "input_date")
     private LocalDate inputDate;
+
+
 
 
     //재고관리 스탁 은 합계만 나타낸다.

@@ -10,62 +10,22 @@
   <link rel="stylesheet" href="/css/nav.css">
   <link rel="stylesheet" href="/css/Production.css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="../static/css/popUpOrder.css">
 
+  <!--   <link rel="stylesheet" href="../static/css/popUpOrder.css"> -->
 </head>
+
 <body>
 <div id="wrap">
 
-  <nav>
-    <button onclick="location.href='main.html'"></button>
-    <ul id="business">
-      <span class="title">영업관리</span>
-
-      <li><a href="order.html">수주등록</a></li>
-
-      <li><a href="/mes/order">수주등록</a></li>
-
-      <li><a href="/mes/order">수주등록</a></li>
-
-      <li><a href="Ordermanagement.html">수주관리</a></li>
-      <li><a href="">출하관리</a></li>
-    </ul>
-    <ul id="Purchase">
-      <span class="title">구매관리</span>
-      <li><a href="">발주관리</a></li>
-      <li><a href="">재고관리</a></li>
-      <li><a href="">입출고관리</a></li>
-    </ul>
-    <ul id="Production">
-      <span class="title">생산관리</span>
-      <!-- <li></li> -->
-
-      <li><a href="">생산계획</a></li>
-
-      <li><a href="/prodPlan">생산계획</a></li>
-
-      <li><a href="/prodPlan">생산계획</a></li>
-
-      <li><a href="">작업지시</a></li>
-      <li><a href="">작업실적등록</a></li>
-      <li><a href="">작업실적수정</a></li>
-    </ul>
-    <ul id="standard">
-      <span class="title">기준정보</span>
-      <!-- <li></li> -->
-      <li><a href="">공정등록</a></li>
-      <li><a href="">라우팅등록</a></li>
-      <li><a href="">제조BOM</a></li>
-    </ul>
-  </nav>
+  <nav th:replace="sideMenu::nav"></nav>
 
 
   <aside>
-    <form class="orderForm" action="/search" method="post">
+    <form class="orderForm" th:action="@{/mes/search}" method="post">
       <div class="topArea">
         <h1>생산계획</h1>
         <div id="btnWrap">
-          <button class="return">
+          <button class="return" type="reset">
             <svg xmlns="http://www.w3.org/2000/svg" width="17.303" height="16.221" viewBox="0 0 17.303 16.221">
               <path id="redo_FILL0_wght400_GRAD0_opsz48" d="M166.272,272.221a6.251,6.251,0,0,1-4.42-1.73,5.852,5.852,0,0,1,0-8.543,6.251,6.251,0,0,1,4.42-1.73h7.948l-3.082-3.082L172.274,256l5.029,5.029-5.029,5.029-1.136-1.135,3.082-3.082h-7.975a4.644,4.644,0,0,0-3.258,1.257,4.254,4.254,0,0,0,0,6.245,4.644,4.644,0,0,0,3.258,1.257h7.813v1.622Z" transform="translate(-160 -256)" fill="#fff"/>
             </svg>
@@ -73,8 +33,6 @@
           <button class="check" type="submit">조회</button>
         </div>
       </div>
-
-
 
       <div id="tableCheckWrap">
         <table id="tableCheck">
@@ -87,8 +45,6 @@
             <td class="inventory">진행상태</td>
             <td>
               <select class="drop" name="status">
-                <option value="진행상태">진행상태</option>
-                <option value="">진행상태</option>
                 <option value="">진행상태</option>
                 <option value="대기">대기</option>
                 <option value="발주입고대기중">발주입고대기중</option>
@@ -98,16 +54,11 @@
             <td class="inventory">품목</td>
             <td>
               <select class="drop" name="items">
-                <option value="select">품목</option>
+                <option value="">품목</option>
                 <option value="흑마늘즙">흑마늘즙</option>
                 <option value="양배추즙">양배추즙</option>
                 <option value="석류젤리">석류젤리</option>
                 <option value="매실젤리">매실젤리</option>
-
-                <option value="석류젤리스틱">석류젤리</option>
-                <option value="매실젤리스틱">매실젤리</option>
-                <option value="석류젤리스틱">석류젤리</option>
-                <option value="매실젤리스틱">매실젤리</option>
               </select>
             </td>
           </tr>
@@ -115,9 +66,9 @@
       </div>
     </form>
 
-
     <div id="orderList">
       <h1>생산계획 목록</h1>
+      <div class="allSelect">전체선택</div>
       <div class="table-container">
         <table id="orderData">
           <thead>
@@ -127,39 +78,30 @@
             <td onclick="clickNum()">생산계획번호</td>
             <td>생산계획항번</td>
             <td onclick="clickDate()">생산번호일자</td>
-            <td onclick="productionNum()">생산계획번호</td>
-            <td>생산계획항번</td>
-            <td onclick="productionDate()">생산번호일자</td>
-            <td onclick="productionNum()">생산계획번호</td>
-            <td>생산계획항번</td>
-            <td onclick="productionDate()">생산번호일자</td>
+            <td onclick="productionNum()">수주번호</td>
+<!--            <td>생산계획항번</td>-->
+<!--            <td onclick="productionDate()">생산번호일자</td>-->
+<!--            <td onclick="productionNum()">생산계획번호</td>-->
+<!--            <td>생산계획항번</td>-->
+<!--            <td onclick="productionDate()">생산번호일자</td>-->
             <td>품목</td>
             <td>계획수량</td>
             <td>작업지시완료여부</td>
-            <td></td>
-            <td></td>
-            <td></td>
           </tr>
           </thead>
           <tbody>
           <tr th:each="prodPlan, prodPlanIndex : ${prodPlans}" onclick="toggleCheckbox(this)">
             <td th:text="${prodPlanIndex.index + 1}"></td>
-          <tr th:each="prodPlan, prodPlanIndex : ${prodPlans}" onclick="toggleCheckbox(this)" >
-            <td th:text="${prodPlanIndex.index+1}"> </td>
-          <tr th:each="prodPlan, prodPlanIndex : ${prodPlans}" onclick="toggleCheckbox(this)" >
-            <td th:text="${prodPlanIndex.index+1}"> </td>
             <td>
               <input type="checkbox" id="checkbox">
             </td>
             <td th:text="${prodPlan.prodPlanNo}"></td>
             <td th:text="${prodPlan.prodPlanSeq}"></td>
             <td th:text="${prodPlan.prodPlanDate}"></td>
+            <td th:text="${prodPlan.orderNo}"></td>
             <td th:text="${prodPlan.productName}"></td>
             <td th:text="${prodPlan.prodPlanQuantity}"></td>
             <td th:text="${prodPlan.prodPlanFinYn}"></td>
-            <td></td>
-            <td></td>
-            <td></td>
           </tr>
           </tbody>
           <tfoot>
@@ -184,19 +126,17 @@
 
 
 
-
-
-
     <!-- 스크립트 -->
 
-    <script src="js/datapicker.js"></script>
-    <script src="js/popUP.js"></script>
+    <script src="/js/datapicker.js"></script>
+    <script src="/js/popUP.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="js/download.js"></script>
-    <script src="js/click.js"></script>
-    <script src="js/ProductionSearch.js"></script>
+    <script src="/js/download.js"></script>
+    <script src="/js/click.js"></script>
+    <script src="/js/Search.js"></script>
     <script>
+
 
       $(document).ready(function() {
 
@@ -212,97 +152,7 @@
         });
 
       });
-
-      let ascendingOrder = true;      //정렬순서 true->오름차순 false->내림차순
-      let clickCount = 0;
-      function productionDate() {
-        let table, rows, switching, i, x, y, shouldSwitch;
-        table = document.getElementById("orderData");
-        switching = true;
-        while (switching) {
-          switching = false;
-          rows = table.getElementsByTagName("tr");
-          for (i = 1; i < rows.length - 1; i++) {
-            shouldSwitch = false;
-            x = rows[i].getElementsByTagName("td")[4];
-            y = rows[i + 1].getElementsByTagName("td")[4];
-            const dateX = new Date(x.textContent);
-            const dateY = new Date(y.textContent);
-
-            if (ascendingOrder) {
-              if (dateX > dateY) {    //오름차순인 경우
-                shouldSwitch = true;
-                break;
-              }
-            } else {
-              if (dateX < dateY) {    //내림차순 정렬인 경우
-                shouldSwitch = true;
-                break;
-              }
-            }
-          }
-          if (shouldSwitch) {
-            // 정렬 시 번호 열도 함께 이동
-            let numberX = rows[i].getElementsByTagName("td")[0].textContent;
-            let numberY = rows[i + 1].getElementsByTagName("td")[0].textContent;
-            rows[i].getElementsByTagName("td")[0].textContent = numberY;
-            rows[i + 1].getElementsByTagName("td")[0].textContent = numberX;
-
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-          }
-        }
-        ascendingOrder = !ascendingOrder;   //다음클릭하면 정렬방향 반전
-      }
-
-      function productionNum() {
-        clickCount++;
-        let table, rows, switching, i, x, y, shouldSwitch;
-        table = document.getElementById("orderData");
-        switching = true;
-        while (switching) {
-          switching = false;
-          rows = table.getElementsByTagName("tr");
-          for (i = 1; i < rows.length - 2; i++) {
-            shouldSwitch = false;
-            x = rows[i].getElementsByTagName("td")[2];
-            y = rows[i + 1].getElementsByTagName("td")[2];
-            const numX = parseInt(x.textContent.match(/\d+/)[0]);   //숫자부분만 추출
-            const numY = parseInt(y.textContent.match(/\d+/)[0]);
-
-            if (ascendingOrder) {
-              if (numX > numY) {
-                shouldSwitch = true;
-                break;
-              }
-            } else {
-              if (numX < numY) {
-                shouldSwitch = true;
-                break;
-              }
-            }
-          }
-          if (shouldSwitch) {
-            // 정렬 시 번호 열도 함께 이동
-            let numberX = rows[i].getElementsByTagName("td")[0].textContent;
-            let numberY = rows[i + 1].getElementsByTagName("td")[0].textContent;
-            rows[i].getElementsByTagName("td")[0].textContent = numberY;
-            rows[i + 1].getElementsByTagName("td")[0].textContent = numberX;
-
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-          }
-        }
-
-        // 클릭 횟수가 짝수일 때 내림차순으로 정렬
-        if (clickCount % 2 === 0) {
-          ascendingOrder = !ascendingOrder;
-        }
-      }
-
     </script>
-
-
 
     <!-- "excel download" -->
     <!-- Sheet JS -->

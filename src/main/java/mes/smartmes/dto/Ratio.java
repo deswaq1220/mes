@@ -31,8 +31,6 @@ public class Ratio {
         return getJellyInputQty()*1000/80;
     }
 
-
-
     public double getWaterOrderInputQty() {
         return getOrderInput() * 30;
     }
@@ -59,6 +57,10 @@ public class Ratio {
     //양배추즙 추출액(kg)
     public double getCabbageWaterOutput() {
         return getCabbageWater() * 0.8;
+    }
+
+    public double getCabbageWaterOutput1() {
+        return getCabbageWaterOutput()*1000.0/80;
     }
 
     //흑마늘 투입량(kg)

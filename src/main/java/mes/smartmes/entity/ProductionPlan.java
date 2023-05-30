@@ -5,13 +5,11 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @EntityListeners(value = {AuditingEntityListener.class})
 @Entity
-@Table(name = "prodplan")
+@Table(name = "prod_plan")
 @ToString
 @Getter
 @Setter
@@ -28,7 +26,7 @@ public class ProductionPlan {
 
     @CreatedDate
     @Column(updatable = false)
-    private Date prodPlanDate;
+    private LocalDateTime prodPlanDate;
 
     @Column(length = 20, nullable = false)
     private String productId;
@@ -39,7 +37,7 @@ public class ProductionPlan {
     @Column(length = 20)
     private String orderNo;
 
-    @Column(length = 10)
+    @Column(length = 20)
     private String prodPlanFinYn;
 
     @Column(length = 10)

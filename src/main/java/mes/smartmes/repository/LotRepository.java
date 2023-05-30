@@ -14,4 +14,9 @@ public interface LotRepository extends JpaRepository<Lot, String> {
     String findBylotId();
 
 
+    @Query("select l.lotId from Lot l")
+    List<String> findLotId();
+
+    @Query("select l.lotNo from Lot l")
+    List<String> findLotNo();
 }

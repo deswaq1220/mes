@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @EntityListeners(value = {AuditingEntityListener.class})
@@ -22,6 +23,9 @@ public class Shipment {
     @Id
     @Column(length = 20)
     private String shipmentNo;
+
+    @Column(length = 20)
+    private String orderNo;
 
     @Column(length = 20)
     private String productId;
