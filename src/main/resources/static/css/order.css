@@ -262,14 +262,17 @@ td{
   background-color: #F2F3F4;
 }
 
-#orderList table tbody td:nth-child(9),
-#orderList table tbody td:nth-child(10),
 #orderList table tbody td:nth-child(11),
 #orderList table tbody td:nth-child(12)
 {
   text-align: right;
   padding: 12px;
   box-sizing: border-box;
+}
+
+#orderList table tbody td:nth-child(11){
+  display: flex;
+  justify-content: center;
 }
 
 #orderList table tfoot{
@@ -350,7 +353,6 @@ td{
 
 #orderDetails table tbody td:nth-child(9),
 #orderDetails table tbody td:nth-child(10),
-#orderDetails table tbody td:nth-child(11),
 #orderDetails table tbody td:nth-child(12)
 {
   text-align: right;
