@@ -27,7 +27,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @AllArgsConstructor
-@RequestMapping("/smartMes")
+@RequestMapping("/mes")
 public class OrdersController {
 
 
@@ -75,7 +75,7 @@ public class OrdersController {
     //수주 등록 후 오더페이지로
     @PostMapping("/addOrder")
     @ResponseStatus(value= HttpStatus.OK)
-    public void saveOder(Orders orders, @RequestParam("orderDateStr")String orderDateStr , Model model, HttpServletRequest request){
+    public void saveOder(Orders orders, Model model, HttpServletRequest request){
         System.out.println("=========================");
 
         //orders.setOrderDate(LocalDateTime.now());
@@ -95,10 +95,11 @@ public class OrdersController {
 
 
         orders.setOrderNo(orderNo);
-        orders.setOrderDate(LocalDate.parse(orderDateStr).atStartOfDay());
+        //orders.setOrderDate(LocalDate.parse(orderDateStr).atStartOfDay());
+        orders.setOrderQuantity(5);
         orders.setCompanyId(request.getParameter("companyId"));
         orders.setProductId(request.getParameter("productId"));
-        orders.setOrderQuantity(Integer.parseInt(request.getParameter("orderQty")));
+        //orders.setOrderQuantity(Integer.parseInt(request.getParameter("orderQty")));
         orders.setOrderStatus("A");
 
         ordersRepository.save(orders);

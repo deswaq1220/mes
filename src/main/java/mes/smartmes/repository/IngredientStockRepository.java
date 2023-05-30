@@ -14,17 +14,17 @@ public interface IngredientStockRepository extends JpaRepository<IngredientStock
 
     // 현일
     @Query("SELECT i FROM IngredientStock i WHERE i.productId = :productId")
-    IngredientStock findByProductId(String productId);
+    IngredientStock findByProductId(@Param("productId")String productId);
 
     @Transactional
     @Modifying
     @Query("UPDATE IngredientStock ig SET ig.quantity = ig.quantity - :quantity WHERE ig.productId = :product_id")
-    void decreaseStockQuantity(String product_id, int quantity);
+    void decreaseStockQuantity(@Param("product_id")String product_id, @Param("quantity")int quantity);
 
     @Transactional
     @Modifying
     @Query("UPDATE IngredientStock ig SET ig.quantity = ig.quantity - :quantity WHERE ig.ingredientId = :ingredientId")
-    void decreaseStock1Quantity(String ingredientId, int quantity);
+    void decreaseStock1Quantity(@Param("ingredientId") String ingredientId, @Param("quantity")int quantity);
 
     @Query("SELECT i.quantity FROM IngredientStock i WHERE i.productId = :productId AND i.ingredientId = 'I008'")
     int findCabbageBoxConcentrateByProductId(@Param("productId") String productId);
@@ -57,7 +57,7 @@ public interface IngredientStockRepository extends JpaRepository<IngredientStock
     int findRaspberryCollagenConcentrateByProductId(@Param("productId") String productId);
 
     @Query("SELECT i FROM IngredientStock i WHERE i.ingredientId = :ingredientId")
-    IngredientStock findBoxConcentrateByProductId(String ingredientId);
+    IngredientStock findBoxConcentrateByProductId(@Param("ingredientId") String ingredientId);
 
     @Query("SELECT i.quantity FROM IngredientStock i WHERE i.ingredientId = :ingredientId")
     int findBoxNumByProductId(@Param("ingredientId") String ingredientId);

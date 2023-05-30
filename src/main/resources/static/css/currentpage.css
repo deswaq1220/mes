@@ -8,7 +8,10 @@ a{
 
 nav{
     width:20% ;
-    height: 85vw;
+
+    height: 100vh;
+    position: fixed;
+
     background-color: #022454;
     color: white;
     float: left;

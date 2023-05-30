@@ -40,24 +40,24 @@ public interface OrdersRepository extends JpaRepository<Orders, String> {
 
     //리드타임
     @Query(value = "SELECT p.lead_time FROM process p WHERE processno = :processNo" ,nativeQuery = true)
-    long findLeadTime(String processNo);
+    long findLeadTime(@Param("processNo") String processNo);
 
     //생산시간
     @Query(value = "SELECT p.process_time FROM process p WHERE processno = :processNo" ,nativeQuery = true)
-    long findProcessTime(String processNo);
+    long findProcessTime(@Param("processNo") String processNo);
 
     //생산능력(prcess_capacity)
     @Query(value = "SELECT p.process_capacity FROM process p WHERE processno = :processNo" ,nativeQuery = true)
-    long findCapa(String processNo);
+    long findCapa(@Param("processNo") String processNo);
 
     @Query(value ="SELECT dayofweek(:currentTime)",nativeQuery = true)
-    long findWorkDay(LocalDateTime currentTime);
+    long findWorkDay(@Param("currentTime") LocalDateTime currentTime);
 
     @Query(value ="SELECT date_format(:totalProcessTime,'%H%i%S')",nativeQuery = true)
-    String findWorkTime(LocalDateTime totalProcessTime);
+    String findWorkTime(@Param("totalProcessTime") LocalDateTime totalProcessTime);
 
     @Query("SELECT o FROM Orders o WHERE o.orderNo = :orderNo")
-    Orders findByOrderNo(String orderNo);
+    Orders findByOrderNo(@Param("orderNo")String orderNo);
 
 
 

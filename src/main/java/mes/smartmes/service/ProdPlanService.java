@@ -23,7 +23,7 @@ public class ProdPlanService {
     private IngredientStockRepository ingredientStockRepository;
     private PorderRepository porderRepository;
     private ProductionPlanRepository productionPlanRepository;
-    private FinProductRepository finproductRepository;
+    private FinproductRepository finproductRepository;
     private IngredientsRepository ingredientsRepository;
     private ShipmentRepository shipmentRepository;
     private ProductRepository productRepository;
@@ -32,8 +32,8 @@ public class ProdPlanService {
     @Autowired
     public ProdPlanService(OrdersRepository ordersRepository, IngredientStockRepository ingredientStockRepository,
                            PorderRepository porderRepository, ProductionPlanRepository productionPlanRepository,
-                           FinProductRepository finproductRepository, IngredientsRepository ingredientsRepository,
-                           ShipmentRepository shipmentRepository, ProductRepository productRepository, ProdPlanRepository prodPlanRepository) {
+                           FinproductRepository finproductRepository, IngredientsRepository ingredientsRepository,
+                           ShipmentRepository shipmentRepository, ProductRepository productRepository) {
         this.ordersRepository = ordersRepository;
         this.ingredientStockRepository = ingredientStockRepository;
         this.porderRepository = porderRepository;
@@ -42,7 +42,6 @@ public class ProdPlanService {
         this.ingredientsRepository = ingredientsRepository;
         this.shipmentRepository = shipmentRepository;
         this.productRepository = productRepository;
-        this.prodPlanRepository = prodPlanRepository;
     }
 
     @Autowired
@@ -136,8 +135,8 @@ public class ProdPlanService {
                     String Porderno = generatePorderNumber();
                     porder.setPorderNo(Porderno);
                     porder.setEmergencyYn("N");
-                    String porderIngredientId = ingredientsRepository.findBoxConcentrateByProductId(productId);
-                    porder.setIngredientId(porderIngredientId);
+                    String porderIngredientName = ingredientsRepository.findBoxConcentrateByProductId(productId);
+                    porder.setIngredientName(porderIngredientName);
                     if(orderBox<500){
                         porder.setPorderQuantity(500);
                     }else if(orderBox >= 500 && orderBox <= 10000){
@@ -153,7 +152,7 @@ public class ProdPlanService {
                             String porderNo = generatePorderNumber();
                             additionalPorder.setPorderNo(porderNo);
                             additionalPorder.setEmergencyYn("N");
-                            additionalPorder.setIngredientId(porderIngredientId);
+                            additionalPorder.setIngredientName(porderIngredientName);
                             additionalPorder.setSupplierId("A포장회사");
 
                             //발주수량정하기
@@ -224,7 +223,7 @@ public class ProdPlanService {
                     porder.setPorderNo(Porderno);
                     porder.setEmergencyYn("N");
                     String porderIngredientId = ingredientsRepository.findPouchConcentrateByProductId(productId);
-                    porder.setIngredientId(porderIngredientId);
+                    porder.setIngredientName(porderIngredientId);
                     if(orderPouch<1000){
                         porder.setPorderQuantity(1000);
                     }else if(orderPouch >= 1000 && orderPouch <= 1000000){
@@ -239,7 +238,7 @@ public class ProdPlanService {
                             String porderNo = generatePorderNumber();
                             additionalPorder.setPorderNo(porderNo);
                             additionalPorder.setEmergencyYn("N");
-                            additionalPorder.setIngredientId(porderIngredientId);
+                            additionalPorder.setIngredientName(porderIngredientId);
 
                             additionalPorder.setSupplierId("A파우치회사");
 
@@ -302,7 +301,7 @@ public class ProdPlanService {
                     porder.setPorderNo(Porderno);
                     porder.setEmergencyYn("N");
                     String porderIngredientId = ingredientsRepository.findBoxConcentrateByProductId(productId);
-                    porder.setIngredientId(porderIngredientId);
+                    porder.setIngredientName(porderIngredientId);
                     if(orderBox<500){
                         porder.setPorderQuantity(500);
                     }else if(orderBox >= 500 && orderBox <= 10000){
@@ -318,7 +317,7 @@ public class ProdPlanService {
                             String porderNo = generatePorderNumber();
                             additionalPorder.setPorderNo(porderNo);
                             additionalPorder.setEmergencyYn("N");
-                            additionalPorder.setIngredientId(porderIngredientId);
+                            additionalPorder.setIngredientName(porderIngredientId);
 
                             additionalPorder.setSupplierId("A포장회사");
 
@@ -391,7 +390,7 @@ public class ProdPlanService {
                     porder.setPorderNo(Porderno);
                     porder.setEmergencyYn("N");
                     String porderIngredientId = ingredientsRepository.findPouchConcentrateByProductId(productId);
-                    porder.setIngredientId(porderIngredientId);
+                    porder.setIngredientName(porderIngredientId);
 
                     if(orderPouch<1000){
                         porder.setPorderQuantity(1000);
@@ -407,7 +406,7 @@ public class ProdPlanService {
                             String porderNo = generatePorderNumber();
                             additionalPorder.setPorderNo(porderNo);
                             additionalPorder.setEmergencyYn("N");
-                            additionalPorder.setIngredientId(porderIngredientId);
+                            additionalPorder.setIngredientName(porderIngredientId);
 
                             additionalPorder.setSupplierId("A파우치회사");
 
@@ -467,7 +466,7 @@ public class ProdPlanService {
                     porder.setPorderNo(Porderno);
                     porder.setEmergencyYn("N");
                     String porderIngredientId = ingredientsRepository.findBoxConcentrateByProductId(productId);
-                    porder.setIngredientId(porderIngredientId);
+                    porder.setIngredientName(porderIngredientId);
                     if(orderBox<500){
                         porder.setPorderQuantity(500);
                     }else if(orderBox >= 500 && orderBox <= 10000){
@@ -483,7 +482,7 @@ public class ProdPlanService {
                             String porderNo = generatePorderNumber();
                             additionalPorder.setPorderNo(porderNo);
                             additionalPorder.setEmergencyYn("N");
-                            additionalPorder.setIngredientId(porderIngredientId);
+                            additionalPorder.setIngredientName(porderIngredientId);
                             additionalPorder.setSupplierId("A포장회사");
 
                             //발주수량정하기
@@ -557,7 +556,7 @@ public class ProdPlanService {
                     porder.setPorderNo(Porderno);
                     porder.setEmergencyYn("N");
                     String porderIngredientId = ingredientsRepository.findStickPouchConcentrateByProductId(productId);
-                    porder.setIngredientId(porderIngredientId);
+                    porder.setIngredientName(porderIngredientId);
                     if(orderStickPouch<1000){
                         porder.setPorderQuantity(1000);
                     }else if(orderStickPouch >= 1000 && orderStickPouch <= 1000000){
@@ -573,7 +572,7 @@ public class ProdPlanService {
                             String porderNo = generatePorderNumber();
                             additionalPorder.setPorderNo(porderNo);
                             additionalPorder.setEmergencyYn("N");
-                            additionalPorder.setIngredientId(porderIngredientId);
+                            additionalPorder.setIngredientName(porderIngredientId);
                             additionalPorder.setSupplierId("A스틱파우치회사");
 
                             //발주수량정하기
@@ -630,7 +629,7 @@ public class ProdPlanService {
                     porder.setPorderNo(Porderno);
                     porder.setEmergencyYn("N");
                     String porderIngredientId = ingredientsRepository.findCollagenConcentrateByProductId(productId);
-                    porder.setIngredientId(porderIngredientId);
+                    porder.setIngredientName(porderIngredientId);
                     if(orderCollagen<5){
                         porder.setPorderQuantity(5);
                     }else if(orderCollagen >= 5 && orderCollagen <= 500){
@@ -645,7 +644,7 @@ public class ProdPlanService {
                             String porderNo = generatePorderNumber();
                             additionalPorder.setPorderNo(porderNo);
                             additionalPorder.setEmergencyYn("N");
-                            additionalPorder.setIngredientId(porderIngredientId);
+                            additionalPorder.setIngredientName(porderIngredientId);
                             additionalPorder.setSupplierId("A콜라겐회사");
 
                             //발주수량정하기
@@ -707,7 +706,7 @@ public class ProdPlanService {
                     porder.setPorderNo(Porderno);
                     porder.setEmergencyYn("N");
                     String porderIngredientId = ingredientsRepository.findBoxConcentrateByProductId(productId);
-                    porder.setIngredientId(porderIngredientId);
+                    porder.setIngredientName(porderIngredientId);
                     if(orderBox<500){
                         porder.setPorderQuantity(500);
                     }else if(orderBox >= 500 && orderBox <= 10000){
@@ -723,7 +722,7 @@ public class ProdPlanService {
                             String porderNo = generatePorderNumber();
                             additionalPorder.setPorderNo(porderNo);
                             additionalPorder.setEmergencyYn("N");
-                            additionalPorder.setIngredientId(porderIngredientId);
+                            additionalPorder.setIngredientName(porderIngredientId);
                             additionalPorder.setSupplierId("A포장회사");
 
                             //발주수량정하기
@@ -794,7 +793,7 @@ public class ProdPlanService {
                     porder.setPorderNo(Porderno);
                     porder.setEmergencyYn("N");
                     String porderIngredientId = ingredientsRepository.findStickPouchConcentrateByProductId(productId);
-                    porder.setIngredientId(porderIngredientId);
+                    porder.setIngredientName(porderIngredientId);
                     if(orderStickPouch<1000){
                         porder.setPorderQuantity(1000);
                     }else if(orderStickPouch >= 1000 && orderStickPouch <= 1000000){
@@ -809,7 +808,7 @@ public class ProdPlanService {
                             String porderNo = generatePorderNumber();
                             additionalPorder.setPorderNo(porderNo);
                             additionalPorder.setEmergencyYn("N");
-                            additionalPorder.setIngredientId(porderIngredientId);
+                            additionalPorder.setIngredientName(porderIngredientId);
                             additionalPorder.setSupplierId("A스틱파우치회사");
 
                             //발주수량정하기
@@ -866,7 +865,7 @@ public class ProdPlanService {
                     porder.setPorderNo(Porderno);
                     porder.setEmergencyYn("N");
                     String porderIngredientId = ingredientsRepository.findCollagenConcentrateByProductId(productId);
-                    porder.setIngredientId(porderIngredientId);
+                    porder.setIngredientName(porderIngredientId);
                     if(orderCollagen<5){
                         porder.setPorderQuantity(5);
                     }else if(orderCollagen >= 5 && orderCollagen <= 500){
@@ -881,7 +880,7 @@ public class ProdPlanService {
                             String porderNo = generatePorderNumber();
                             additionalPorder.setPorderNo(porderNo);
                             additionalPorder.setEmergencyYn("N");
-                            additionalPorder.setIngredientId(porderIngredientId);
+                            additionalPorder.setIngredientName(porderIngredientId);
                             additionalPorder.setSupplierId("A콜라겐회사");
 
                             //발주수량정하기
@@ -951,19 +950,19 @@ public class ProdPlanService {
 
                 if("양배추즙".equals(productRepository.findProductNameByProductId(productId))) {
                     String porderproductId = ingredientsRepository.findCabbageNameByProductId(productId);
-                    porder.setIngredientId(porderproductId);
+                    porder.setIngredientName(porderproductId);
                     porder.setSupplierId("양배추농장");
                 }else if("석류젤리스틱".equals(productRepository.findProductNameByProductId(productId))) {
                     String porderproductId = ingredientsRepository.findRaspberryConcentrateByProductId(productId);
-                    porder.setIngredientId(porderproductId);
+                    porder.setIngredientName(porderproductId);
                     porder.setSupplierId("석류농장");
                 }else if("매실젤리스틱".equals(productRepository.findProductNameByProductId(productId))){
                     String porderproductId = ingredientsRepository.findplumConcentrateByProductId(productId);
-                    porder.setIngredientId(porderproductId);
+                    porder.setIngredientName(porderproductId);
                     porder.setSupplierId("매실농장");
                 }else if("흑마늘즙".equals(productRepository.findProductNameByProductId(productId))){
                     String porderproductId = ingredientsRepository.findBlackNameByProductId(productId);
-                    porder.setIngredientId(porderproductId);
+                    porder.setIngredientName(porderproductId);
                     porder.setSupplierId("흑마늘농장");
                 }
 
@@ -989,7 +988,7 @@ public class ProdPlanService {
                             additionalPorder.setPorderNo(porderNo);
                             additionalPorder.setEmergencyYn("N");
                             String porderproductId1 = ingredientsRepository.findCabbageNameByProductId(productId);
-                            additionalPorder.setIngredientId(porderproductId1);
+                            additionalPorder.setIngredientName(porderproductId1);
                             additionalPorder.setSupplierId("양배추농장");
 
                             //발주수량정하기
@@ -1049,7 +1048,7 @@ public class ProdPlanService {
                             additionalPorder.setPorderNo(porderNo);
                             additionalPorder.setEmergencyYn("N");
                             String porderproductId1 = ingredientsRepository.findBlackNameByProductId(productId);
-                            additionalPorder.setIngredientId(porderproductId1);
+                            additionalPorder.setIngredientName(porderproductId1);
                             additionalPorder.setSupplierId("흑마늘농장");
 
                             //발주수량정하기
@@ -1094,7 +1093,7 @@ public class ProdPlanService {
                             additionalPorder.setPorderNo(porderNo);
                             additionalPorder.setEmergencyYn("N");
                             String porderproductId1 = ingredientsRepository.findRasberryNameByProductId(productId);
-                            additionalPorder.setIngredientId(porderproductId1);
+                            additionalPorder.setIngredientName(porderproductId1);
                             additionalPorder.setSupplierId("석류농장");
 
                             //발주수량정하기
@@ -1138,7 +1137,7 @@ public class ProdPlanService {
                             additionalPorder.setPorderNo(porderNo);
                             additionalPorder.setEmergencyYn("N");
                             String porderproductId1 = ingredientsRepository.findPlumNameByProductId(productId);
-                            additionalPorder.setIngredientId(porderproductId1);
+                            additionalPorder.setIngredientName(porderproductId1);
                             additionalPorder.setSupplierId("매실농장");
 
                             //발주수량정하기
@@ -1347,8 +1346,6 @@ public class ProdPlanService {
 
 
 
-
-
 //    private String determineProgressStatus(String productId) {
 //        // 생산계획 테이블에서 해당 제품의 진행중인 로우를 조회하는 쿼리를 실행
 //        List<ProductionPlan> productionPlans = productionPlanRepository.findByProductIdAndProdPlanFinYn(productId, "진행중");
@@ -1372,7 +1369,7 @@ public class ProdPlanService {
         return "진행중"; // "진행중"인 로우가 없는 경우 "진행중" 상태 반환
     }
 
-    @Scheduled(cron = "*/30 * * * * ?") // 30초 마다 실행
+    @Scheduled(cron = "*/5 * * * * ?") // 30초 마다 실행
     public void processOrdersAutomatically() {
         List<Orders> orders = ordersRepository.findByOrderStatus("B");
         if (orders != null && !orders.isEmpty()) {
@@ -1455,7 +1452,6 @@ public class ProdPlanService {
     }
 
     //현화
-
     public List<ProductionPlan> selectList(){
         return prodPlanRepository.findAll();
     }

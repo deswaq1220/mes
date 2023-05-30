@@ -25,7 +25,10 @@ public class PorderService {
 
     private final PorderRepository porderRepository;
 
+    public List<Porder> findSearch(java.util.Date startDate, java.util.Date endDate, String porderStatus, String supplierId) {
+        return porderRepository.findSearch(startDate, endDate, porderStatus, supplierId);
 
+    }
 
     // 은영
 
