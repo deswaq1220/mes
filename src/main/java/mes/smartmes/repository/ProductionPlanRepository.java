@@ -36,6 +36,11 @@ public interface ProductionPlanRepository extends JpaRepository<ProductionPlan, 
     @Query("SELECT o FROM Orders o WHERE o.orderStatus = :orderStatus")
     List<Orders> findByOrderStatus(@Param("orderStatus") String orderStatus);
 
+    @Modifying
+    @Transactional
+    @Query("UPDATE ProductionPlan p SET p.prodPlanFinYn = :planStatus WHERE p.prodPlanNo = :planNo")
+    void setPlanStatus(@Param("planNo") String orderNo, @Param("planStatus") String planStatus);
+
 
 
 }

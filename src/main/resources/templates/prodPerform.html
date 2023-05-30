@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title> 작업실적 </title>
   <!-- css -->
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/nav.css">
-  <link rel="stylesheet" href="css/prodPerform.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/prodPerform.css">
   <!-- <link rel="stylesheet" href="css/popUpOrder.css"> -->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
@@ -97,6 +97,7 @@
       <form class="orderData">
         <div class="titleBtnWrap">
         <h1> 작업실적 </h1>
+          <div class="allSelect">전체선택</div>
         <div class="routingBtnWrap">
           <button class="routingBtn" type="button" >작업시작</button>
           <button class="routingBtn" type="button" >작업종료</button>
@@ -338,13 +339,6 @@
     </div>
 
     <div id="orderDetails">
-      <form class="orderForm">
-        <div class=" Rwrap2">
-          <button class="routingBtn" type="button" >생산실적</button>
-          <button class="routingBtn" type="button" >자재투입</button>
-          <button class="routingBtn" type="button" >작업자</button>
-          <button class="routingBtn" type="button" >비가동</button>
-        </div>
       <div class="table-container">
         <div class="routingBtnWrap">
           <button class="addBtn" type="button" >추가</button>
@@ -401,7 +395,6 @@
         </tfoot> -->
       </table>
         </div>
-      </form>
       <button id="fileSave">엑셀저장</button>
     </div>
   </aside>
@@ -409,12 +402,12 @@
 
 <!-- 스크립트 --> 
 
-    <script src="js/datapicker.js"></script>
+    <script src="/js/datapicker.js"></script>
     <!-- <script src="js/popUP.js"></script> -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="js/download.js"></script>
-    <script src="js/click.js"></script>
+    <script src="/js/download.js"></script>
+    <script src="/js/click.js"></script>
     <script>
 
       $(document).ready(function() {

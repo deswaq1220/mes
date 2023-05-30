@@ -6,20 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>작업지시 </title>
   <!-- css -->
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/nav.css">
-  <link rel="stylesheet" href="css/workorder.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/workorder.css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 </head>
 <body>
  <div id="wrap">
 
-   <nav th:replace="sideMenu :: nav"></nav
+   <nav th:replace="sideMenu :: nav"></nav>
     <aside>
       <form class="orderForm">
       <div class="topArea">
         <h1> 작업지시</h1>
+        <div class="allSelect">전체선택</div>
         <div id="btnWrap">
           <button class="return">
             <svg xmlns="http://www.w3.org/2000/svg" width="17.303" height="16.221" viewBox="0 0 17.303 16.221">
@@ -208,12 +209,12 @@
 
  <!-- 스크립트 -->
  
-  <script src="js/datapicker.js"></script>
+  <script src="/js/datapicker.js"></script>
   <!-- <script src="js/popUP.js"></script> -->
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script src="js/download.js"></script>
-  <script src="js/click.js"></script>
+  <script src="/js/download.js"></script>
+  <script src="/js/click.js"></script>
 
 <!-- "excel download" -->
 <!-- Sheet JS -->

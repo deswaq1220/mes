@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Repository
 public interface IngredientStockRepository extends JpaRepository<IngredientStock, String> {
 
     // 현일
@@ -57,7 +59,7 @@ public interface IngredientStockRepository extends JpaRepository<IngredientStock
     int findRaspberryCollagenConcentrateByProductId(@Param("productId") String productId);
 
     @Query("SELECT i FROM IngredientStock i WHERE i.ingredientId = :ingredientId")
-    IngredientStock findBoxConcentrateByProductId(String ingredientId);
+    IngredientStock findBoxConcentrateByProductId(@Param("ingredientId") String ingredientId);
 
     @Query("SELECT i.quantity FROM IngredientStock i WHERE i.ingredientId = :ingredientId")
     int findBoxNumByProductId(@Param("ingredientId") String ingredientId);
