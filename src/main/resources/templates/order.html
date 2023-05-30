@@ -83,7 +83,6 @@
     </form>
 
 
-    <form action="/mes/addOrder" method="post">
     <div id="orderList">
       <h1> 수주 </h1>
       <div class="allSelect">전체선택</div>
@@ -218,7 +217,7 @@
           </td>
 
           <td>
-            <input type="datetime-local" class="datepicker" name="deliveryDate" >
+            <input type="datetime-local" class="datepicker" required id = "deliveryDate" name="deliveryDate" >
           </td>
         </tr>
 
@@ -253,7 +252,6 @@
     </div>
   </div>
 </div>
-</form>
 
 
 
@@ -383,6 +381,7 @@
 
     // 저장 동작 수행하는 코드 작성
 
+    saveOrder();
     showSuccessMessage("저장되었습니다."); // 성공 메시지 표시
     closePopup(); // 팝업 창 닫기
   }

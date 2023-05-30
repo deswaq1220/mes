@@ -73,6 +73,7 @@ public class OrdersController {
 
 
     //수주 등록 후 오더페이지로
+    @ResponseBody
     @PostMapping("/addOrder")
     public String saveOder(@ModelAttribute Orders orders){
 
@@ -107,9 +108,8 @@ public class OrdersController {
             e.printStackTrace();
             return "redirect:/mes/order";
         }
-
-
     }
+
     // 조회
     @GetMapping("orderList")
     public String orderList(Model model){
