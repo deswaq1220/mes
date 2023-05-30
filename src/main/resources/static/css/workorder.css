@@ -1,4 +1,5 @@
-#business li:nth-child(2){
+
+#Production li:nth-child(3){
   font-weight: 700;
 }
 
@@ -259,12 +260,7 @@ td{
   background-color: #F2F3F4;
 }
 
-#orderList table tbody td:nth-child(6)
-{
-  text-align: right;
-  padding: 12px;
-  box-sizing: border-box;
-}
+
 
 #orderList table tfoot{
   width: 30px;
@@ -324,6 +320,11 @@ td{
 
 }
 
+#orderDetails table thead tr td:nth-child(1),
+#orderDetails table thead tr td:nth-child(2){
+  width: 40px;
+}
+
 #orderDetails table{
   width: 100%;
   border-spacing: 0px;
@@ -368,15 +369,14 @@ td{
   border: none;
 }
 
-#orderDetails table tbody td:nth-child(10),
-#orderDetails table tbody td:nth-child(5),
-#orderDetails table tbody td:nth-child(11),
-#orderDetails table tbody td:nth-child(12)
-{
-  text-align: right;
-  padding: 12px;
-  box-sizing: border-box;
-}
+/*#orderDetails table tbody td:nth-child(10),*/
+/*#orderDetails table tbody td:nth-child(5),*/
+/*#orderDetails table tbody td:nth-child(11)*/
+/*{*/
+/*  text-align: right;*/
+/*  padding: 12px;*/
+/*  box-sizing: border-box;*/
+/*}*/
 #orderDetails table tbody td:nth-child(6)
 {
   text-align: center;

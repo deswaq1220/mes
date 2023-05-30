@@ -31,6 +31,7 @@ public class Orders {
     @Column(length = 20)
     private String companyId;               //  업체 id
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime orderDate;                 // 주문날짜
 
     @Column(length = 20)

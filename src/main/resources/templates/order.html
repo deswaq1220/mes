@@ -18,11 +18,10 @@
 <body>
 <div id="wrap">
   <nav th:replace="sideMenu::nav"></nav>
-
   <aside>
-    <form class="orderForm">
+    <form class="orderForm" th:action="@{/mes/ordersSearch}" method="get">
       <div class="topArea">
-        <h1> 수주등록</h1>
+        <h1> 수주등록,관리</h1>
         <div id="btnWrap">
           <button class="return">
             <svg xmlns="http://www.w3.org/2000/svg" width="17.303" height="16.221" viewBox="0 0 17.303 16.221">
@@ -30,34 +29,23 @@
             </svg>
 
           </button>
-          <button class="check" type="button">조회</button>
+          <button class="check" type="submit">조회</button>
           <button class="new" type="button">신규</button>
-          <button class="retouch" type="button">수정</button>
+          <button class="retouch" type="button" onclick="handleCheckboxClick(event)">수정</button>
         </div>
       </div>
 
       <div id="tableCheckWrap">
         <table id="tableCheck">
           <tr class="tablerow">
-
             <td class="inventory">등록일자</td>
             <td><input type="date" class="datepicker" name="startDate"></td>
             <td>~</td>
             <td><input type="date" class="datepicker" id="picker" name="endDate"></td>
-            <td class="inventory">거래처</td>
-            <td>
-              <select class="drop">
-                <option value="select">거래처</option>
-                <option value="cupang">코드하우스</option>
-                <option value="Gmarket">하나로마트</option>
-                <option value="Gmarket">에이농장</option>
-                <option value="Gmarket">팔피엠</option>
-              </select>
-            </td>
 
+          <tr class="tablerow">
             <td class="inventory">품목</td>
             <td>
-
               <select class="drop">
                 <option value="select">품목</option>
                 <option th:each = "productList : ${productList}" th:value="${productList.getProductId()}" th:text = "${productList.getProductName()}"></option>
@@ -67,17 +55,17 @@
                 <option value="Pomegranate">석류젤리스틱</option>
                 <option value="plum">매실젤리</option>-->
               </select>
-
-            </td>
-            <td class="inventory">수주번호</td>
+            <td class="inventory">진행상태</td>
             <td>
-              <input type="text">
+              <select class="drop">
+                <option value="select">진행상태</option>
+                <option value="">주문 접수</option>
+                <option value="A">수주 확정</option>
+                <option value="B">생산계획완료</option>
+              </select>
             </td>
 
           </tr>
-          <!--          <tr class="tablerow">-->
-          <!--            -->
-          <!--          </tr>-->
         </table>
       </div>
     </form>
@@ -104,10 +92,10 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:each="order, rowStat : ${orderList}" onclick="toggleCheckbox(this)">
+          <tr th:each="order, rowStat : ${orderList}">
             <td th:text="${rowStat.index + 1}"></td>
             <td>
-              <input type="checkbox" onclick="event.stopPropagation()" class="row-checkbox">
+              <input type="checkbox" onclick="handleCheckboxClick(event)" class="row-checkbox">
             </td>
             <td th:if="${order.orderStatus == 'A'}"> 주문 접수</td>
             <td th:if="${order.orderStatus == 'B'}"> 수주 확정 </td>
@@ -122,7 +110,7 @@
             <td th:text="${order.getCompanyId()}"></td>
             <td th:text="${order.orderQuantity}"></td>
             <td th:text="BOX"></td>
-            <td th:text="1"></td>
+            <td th:text="${order.deliveryDate}"></td>
             <td th:index="0">
               <button th:if = "${order.orderStatus == 'A'}" class="confirmed" type="button" th:onclick="confirmed([[${order.orderNo}]])">수주확정</button>
               <button th:if = "${order.orderStatus == 'B' || order.orderStatus == 'C'}" class="nowork" type="button" disabled="disabled">확정완료</button>
@@ -166,7 +154,6 @@
     <div class="popupTopArea">
       <h1> 수주등록</h1>
       <div id="popUpBtnWrap">
-        <button class ="save" onclick="calculateExpectedDeliveryDate()">납기일계산</button>
         <button class="save" onclick="confirmSave()">저장</button>
         <button class="close" type="button">닫기</button>
       </div>
@@ -180,7 +167,7 @@
           </td>
           <td class="inventory" >거래처</td>
           <td>
-            <select class="company" required id = "company">
+            <select class="company" required id = "company" name="company">
               <option value="">회사명</option>
               <option value="cupang">쿠팡</option>
               <option value="Gmarket">지마켓</option>
@@ -200,7 +187,7 @@
           </td>
           <td class="inventory">수주일</td>
           <td>
-            <input type="date" class="orderPopupDatepicker" required id = "orderDate" name ="orderDate" >
+            <input type="datetime-local" class="orderPopupDatepicker" required id = "orderDate" name ="orderDate" >
           </td>
         </tr>
         <tr class="tablerow">
@@ -208,28 +195,25 @@
           <td>
             <select class="company" required id = "selectedBox">
               <option value="select" >품목</option>
-              <option th:each = "productList : ${productList}" th:value="${productList.getProductId()}" th:text = "${productList.getProductName()}"></option>
+              <option th:each = "product : ${productList}" th:value="${product.getProductId()}" th:text = "${product.getProductName()}"></option>
             </select>
           </td>
           <td class="inventory">개수</td>
           <td>
-            <input type = "number" required id = "orderqty" name ="orderqty" placeholder="BOX" min="0">
+            <input type = "number" required id = "orderQuantity" name ="orderQuantity" placeholder="BOX" min="0">
           </td>
-          <td class="inventory" required id = "expectedDeliveryDate">납품예정일</td>
+          <td class="inventory">납품예정일</td>
           <td>
-            <input  type = "text" readonly>
+            <input type = "text">
           </td>
-          <td class="inventory">납기일</td>
+
           <td>
-            <input type="datetime-local" class="datepicker" name="deliveryDate" >
+            <input type="datetime-local" class="datepicker" required id = "deliveryDate" name="deliveryDate" >
           </td>
         </tr>
 
         <tr class="tablerow" >
-          <td class="inventory"> 주문상태</td>
-          <td>
-            <input type="text" name="orderStatus">
-          </td>
+
           <td class="inventory">거래처</td>
           <td>
             <select class="drop">
@@ -247,6 +231,7 @@
 </div>
 
 <!-- 모달 창-->
+
 <div id="modalOverlay" onclick="closeModal()">
   <div id="confirmModal" class="modal">
     <div class="modal-content">
@@ -273,14 +258,13 @@
 <!-- 수정 팝업!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 <!-- 수정 팝업!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 <!-- 수정 팝업!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-
 <div id="popUP_wrap2">
   <div id="registrationWrap2">
-    <form id="wrapper2">
+    <form id="wrapper2" onsubmit="submitForm(event)">
       <div class="popupTopArea">
-        <h1> 수주수정</h1>
+        <h1>수주수정</h1>
         <div id="popUpBtnWrap2">
-          <button class="save" onclick="confirmSave()" type="button">저장</button>
+          <button class="save" type="submit">저장</button>
           <button class="close" type="button">닫기</button>
         </div>
       </div>
@@ -288,112 +272,229 @@
       <div id="popUp_tableCheckWrap2">
         <table id="popUp_tableCheck2">
           <tr class="tablerow" onclick="toggleCheckbox(this)">
-            <td class="inventory">회사</td>
+            <td class="inventory">진행상태</td>
             <td>
-              <select class="company">
-                <option value="">회사명</option>
-
-                <option value="cupang">쿠팡</option>
-                <option value="Gmarket">지마켓</option>
-                <option value="11">11번가</option>
-              </select>
-            </td>
-
-            <td class="inventory">담당자</td>
-            <td>
-              <!-- <form>
-                <input type="search" placeholder="CODE">
-                <input type="search" placeholder="NAME">
-                <button class="searchBtn">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="25.002" height="25" viewBox="0 0 25.002 25">
-                    <path id="패스_31" data-name="패스 31" d="M501.807,542.86l-5.147-5.147a10.693,10.693,0,1,0-.947.947l5.147,5.147a.655.655,0,0,0,.473.193.683.683,0,0,0,.473-.193.664.664,0,0,0,0-.94ZM488.667,540A9.333,9.333,0,1,1,498,530.667,9.344,9.344,0,0,1,488.667,540Z" transform="translate(-477.5 -519.5)" fill="#fff" stroke="#fff" stroke-width="1"/>
-                  </svg>
-
-                </button>
-              </form> -->
-              <select class="drop">
-                <option value="">담당자</option>
-                <option >양은영</option>
-                <option >박희람</option>
-                <option >성현일</option>
-                <option >조현화</option>
-                <option >변경원</option>
-              </select>
+              <input type="text" class="orderStatus" id="orderStatus">
             </td>
             <td class="inventory">수주번호</td>
             <td>
-              <input type="text" class="systemAuto" placeholder="시스템 자동발번" readonly required>
+              <input type="text" class="orderNo" id="orderNo" placeholder="시스템 자동발번" readonly required>
             </td>
-            <td class="inventory">수주일</td>
+            <td class="inventory">품목명</td>
             <td>
-              <input type="date" class="popUpdatepicker" >
+              <input type="text" class="productId" id="productId">
             </td>
           </tr>
           <tr class="tablerow">
-            <td class="inventory">거래처</td>
+            <td class="inventory">수주일</td>
             <td>
-              <select class="drop">
-                <option value="">거래처</option>
-                <option value="cupang">코드하우스</option>
-                <option value="Gmarket">하나로마트</option>
-                <option value="Gmarket">에이농장</option>
-                <option value="Gmarket">팔피엠</option>
-              </select>
+              <input type="text" class="orderDate" id="orderDate"readonly required>
+              <!--              <input type="date" class="popUpdatepicker" >-->
+            </td>
+            <td class="inventory">수량</td>
+            <td>
+              <input type="text" class="orderQuantity" id="orderQuantity">
             </td>
 
+            <td class="inventory">거래처</td>
+            <td>
+              <input type="text" class="companyId" id="companyId" readonly required>
+            </td>
 
-
+            <td class="inventory">납품예정일</td>
+            <td>
+              <input type="text" class="deliveryDate" id="deliveryDate">
+            </td>
 
             <!-- 스크립트 -->
 
-<script src="/js/datapicker.js"></script>
-<script src="/js/popUP.js"></script>
-<script src="/js/order.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="/js/download.js"></script>
+            <script src="/js/datapicker.js"></script>
+            <script src="/js/popUP.js"></script>
+            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script src="/js/download.js"></script>
 
-<script>
+            <script src="/js/click.js"></script>
+            <script src="/js/OrderSearch.js"></script>
+            <script src="/js/order.js"></script>
+            <script>
+              //수정페이지
 
-  $(document).ready(function() {
+              function handleCheckboxClick(event) {
+                const checkbox = event.target;
+                // 체크박스의 부모 행을 가져옵니다.
+                const row = checkbox.closest('tr');
+                if (checkbox.checked) {
+                  // 체크박스가 체크되어 있으면 행 데이터를 표시합니다.
+                  displayRowData(row);
+                }
+              }
 
-    $(".new").click(function() {
-      $("#popUP_wrap").fadeIn();
+              function displayRowData(row) {
+                const orderStatus = row.cells[2].textContent;
+                const statusInput = document.getElementById('orderStatus');
+                statusInput.value = orderStatus;
 
-    });
+                const orderNo = row.cells[4].textContent;
+                const orderNoInput = document.getElementById('orderNo');
+                orderNoInput.value = orderNo;
 
-    $(".close").click(function() {
+                const productId = row.cells[5].textContent;
+                const productInput = document.getElementById('productId');
+                productInput.value = productId;
 
-      $("#popUP_wrap").fadeOut();
+                const orderDate = row.cells[3].textContent;
+                const orderDateInput = document.getElementById('orderDate');
+                orderDateInput.value = orderDate;
 
-    });
+                const orderQuantity = row.cells[7].textContent;
+                const quantityInput = document.getElementById('orderQuantity');
+                quantityInput.value = orderQuantity;
 
-  });
+                const companyId = row.cells[6].textContent;
+                const companyInput = document.getElementById('companyId');
+                companyInput.value = companyId;
 
-  function calculateExpectedDeliveryDate() {
-    var orderqty = document.getElementById("orderqty").value;
-    var selectedBox = document.getElementById("selectedBox").value;
-
-    // AJAX 요청을 통해 컨트롤러로 값을 전달
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/calculateDeliveryDate", true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-        var response = JSON.parse(xhr.responseText);
-        var expectedDeliveryDate = response.expectedDeliveryDate;
-
-        // 예상 납기일 업데이트
-        document.getElementById("expectedDeliveryDate").innerText = expectedDeliveryDate;
-      }
-    };
-    xhr.send("orderqty=" + encodeURIComponent(orderqty) + "&selectedBox=" + encodeURIComponent(selectedBox));
-
-  }
+                const deliveryDate = row.cells[9].textContent;
+                const deliveryDateInput = document.getElementById('deliveryDate');
+                deliveryDateInput.value = deliveryDate;
 
 
 
-</script>
+                const rowData = {
+                  index: row.cells[0].textContent,
+                  orderStatus: orderStatus,
+                  orderDate: orderDate,
+                  orderNo: orderNo,
+                  productId: productId,
+                  companyId: companyId,
+                  orderQuantity: orderQuantity,
+                  deliveryDate: deliveryDate,
+                };
+
+                console.log(rowData);
+              }
+
+              //수정데이터 db 보내기
+
+              function submitForm(event) {
+                event.preventDefault();
+
+                // 수정된 값 수집
+                const orderStatus = document.getElementById("orderStatus").value;
+                const orderNo = document.getElementById("orderNo").value;
+                const productId = document.getElementById("productId").value;
+                const orderDate = document.getElementById("orderDate").value;
+                const orderQuantity = document.getElementById("orderQuantity").value;
+                const companyId = document.getElementById("companyId").value;
+                const deliveryDate = document.getElementById("deliveryDate").value;
+
+
+                // AJAX 요청
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "/mes/orderUpdate");
+                xhr.setRequestHeader("Content-Type", "application/json");
+
+
+
+                xhr.send(JSON.stringify({
+                  //"orderStatus": orderStatus,
+                  "orderNo": orderNo,
+                  "productId": productId,
+                  //"orderDate": orderDate,
+                  "orderQuantity": orderQuantity,
+                  "companyId": companyId,
+                  "deliveryDate":deliveryDate,
+                  "orders": {
+                    "orderStatus": orderStatus,
+                    "orderNo": orderNo,
+                    "productId": productId,
+                    "orderDate": orderDate,
+                    "orderQuantity": orderQuantity,
+                    "companyId": companyId,
+                    "deliveryDate":deliveryDate
+                  }
+                }));
+
+                xhr.onload = function() {
+                  if (xhr.status === 200) {
+                    // 성공적으로 업데이트된 경우
+                    window.location.href = "/mes/orderList"; // 리다이렉트
+                  } else {
+                    // 업데이트에 실패한 경우
+                    console.log("업데이트 실패");
+                  }
+                };
+              }
+
+
+
+
+              $(document).ready(function () {
+
+                // 신규
+                $(".new").click(function () {
+                  $("#popUP_wrap").fadeIn();
+                });
+                $(".close").click(function () {
+                  $("#popUP_wrap").fadeOut();
+                });
+
+                //수정
+                $(".retouch").click(function () {
+                  $("#popUP_wrap2").fadeIn();
+                });
+                $(".close").click(function () {
+                  $("#popUP_wrap2").fadeOut();
+                });
+
+              });
+
+              // 신규 모달 표시
+              function confirmSave() {
+                var modal = document.getElementById("confirmModal");
+                modal.style.display = "block"; // 모달 표시
+              }
+
+              function saveAndClose() {
+                saveOrder();
+                closeModal(); // 모달 창 닫기
+
+                // 저장 동작 수행하는 코드 작성
+
+                // showSuccessMessage("저장되었습니다."); // 성공 메시지 표시
+                // closePopup(); // 팝업 창 닫기
+              }
+
+              function closeModal() {
+                var modal = document.getElementById("confirmModal");
+                modal.style.display = "none"; // 모달 숨김
+
+                var popupWrap = document.getElementById("popUP_wrap");
+                popupWrap.style.display = "none"; // 기존 팝업 숨김
+                var popupWrap2 = document.getElementById("popUP_wrap2");
+                popupWrap2.style.display = "none"; // 기존 팝업 숨김
+
+              }
+
+              function closeSuccessModal() {
+                const successModal = document.querySelector(".modal");
+                successModal.parentNode.removeChild(successModal);
+                closeModal(); // 모달 창 닫기
+              }
+
+              function cancelSave() {
+                closeModal(); // 모달 창 닫기
+
+                const popupWrap = document.getElementById("popUP_wrap");
+                popupWrap.style.display = "block"; // 기존 팝업 보이도록 설정
+              }
+
+
+
+
+
+            </script>
 
 
 

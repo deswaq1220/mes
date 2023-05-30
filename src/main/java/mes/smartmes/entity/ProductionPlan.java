@@ -28,8 +28,6 @@ public class ProductionPlan {
     @Column(updatable = false)
     private LocalDateTime prodPlanDate;
 
-    private LocalDateTime expectInputDate;
-
     @Column(length = 20, nullable = false)
     private String productId;
 

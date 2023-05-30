@@ -76,6 +76,12 @@ aside{
   width: 100%;
 }
 
+  #tableCheckWrap #tableCheck tr td:nth-child(3),
+  #tableCheckWrap #tableCheck tr td:nth-child(5)
+  {
+    margin-right: 12px;
+  }
+
 /* 회사 수주일, 수주번호,품목 거래처 */
 .inventory{
   width: 120px;
