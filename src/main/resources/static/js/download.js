@@ -9,7 +9,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // 전체 선택 버튼 클릭 이벤트 처리
     const allSelectButton = document.querySelector('.allSelect');
     allSelectButton.addEventListener('click', selectAllRows);
+
+    // 테이블 내 각 행 클릭 이벤트 처리
+    const table = document.querySelector('.orderData');
+    table.addEventListener('click', toggleRowColor);
+
+    function selectAllRows() {
+        const checkboxes = table.querySelectorAll('input[type="checkbox"]');
+        const isChecked = allSelectButton.classList.toggle('selected');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = isChecked;
+            const row = checkbox.closest('tr');
+            changeColor(row, isChecked);
+        });
+
+        if (!isChecked) {
+            resetRowColors(table);
+        }
+    }
 });
+
+function toggleRowColor(event) {
+    const row = event.target.closest('tr');
+    if (!row || event.target.tagName === 'INPUT') {
+        return; // 체크박스를 클릭한 경우 무시
+    }
+    const checkbox = row.querySelector('input[type="checkbox"]');
+    checkbox.checked = !checkbox.checked;
+    changeColor(row, checkbox.checked);
+}
 
 //전체버튼 클릭
 function selectAllRows() {

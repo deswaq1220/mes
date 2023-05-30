@@ -28,7 +28,6 @@ public class ShipmentService {
 
     public List<Shipment> getAllShipments() {
         return shipmentRepository.findAll();
-
     }
 
     // 다중검색

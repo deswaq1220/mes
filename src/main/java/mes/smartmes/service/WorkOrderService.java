@@ -1,12 +1,11 @@
 package mes.smartmes.service;
 
 
+import com.querydsl.core.BooleanBuilder;
 import mes.smartmes.dto.Ratio;
-import mes.smartmes.entity.Routing;
-import mes.smartmes.entity.WorkOrder;
+import mes.smartmes.entity.*;
 import mes.smartmes.repository.ProcessRepository;
 
-import mes.smartmes.entity.ProductionPlan;
 import mes.smartmes.repository.ProductionPlanRepository;
 import mes.smartmes.repository.RoutingRepository;
 import mes.smartmes.repository.WorkOrderRepository;
@@ -15,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -305,4 +306,47 @@ public class WorkOrderService {
         // 생산계획번호를 조합하여 반환합니다.
         return "WO" + formattedDate + formattedSequence;
     }
+
+
+    public List<WorkOrder> getAllWorkOrder() {
+        return workOrderRepository.findAll();
+    }
+
+
+
+    // 다중검색
+
+    @Transactional
+    public List<WorkOrder> searchWorkOrder(String workStatus, LocalDateTime startDate, LocalDateTime endDate, String productId, String workOrderNo,String processNo) {
+        QWorkOrder qWorkOrder = QWorkOrder.workOrder;
+        BooleanBuilder builder = new BooleanBuilder();
+
+
+        if (workOrderNo != null && workOrderNo != "") {
+            builder.and(qWorkOrder.workOrderNo.contains(workOrderNo)); //출하번호
+        }
+        if (workStatus != null && workStatus != "") {
+            builder.and(qWorkOrder.workStatus.contains(workStatus)); //출하번호
+        }
+
+
+        if (productId != null && productId != "") {
+            builder.and(qWorkOrder.productId.contains(productId)); // 거래처
+        }
+
+        if (processNo != null && processNo != "") {
+            builder.and(qWorkOrder.processNo.contains(processNo)); // 거래처
+        }
+
+        if (startDate != null && endDate != null) {
+            builder.and(qWorkOrder.workOrderDate.between(startDate, endDate)); // 날짜
+        }
+
+        return (List<WorkOrder>) workOrderRepository.findAll(builder);
+
+//        return (List<Shipment>) shipmentRepository.findAll(builder.getValue());
+    }
+
+
+
 }

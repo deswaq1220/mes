@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>라우팅등록배정 </title>
   <!-- css -->
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/nav.css">
-  <link rel="stylesheet" href="css/Routing.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/Routing.css">
   <!-- <link rel="stylesheet" href="css/popUpOrder.css"> -->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
@@ -39,7 +39,7 @@
             <td class="inventory">공정명</td>
             <td>
               <select class="company">
-                <option value="select">공정명</option>
+                <option value="">공정명</option>
                 <option value="cupang">추출</option>
                 <option value="Gmarket">실링</option>
                 <option value="11">포장</option>
@@ -53,7 +53,7 @@
             <td class="inventory">재작업여부</td>
             <td>
               <select class="drop">
-                <option value="select">재작업여부 Y/N</option>
+                <option value="">재작업여부 Y/N</option>
                 <option value="cupang">N</option>
                 <option value="Gmarket">Y</option>
               </select>
@@ -62,7 +62,7 @@
             <td>
 
               <select class="drop">
-                <option value="select">품목</option>
+                <option value="">품목</option>
                 <option value="cupang">몰라..모리겟다</option>
                 <option value="Gmarket">하나로마트</option>
                 <option value="Gmarket">에이농장</option>
@@ -74,7 +74,7 @@
             <td>
 
               <select class="drop">
-                <option value="select">전체</option>
+                <option value="">전체</option>
                 <option value="cabbage">미사용</option>
                 <option value="garlic">사용</option>
               </select>
@@ -108,13 +108,13 @@
           </tr>
           </thead>
           <tbody>
-          <tr onclick="toggleCheckbox(this)">
-            <td>1</td>
+          <tr class="row-data" th:each="routing,index : ${routingList}">
+            <td th:text="${index.count}"></td>
             <td>
-              <input type="checkbox" id="checkbox">
+              <input type="checkbox" onclick="event.stopPropagation()" class="row-checkbox">
             </td>
-            <td>RTN002</td>
-            <td>양배추 추출</td>
+            <td th:text="${routing.routingId}"></td>
+            <td th:text="${routing.routingName}"></td>
             <td>N</td>
             <td>1</td>
             <td>7</td>

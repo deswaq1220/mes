@@ -52,7 +52,7 @@
             <td class="inventory">거래처</td>
             <td>
               <select class="drop">
-                <option value="select">거래처</option>
+                <option value="">거래처</option>
                 <option value="cupang">코드하우스</option>
                 <option value="Gmarket">하나로마트</option>
                 <option value="Gmarket">에이농장</option>
@@ -66,7 +66,7 @@
             <td>
 
               <select class="drop">
-                <option value="select">품목</option>
+                <option value="">품목</option>
                 <option th:each = "productList : ${productList}" th:value="${productList.getProductId()}" th:text = "${productList.getProductName()}"></option>
                 <!--<option value="select">품목</option>
                 <option value="cabbage">양배추즙</option>
