@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>발주관리 </title>
+  <title>Lot조회</title>
   <!-- css -->
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="/css/nav.css">
@@ -21,7 +21,7 @@
 
     <form class="orderForm" action="/mes/porderSearch" method="post">
       <div class="topArea">
-        <h1>발주관리</h1>
+        <h1>Lot관리</h1>
         <div id="btnWrap">
           <svg xmlns="http://www.w3.org/2000/svg" width="17.303" height="16.221" viewBox="0 0 17.303 16.221">
             <path id="redo_FILL0_wght400_GRAD0_opsz48" d="M166.272,272.221a6.251,6.251,0,0,1-4.42-1.73,5.852,5.852,0,0,1,0-8.543,6.251,6.251,0,0,1,4.42-1.73h7.948l-3.082-3.082L172.274,256l5.029,5.029-5.029,5.029-1.136-1.135,3.082-3.082h-7.975a4.644,4.644,0,0,0-3.258,1.257,4.254,4.254,0,0,0,0,6.245,4.644,4.644,0,0,0,3.258,1.257h7.813v1.622Z" transform="translate(-160 -256)" fill="#fff"/>
@@ -64,7 +64,7 @@
 
 
     <div id="orderList">
-      <h1> 발주목록 </h1>
+      <h1> Lot목록 </h1>
       <div class="allSelect">전체선택</div>
       <div class="table-container">
         <table class="orderData">
@@ -72,39 +72,69 @@
           <tr>
             <td></td>
             <td></td>
-            <td onclick="porderNum()">발주번호</td>
-            <td onclick="porderDate()">발주날짜</td>
-            <td>거래처</td>
-            <td>재료</td>
-            <td>수량</td>
-            <td>상태</td>
-            <td>긴급요청여부</td>
+            <td onclick="porderNum()">Lot번호</td>
+            <td>투입수량</td>
+            <td>산출수량</td>
+            <td>자재</td>
+            <td>현재공정Lot번호</td>
+            <td>전공정Lot번호</td>
+            <td>공정</td>
+            <td>등록일</td>
           </tr>
           </thead>
           <tbody>
-          <tr th:each="porder, porderIndex : ${porders}" onclick="toggleCheckbox(this)">
+          <tr th:each="lotList, porderIndex : ${lots}" onclick="toggleCheckbox(this)">
             <td th:text="${porderIndex.index + 1}"></td>
             <td>
               <input type="checkbox" id="checkbox">
             </td>
-            <td th:text="${porder.porderNo}"></td>
-            <td th:text="${porder.porderDate}"></td>
-            <td th:text="${porder.supplierId}"></td>
-            <td th:if="${porder.ingredientName=='양배추'}">양배추</td>
-            <td th:if="${porder.ingredientName=='흑마늘'}">흑마늘</td>
-            <td th:if="${porder.ingredientName=='석류농축액'}">석류농축액</td>
-            <td th:if="${porder.ingredientName=='매실농축액'}">매실농축액</td>
-            <td th:if="${porder.ingredientName=='콜라겐'}">콜라겐</td>
-            <td th:if="${porder.ingredientName=='파우치'}">파우치</td>
-            <td th:if="${porder.ingredientName=='스틱파우치'}">스틱파우치</td>
-            <td th:if="${porder.ingredientName=='포장Box'}">포장Box</td>
-            <td th:text="${porder.porderQuantity}"></td>
-            <td th:text="${porder.porderStatus}"></td>
-            <td th:text="${porder.emergencyYn}"></td>
+            <td th:text="${lotList.lotId}"></td>
+            <td th:text="${lotList.inputQuantity}"></td>
+            <td th:text="${lotList.outputQuantity}"></td>
+            <td th:if="${lotList.productId=='P001' && lotList.processNo=='process01'}">양배추</td>
+            <td th:if="${lotList.productId=='P002' && lotList.processNo=='process01'}">흑마늘</td>
+            <td th:if="${lotList.productId=='P003' && lotList.processNo=='process01'}">양배추</td>
+            <td th:if="${lotList.productId=='P004' && lotList.processNo=='process01'}">양배추</td>
+            <td th:if="${lotList.productId=='P001' && lotList.processNo=='process02'}">양배추</td>
+            <td th:if="${lotList.productId=='P002' && lotList.processNo=='process02'}">흑마늘</td>
+            <td th:if="${lotList.productId=='P001' && lotList.processNo=='process03'}">양배추+정제수</td>
+            <td th:if="${lotList.productId=='P002' && lotList.processNo=='process03'}">흑마늘+정제수</td>
+            <td th:if="${lotList.productId=='P001' && lotList.processNo=='process04'}">양배추추출액</td>
+            <td th:if="${lotList.productId=='P002' && lotList.processNo=='process04'}">흑마늘추출액</td>
+            <td th:if="${lotList.productId=='P003' && lotList.processNo=='process05'}">석류농축액+정제수+콜라겐</td>
+            <td th:if="${lotList.productId=='P004' && lotList.processNo=='process05'}">매실농축액+정제수+콜라겐</td>
+            <td th:if="${lotList.productId=='P003' && lotList.processNo=='process06'}">석류젤리스틱</td>
+            <td th:if="${lotList.productId=='P004' && lotList.processNo=='process06'}">매실젤리스틱</td>
+            <td th:if="${lotList.productId=='P001' && lotList.processNo=='process06'}">양배추즙포</td>
+            <td th:if="${lotList.productId=='P002' && lotList.processNo=='process06'}">흑마늘즙포</td>
+            <td th:if="${lotList.productId=='P001' && lotList.processNo=='process07'}">양배추반제품</td>
+            <td th:if="${lotList.productId=='P002' && lotList.processNo=='process07'}">흑마늘반제품</td>
+            <td th:if="${lotList.productId=='P003' && lotList.processNo=='process08'}">석류젤리반제품</td>
+            <td th:if="${lotList.productId=='P004' && lotList.processNo=='process08'}">매실젤리반제품</td>
+            <td th:if="${lotList.productId=='P001' && lotList.processNo=='process09'}">양배추즙포</td>
+            <td th:if="${lotList.productId=='P002' && lotList.processNo=='process09'}">흑마늘즙포</td>
+            <td th:if="${lotList.productId=='P001' && lotList.processNo=='process10'}">양배추즙포</td>
+            <td th:if="${lotList.productId=='P002' && lotList.processNo=='process10'}">흑마늘즙포</td>
+            <td th:if="${lotList.productId=='P003' && lotList.processNo=='process10'}">석류젤리스틱</td>
+            <td th:if="${lotList.productId=='P004' && lotList.processNo=='process10'}">매실젤리스틱</td>
+            <td th:text="${lotList.lotNo}"></td>
+            <td th:text="${lotList.lotPlotNo}"></td>
+            <td th:if="${lotList.processNo == 'process01'}">원료계량</td>
+            <td th:if="${lotList.processNo == 'process02'}">전처리</td>
+            <td th:if="${lotList.processNo == 'process03'}">추출</td>
+            <td th:if="${lotList.processNo == 'process04'}">혼합 및 살균</td>
+            <td th:if="${lotList.processNo == 'process05'}">혼합 및 살균</td>
+            <td th:if="${lotList.processNo == 'process06'}">식힘</td>
+            <td th:if="${lotList.processNo == 'process07'}">충진</td>
+            <td th:if="${lotList.processNo == 'process08'}">충진</td>
+            <td th:if="${lotList.processNo == 'process09'}">검사</td>
+            <td th:if="${lotList.processNo == 'process10'}">포장</td>
+            <td th:text="${lotList.regDate}"></td>
           </tr>
           </tbody>
           <tfoot>
           <tr>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

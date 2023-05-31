@@ -236,8 +236,7 @@ td{
   background-color: #F2F3F4;
 }
 
-#orderList table tbody td:nth-child(9),
-#orderList table tbody td:nth-child(10),
+
 #orderList table tbody td:nth-child(11),
 #orderList table tbody td:nth-child(12)
 {
@@ -275,8 +274,7 @@ td{
   border-left: 1px solid white;
 }
 
-#orderList table tfoot tr td:nth-child(9),
-#orderList table tfoot tr td:nth-child(10),
+
 #orderList table tfoot tr td:nth-child(11),
 #orderList table tfoot tr td:nth-child(12){
   text-align: right;

@@ -22,12 +22,15 @@ public class IngredientOutputService {
     private IngredientStockRepository ingredientStockRepository;
     private IngredientsOutputRepository ingredientsOutputRepository;
 
+    private CountService countService;
 
-    public IngredientOutputService(ProductionPlanRepository productionPlanRepository, PorderRepository porderRepository, IngredientStockRepository ingredientStockRepository, IngredientsOutputRepository ingredientsOutputRepository){
+
+    public IngredientOutputService(ProductionPlanRepository productionPlanRepository, PorderRepository porderRepository, IngredientStockRepository ingredientStockRepository, IngredientsOutputRepository ingredientsOutputRepository, CountService countService){
         this.productionPlanRepository = productionPlanRepository;
         this.porderRepository = porderRepository;
         this.ingredientStockRepository = ingredientStockRepository;
         this.ingredientsOutputRepository = ingredientsOutputRepository;
+        this.countService = countService;
     }
 
     public void changePlan(String orderNo, String planNo){
@@ -38,6 +41,7 @@ public class IngredientOutputService {
         ProductionPlan pp = productionPlanRepository.findByPlanNo(planNo);
         IngredientOutput io = new IngredientOutput();
         String id = null;
+        int quantity = 0;
 
         for (int i= 0; i<po.size(); i++) {
             if (po.get(i).equals("양배추")) {
@@ -57,26 +61,47 @@ public class IngredientOutputService {
             } else if (po.get(i).equals("포장Box")) {
                 id = "I008";
             }
-            IngredientStock is = ingredientStockRepository.findByIngId(id);
-            if(id.equals("I001")){
-                is.setQuantity(is.getQuantity()-pq.get(i));
-            }
-            is.setQuantity(is.getQuantity()-pq.get(i));
-            if(is.getQuantity()-pq.get(i) <= 0){
-                is.setQuantity(0);
-            }
+            IngredientStock is = ingredientStockRepository.findByIngId(id);           
+            
             io.setIngredientId(id);
             io.setOutputDate(LocalDateTime.now());
             String no = generateOutputNumber();
             io.setIngredientOutId(no);
             io.setPorderNo(planNo);
-            io.setOutputQuantity(pq.get(i));
+            io.setOrderNo(orderNo);
+            if(id.equals("I001")){
+                quantity = countService.needCabbage(orderNo);
+                io.setOutputQuantity(quantity);
+            }else if(id.equals("I002")){
+                quantity = countService.needBlackGaric(orderNo);
+                io.setOutputQuantity(quantity);
+            }else if(id.equals("I003") || id.equals("I004")){
+                quantity = countService.suckryuMaesilc(orderNo);
+                io.setOutputQuantity(quantity);
+            }else if(id.equals("I005")){
+                quantity = countService.needCollagen(orderNo);
+                io.setOutputQuantity(quantity);
+            }else if(id.equals("I006")){
+                quantity = countService.needPouch(orderNo);
+                io.setOutputQuantity(quantity);
+            }else if(id.equals("I007")){
+                quantity = countService.needStickPouch(orderNo);
+                io.setOutputQuantity(quantity);
+            }else if(id.equals("I008")){
+                quantity = countService.needBox(orderNo);
+                io.setOutputQuantity(quantity);
+            }
+            is.setQuantity(is.getQuantity()-quantity);
+            if(is.getQuantity()-pq.get(i) <= 0){
+                is.setQuantity(0);
+            }
+
             ingredientsOutputRepository.save(io);
             ingredientsOutputRepository.flush();
             ingredientStockRepository.save(is);
 
         }
-        pp.setProdPlanFinYn("작업지시완료(원자재출하완료)");
+        pp.setProdPlanFinYn("작업지시완료(원자재출하)");
         productionPlanRepository.save(pp);
         productionPlanRepository.flush();
         ingredientStockRepository.flush();
@@ -88,9 +113,6 @@ public class IngredientOutputService {
 
     }
 
-
-
-
     @Scheduled(cron = "*/20 * * * * ?") // 30초 마다 실행
     public void processPlanChangeAutomatically() {
         LocalDateTime currentDateTime = LocalDateTime.now();
@@ -99,7 +121,10 @@ public class IngredientOutputService {
             for (ProductionPlan productionPlan : plans) {
                 String orderNo = productionPlan.getOrderNo();
                 String planNo = productionPlan.getProdPlanNo();
-                changePlan(orderNo,planNo);
+                //List<String> po = porderRepository.findByNo(orderNo,"입고완료");
+                //if(po != null){
+                    changePlan(orderNo,planNo);
+                //}
 
             }
         }
@@ -119,7 +144,7 @@ public class IngredientOutputService {
 
         List<String> no = ingredientsOutputRepository.findingredientOutId();
         for(int i=0;i<no.size();i++){
-            if(("SM"+formattedDate+formattedSequence) == no.get(i)){
+            if(("IO"+formattedDate+formattedSequence) == no.get(i)){
                 int incrementedValue = Integer.parseInt(formattedSequence) + 1;
                 formattedSequence = String.format("%03d", incrementedValue);
             }
@@ -129,5 +154,10 @@ public class IngredientOutputService {
         sequence++;
         // 생산계획번호를 조합하여 반환합니다.
         return "IO" + formattedDate + formattedSequence;
+    }
+
+
+    public List<IngredientOutput> selectList() {
+        return ingredientsOutputRepository.findAll();
     }
 }

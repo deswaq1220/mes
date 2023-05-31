@@ -167,41 +167,91 @@ public class LotService {
         // 시퀀스 값을 문자열로 변환합니다.
         String formattedSequence = String.format("%03d", sequence1);
         String LotNo = formattedDate + formattedSequence;
+        int incrementedValue = 0;
+
 
         List<String> no = lotRepository.findLotNo();
-        for(int i=0;i<no.size();i++){
-            if(("WYGY"+LotNo).equals(no.get(i)) || ("JCR"+LotNo).equals(no.get(i)) || ("CC"+LotNo).equals(no.get(i))
-                    || ("HHMSG_J"+LotNo).equals(no.get(i)) || ("HHMSG_JR"+LotNo).equals(no.get(i)) || ("SH"+LotNo).equals(no.get(i))
-                    || ("CJ_J"+LotNo).equals(no.get(i)) || ("CJ_JR"+LotNo).equals(no.get(i)) || ("GS"+LotNo).equals(no.get(i))
-                    || ("PJ"+LotNo).equals(no.get(i))){
-                System.out.println("앙아앙아 = "+formattedSequence);
-                int incrementedValue = Integer.parseInt(formattedSequence) + 1;
-                formattedSequence = String.format("%03d", incrementedValue);
-                System.out.println("다음 = "+formattedSequence);
-
-            }
-        }
 
 
         if(wo.getProcessNo().equals("process01")){
+            for(int i=0;i<no.size();i++){
+                if(("WYGY"+LotNo).equals(no.get(i))){
+                    incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                    formattedSequence = String.format("%03d", incrementedValue);
+                }
+            }
             return "WYGY"+formattedDate+formattedSequence;
         }else if(wo.getProcessNo().equals("process02")){
+            for(int i=0;i<no.size();i++){
+                if(("JCR"+LotNo).equals(no.get(i))){
+                    incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                    formattedSequence = String.format("%03d", incrementedValue);
+                }
+            }
             return "JCR"+formattedDate+formattedSequence;
         }else if(wo.getProcessNo().equals("process03")){
+            for(int i=0;i<no.size();i++){
+                if(("CC"+LotNo).equals(no.get(i))){
+                    incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                    formattedSequence = String.format("%03d", incrementedValue);
+                }
+            }
             return "CC"+formattedDate+formattedSequence;
         }else if(wo.getProcessNo().equals("process04")){
+            for(int i=0;i<no.size();i++){
+                if(("HHMSG_J"+LotNo).equals(no.get(i))){
+                    incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                    formattedSequence = String.format("%03d", incrementedValue);
+                }
+            }
             return "HHMSG_J"+formattedDate+formattedSequence;
         }else if(wo.getProcessNo().equals("process05")){
+            for(int i=0;i<no.size();i++){
+                if(("HHMSG_JR"+LotNo).equals(no.get(i))){
+                    incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                    formattedSequence = String.format("%03d", incrementedValue);
+                }
+            }
             return "HHMSG_JR"+formattedDate+formattedSequence;
         }else if(wo.getProcessNo().equals("process06")){
+            for(int i=0;i<no.size();i++){
+                if(("SH"+LotNo).equals(no.get(i))){
+                    incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                    formattedSequence = String.format("%03d", incrementedValue);
+                }
+            }
             return "SH"+formattedDate+formattedSequence;
         }else if(wo.getProcessNo().equals("process07")){
+            for(int i=0;i<no.size();i++){
+                if(("CJ_J"+LotNo).equals(no.get(i))){
+                    incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                    formattedSequence = String.format("%03d", incrementedValue);
+                }
+            }
             return "CJ_J"+formattedDate+formattedSequence;
         }else if(wo.getProcessNo().equals("process08")){
+            for(int i=0;i<no.size();i++){
+                if(("CJ_JR"+LotNo).equals(no.get(i))){
+                    incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                    formattedSequence = String.format("%03d", incrementedValue);
+                }
+            }
             return "CJ_JR"+formattedDate+formattedSequence;
         }else if(wo.getProcessNo().equals("process09")){
+            for(int i=0;i<no.size();i++){
+                if(("GS"+LotNo).equals(no.get(i))){
+                    incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                    formattedSequence = String.format("%03d", incrementedValue);
+                }
+            }
             return "GS"+formattedDate+formattedSequence;
         }else if(wo.getProcessNo().equals("process10")){
+            for(int i=0;i<no.size();i++){
+                if(("PJ"+LotNo).equals(no.get(i))){
+                    incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                    formattedSequence = String.format("%03d", incrementedValue);
+                }
+            }
             return "PJ"+formattedDate+formattedSequence;
         }
         // 시퀀스 값을 1 증가시킵니다.
@@ -418,6 +468,7 @@ public class LotService {
             processStartTimes.put(process, totalProcessTime);
             if (cnt == 0) {
                 System.out.println("씨엔티0");
+                totalProcessTime = dayCheck(totalProcessTime);
                 list.add(String.valueOf(totalProcessTime));
                 list.add(process);
                 processTimes.put(process, totalProcessTime);
@@ -432,6 +483,8 @@ public class LotService {
                             System.out.println("수작업이프문 - "+totalProcessTime);
                             currentTime = selfTimeCheck(totalProcessTime, leadTime, time);
                             totalProcessTime = currentTime.plusMinutes(leadTime+time);
+                            totalProcessTime = dayCheck(totalProcessTime);
+                            totalProcessTime = selfTimeCheck(totalProcessTime, leadTime, time);
                             System.out.println("수작업이프문 토탈 - "+totalProcessTime);
                             System.out.println("수작업이프문 커런트 - "+currentTime);
 
@@ -877,6 +930,11 @@ public class LotService {
         return currentTime;
     }
 
+
+
+    public List<Lot> selectList() {
+        return lotRepository.findAll();
+    }
 
 
 

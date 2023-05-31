@@ -11,7 +11,6 @@ import javax.persistence.Table;
 @Table(name = "company")
 @Getter
 @Setter
-@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

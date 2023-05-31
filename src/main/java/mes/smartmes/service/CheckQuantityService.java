@@ -36,6 +36,9 @@ public class CheckQuantityService {
         double workProcessTime = 0; // 공정별 총 소요시간
 
         LocalDateTime totalProcessTime = date;  //총시간 = 끝난시간
+        if(totalProcessTime == null){
+            totalProcessTime = LocalDateTime.now();
+        }
         LocalDateTime currentTime = LocalDateTime.now();  //시작시간
         System.out.println("카운트타임1 토탈프로세스타임 - "+totalProcessTime);
         System.out.println("카운트타임1 퀀티티 - "+quantity);

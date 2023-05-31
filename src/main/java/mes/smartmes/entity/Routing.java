@@ -11,7 +11,6 @@ import javax.persistence.Table;
 @Setter
 @ToString
 @Entity
-@Builder
 @Table(name = "routing")
 @NoArgsConstructor
 @AllArgsConstructor

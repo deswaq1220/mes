@@ -1,28 +1,18 @@
 package mes.smartmes.service;
 
-import lombok.RequiredArgsConstructor;
 import mes.smartmes.entity.*;
-import mes.smartmes.repository.IngredientInputRepository;
-import mes.smartmes.repository.IngredientStockRepository;
-import mes.smartmes.repository.OrdersRepository;
-import mes.smartmes.repository.PorderRepository;
+import mes.smartmes.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import javax.transaction.Transactional;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
-import java.util.HashMap;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +30,7 @@ public class IngredientService {
 
     private IngredientInputRepository ingredientInputRepository;
     private IngredientStockRepository ingredientStockRepository;
+    private ProductionPlanRepository productionPlanRepository;
 
 
     private PorderRepository porderRepository;
@@ -48,22 +39,24 @@ public class IngredientService {
     private PorderService porderService;
 
     @Autowired
-    public IngredientService(IngredientInputRepository ingredientInputRepository, IngredientStockRepository ingredientStockRepository, PorderRepository porderRepository) {
+    public IngredientService(IngredientInputRepository ingredientInputRepository, IngredientStockRepository ingredientStockRepository, ProductionPlanRepository productionPlanRepository, PorderRepository porderRepository) {
         this.ingredientInputRepository = ingredientInputRepository;
         this.ingredientStockRepository = ingredientStockRepository;
+        this.productionPlanRepository = productionPlanRepository;
         this.porderRepository = porderRepository;
     }
 
     // 발주 재료 입고  업데이트 확인
     @Transactional
-    public void updatePorderStatusAndInsertIngredient(String porderNo) {
+    public void updatePorderStatusAndInsertIngredient(String porderNo, String planNo) {
 
         List<Porder> porders = porderRepository.findAll();
         //IngredientStock ingredientStock = new IngredientStock();
 
 
         Porder pd = new Porder();
-        pd.setPorderStatus("입고완료");
+        ProductionPlan pp = productionPlanRepository.findByPlanNo(planNo);
+        //pd.setPorderStatus("입고완료");
         //porderRepository.updatePorderStatus(porderNo, "입고완료");
         for(Porder porder : porders) {
             //재고 넘버링 부여할 스트링 필드
@@ -85,7 +78,8 @@ public class IngredientService {
                 System.out.println("입고완료" + porder.toString());
 
                 // 자재 입고테이블에 인서트
-
+                String no = generateOutputNumber();
+                ingredientInput.setIngredientInId(no);
                 ingredientInput.setPorderNo(porder.getPorderNo());              // 발주번호
 //            System.out.println("ingredientInput1 = " + ingredientInput);
                 if(porder.getIngredientName().equals("양배추")){
@@ -114,7 +108,8 @@ public class IngredientService {
                 System.out.println(ingredientInput.getIngredientInId());
                 System.out.println(ingredientInput.getPorderNo());
                 System.out.println("찍어보자 : " + ingredientInput.toString());
-
+                pp.setProdPlanFinYn("발주입고완료");
+                productionPlanRepository.save(pp);
 
                 // 현재 재고를 업데이트  // 저장 된 재고를 더하기
 
@@ -129,14 +124,47 @@ public class IngredientService {
         }
     }
 
+    private static int sequence = 1;
+    public String generateOutputNumber() {
+        // 현재 시간 정보를 가져옵니다.
+        LocalDateTime now = LocalDateTime.now();
+        // 형식 지정을 위한 DateTimeFormatter를 생성합니다.
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        // 현재 시간 정보를 "yyyyMMdd" 형식의 문자열로 변환합니다.
+        String formattedDate = now.format(formatter);
+        // 시퀀스 값을 문자열로 변환합니다.
+        String formattedSequence = String.format("%03d", sequence);
+
+        List<String> no = ingredientInputRepository.findingredientinId();
+        for(int i=0;i<no.size();i++){
+            if(("II"+formattedDate+formattedSequence) == no.get(i)){
+                int incrementedValue = Integer.parseInt(formattedSequence) + 1;
+                formattedSequence = String.format("%03d", incrementedValue);
+            }
+        }
+
+        // 시퀀스 값을 1 증가시킵니다.
+        sequence++;
+        // 생산계획번호를 조합하여 반환합니다.
+        return "II" + formattedDate + formattedSequence;
+    }
+
     @Scheduled(cron = "*/20 * * * * ?") // 30초 마다 실행
     public void processPordersAutomatically() {
         LocalDateTime currentDateTime = LocalDateTime.now();
         List<Porder> porders = porderRepository.findByPorderStatusAndPorderDateBefore("입고대기", currentDateTime);
+        String planNo = null;
         if (porders != null && !porders.isEmpty()) {
+            List<ProductionPlan> plans = productionPlanRepository.findByProdPlanFinYn("발주입고대기중");
+            for(ProductionPlan plan : plans){
+                planNo = plan.getProdPlanNo();
+            }
             for (Porder porder : porders) {
                 String porderNo = porder.getPorderNo();
-                updatePorderStatusAndInsertIngredient(porderNo);
+                if(planNo != null){
+                    updatePorderStatusAndInsertIngredient(porderNo, planNo);
+                }
+
             }
         }
 
@@ -167,7 +195,9 @@ public class IngredientService {
 
 
 
-
+    public List<IngredientInput> selectList() {
+        return ingredientInputRepository.findAll();
+    }
 
 
 

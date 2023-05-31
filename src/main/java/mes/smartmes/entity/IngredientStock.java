@@ -14,7 +14,6 @@ import java.time.LocalDate;
 @ToString
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class IngredientStock {

@@ -18,6 +18,9 @@ import mes.smartmes.service.CalendarService;
 import mes.smartmes.service.OrdersService;
 import mes.smartmes.service.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -109,32 +112,35 @@ public class ShipmentController {
 
 
     // 조회
-    @GetMapping("/shipmentList")
-    public String shipmentList(Model model){
+    @GetMapping("/shipment")
+    public String selectList(Model model) {
+        List<Shipment> shipmentList = shipmentService.selectList();
+        model.addAttribute("shipments", shipmentList);
 
-        List<Shipment> shipmentList = shipmentRepository.findAll();
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Porder> result = porderRepository.findAll(pageable);
+        model.addAttribute("pageable",pageable);
 
-        // orderList 리스트 객체를 orderList 라는 이름으로 뷰페이지에서 사용 가능하게 세팅
-        model.addAttribute("shipmentList", shipmentList);
-        System.out.println("쉽먼트 : " + shipmentList.getClass());
+        System.out.println("===================================");
+        System.out.println(result);
+        System.out.println("Total Pages:"+result.getTotalPages());
 
-
-        return "redirect:/shipment/shipment";
+        return "shipment";
     }
 
     // 디비에 있는 데이터  뷰페이지에 전달
-    @GetMapping("/shipment")
-    public String list(Model model){
-        List<Shipment> shipments = shipmentService.getAllShipments();
-        List<Orders>  orderList = ordersRepository.findAll();
-        List<Product> productList = productRepository.findAll();
-        List<Porder> porderList = porderRepository.findAll();
-        model.addAttribute("shipmentlist",shipments);
-        model.addAttribute("orderList",orderList);
-        model.addAttribute("productList",productList);
-        model.addAttribute("porderList",porderList);
-        return "shipment";
-    }
+//    @GetMapping("/shipment")
+//    public String list(Model model){
+//        List<Shipment> shipments = shipmentService.getAllShipments();
+//        List<Orders>  orderList = ordersRepository.findAll();
+//        List<Product> productList = productRepository.findAll();
+//        List<Porder> porderList = porderRepository.findAll();
+//        model.addAttribute("shipmentlist",shipments);
+//        model.addAttribute("orderList",orderList);
+//        model.addAttribute("productList",productList);
+//        model.addAttribute("porderList",porderList);
+//        return "shipment";
+//    }
 
     //다중검색
 

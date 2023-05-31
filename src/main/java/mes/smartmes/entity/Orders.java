@@ -17,7 +17,6 @@ import java.time.format.DateTimeFormatter;
 @Table(name = "orders")
 @ToString
 @Getter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -51,7 +50,7 @@ public class Orders {
     private LocalDateTime deliveryDate;              // 납품일자
 
     @Column(length = 1)
-    private String orderStatus;            // 주문 상태 A = 주문접수 , B =  수주확정, C = 생산계획 완료
+    private String orderStatus="A";            // 주문 상태 A = 주문접수 , B =  수주확정, C = 생산계획 완료
 
 
 

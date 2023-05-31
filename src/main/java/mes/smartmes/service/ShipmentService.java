@@ -49,6 +49,10 @@ public class ShipmentService {
         return shipmentRepository.deleteByShipmentNo(shipmentNo);
     }
 
+    public List<Shipment> selectList() {
+        return shipmentRepository.findAll();
+    }
+
     // 다중검색
 
     @javax.transaction.Transactional

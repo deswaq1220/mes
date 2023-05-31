@@ -24,6 +24,9 @@ public class IngredientOutput {
     @Column(length = 20)
     private String porderNo;                        // 발주 번호
 
+    @Column(length = 20)
+    private String orderNo;
+
 
     @Column(length = 20, nullable = false)
     private String ingredientId;                   // 재료 아이디

@@ -49,11 +49,7 @@
               <select class="drop">
                 <option value="select">품목</option>
                 <option th:each = "productList : ${productList}" th:value="${productList.getProductId()}" th:text = "${productList.getProductName()}"></option>
-                <!--<option value="select">품목</option>
-                <option value="cabbage">양배추즙</option>
-                <option value="garlic">흑마늘즙</option>
-                <option value="Pomegranate">석류젤리스틱</option>
-                <option value="plum">매실젤리</option>-->
+
               </select>
             <td class="inventory">진행상태</td>
             <td>
@@ -154,6 +150,7 @@
     <div class="popupTopArea">
       <h1> 수주등록</h1>
       <div id="popUpBtnWrap">
+        <button class="save" onclick="calculateExpectedDeliveryDate()">납기일계산</button>
         <button class="save" onclick="confirmSave()">저장</button>
         <button class="close" type="button">닫기</button>
       </div>
@@ -202,14 +199,15 @@
           <td>
             <input type = "number" required id = "orderQuantity" name ="orderQuantity" placeholder="BOX" min="0">
           </td>
-          <td class="inventory">납품예정일</td>
+          <td class="inventory" >납품예정일</td>
           <td>
-            <input type = "text">
+            <div class="inputArea" required id = "expectedDeliveryDate" ></div>
           </td>
-
           <td>
             <input type="datetime-local" class="datepicker" required id = "deliveryDate" name="deliveryDate" >
           </td>
+
+
         </tr>
 
         <tr class="tablerow" >
@@ -288,12 +286,12 @@
           <tr class="tablerow">
             <td class="inventory">수주일</td>
             <td>
-              <input type="text" class="orderDate" id="orderDate"readonly required>
+              <input type="text" class="orderDate" id="changeorderDate"readonly required>
               <!--              <input type="date" class="popUpdatepicker" >-->
             </td>
             <td class="inventory">수량</td>
             <td>
-              <input type="text" class="orderQuantity" id="orderQuantity">
+              <input type="text" class="orderQuantity" id="changeorderQuantity">
             </td>
 
             <td class="inventory">거래처</td>
@@ -303,8 +301,15 @@
 
             <td class="inventory">납품예정일</td>
             <td>
-              <input type="text" class="deliveryDate" id="deliveryDate">
+              <input type="text" class="deliveryDate" id="changedeliveryDate">
             </td>
+          </tr>
+        </table>
+      </div>
+    </form>
+  </div>
+</div>
+
 
             <!-- 스크립트 -->
 
@@ -318,6 +323,31 @@
             <script src="/js/OrderSearch.js"></script>
             <script src="/js/order.js"></script>
             <script>
+
+
+              function calculateExpectedDeliveryDate() {
+                var orderqty = document.getElementById("orderQuantity").value;
+                var selectedBox = document.getElementById("selectedBox").value;
+
+                // AJAX 요청을 통해 컨트롤러로 값을 전달
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/calculateDeliveryDate", true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function () {
+                  if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    var expectedDeliveryDate = response.expectedDeliveryDate;
+
+                    // 예상 납기일 업데이트
+                    document.getElementById("expectedDeliveryDate").innerText = expectedDeliveryDate;
+                  }
+                };
+                xhr.send("orderqty=" + encodeURIComponent(orderqty) + "&selectedBox=" + encodeURIComponent(selectedBox));
+              }
+
+
+
+
               //수정페이지
 
               function handleCheckboxClick(event) {
@@ -344,11 +374,11 @@
                 productInput.value = productId;
 
                 const orderDate = row.cells[3].textContent;
-                const orderDateInput = document.getElementById('orderDate');
+                const orderDateInput = document.getElementById('changeorderDate');
                 orderDateInput.value = orderDate;
 
                 const orderQuantity = row.cells[7].textContent;
-                const quantityInput = document.getElementById('orderQuantity');
+                const quantityInput = document.getElementById('changeorderQuantity');
                 quantityInput.value = orderQuantity;
 
                 const companyId = row.cells[6].textContent;
@@ -356,7 +386,7 @@
                 companyInput.value = companyId;
 
                 const deliveryDate = row.cells[9].textContent;
-                const deliveryDateInput = document.getElementById('deliveryDate');
+                const deliveryDateInput = document.getElementById('changedeliveryDate');
                 deliveryDateInput.value = deliveryDate;
 
 
@@ -384,10 +414,10 @@
                 const orderStatus = document.getElementById("orderStatus").value;
                 const orderNo = document.getElementById("orderNo").value;
                 const productId = document.getElementById("productId").value;
-                const orderDate = document.getElementById("orderDate").value;
-                const orderQuantity = document.getElementById("orderQuantity").value;
+                const orderDate = document.getElementById("changeorderDate").value;
+                const orderQuantity = document.getElementById("changeorderQuantity").value;
                 const companyId = document.getElementById("companyId").value;
-                const deliveryDate = document.getElementById("deliveryDate").value;
+                const deliveryDate = document.getElementById("changedeliveryDate").value;
 
 
                 // AJAX 요청

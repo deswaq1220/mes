@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @ToString
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductionPlan {
